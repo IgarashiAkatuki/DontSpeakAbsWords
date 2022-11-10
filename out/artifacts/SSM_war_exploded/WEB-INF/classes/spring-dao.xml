@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+<!--    扫描数据库配置文件-->
+    <context:property-placeholder location="classpath:database.properties"/>
+<!--    配置数据库连接池-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${driver}"/>
+        <property name="jdbcUrl" value="${url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${password}"/>
+
+<!--        c3p0连接池私有属性-->
+<!--        连接池最大最小连接数-->
+        <property name="maxPoolSize" value="50"/>
+        <property name="minPoolSize" value="10"/>
+<!--        初始连接数量-->
+        <property name="initialPoolSize" value="10"/>
+<!--        关闭连接后不自动commit-->
+        <property name="autoCommitOnClose" value="false"/>
+<!--        获取连接超时时间-->
+        <property name="checkoutTimeout" value="10000"/>
+<!--        当前获取连接失败重试次数-->
+        <property name="acquireRetryAttempts" value="3"/>
+    </bean>
+<!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+<!--    <property name="driverClassName" value="${driver}"/>-->
+<!--    <property name="url" value="${url}"/>-->
+<!--    <property name="username" value="${jdbc.username}"/>-->
+<!--    <property name="password" value="${password}"/>-->
+<!--</bean>-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    </bean>
+
+    <bean id="mapperBean" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.midsummra.mapper.WordMapper"/>
+    </bean>
+    <bean id="translationMapperBean" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.midsummra.mapper.TranslationMapper"/>
+    </bean>
+
+    <bean id="userMapperBean" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.midsummra.mapper.UserMapper"/>
+    </bean>
+</beans>

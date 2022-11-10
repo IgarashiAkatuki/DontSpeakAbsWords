@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.midsummra.mapper.WordMapper">
+
+    <resultMap id="Word" type="com.midsummra.pojo.Word">
+        <result column="word_id" property="id"/>
+    </resultMap>
+
+    <insert id="addWord" parameterType="com.midsummra.pojo.Word">
+        insert into project_test.words (date, word, likes) VALUES (#{date},#{word},#{likes})
+    </insert>
+
+    <delete id="deleteWordById" parameterType="int">
+        delete from project_test.words where word_id = #{id}
+    </delete>
+
+    <delete id="deleteWordByName" parameterType="java.lang.String">
+        delete from project_test.words where word = #{word}
+    </delete>
+
+    <update id="updateWord" parameterType="com.midsummra.pojo.Word">
+        update project_test.words set word = #{word},date = #{date},likes = #{likes} where word_id = #{id};
+
+    </update>
+
+    <select id="queryWordById" parameterType="int" resultMap="Word">
+        select * from project_test.words where word_id = #{id}
+    </select>
+
+    <select id="queryWordByName" parameterType="String" resultMap="Word">
+        select * from project_test.words where word = #{name}
+    </select>
+
+    <select id="queryAllWord" resultMap="Word">
+        select * from project_test.words
+    </select>
+
+    <update id="addLikes" parameterType="java.lang.String">
+        update project_test.words set likes = likes+1 where word = #{word}
+    </update>
+
+    <select id="getRandomWords" resultMap="Word">
+        select * from project_test.words  where likes > #{likes} order by rand() limit #{limits};
+    </select>
+
+    <select id="getWordId" parameterType="java.lang.String" resultType="int">
+        select word_id from project_test.words where word = #{word}
+    </select>
+
+</mapper>
