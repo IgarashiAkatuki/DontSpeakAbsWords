@@ -1,6 +1,6 @@
 # DontSpeakAbsWords
 给我好好说话(恼
-**最后更新于2022.11.9**
+**最后更新于2022.11.11**
 
 - *****为改动api
 
@@ -111,7 +111,7 @@
 | word  | 词条的内容     | String |            | 是       |
 | likes | 词条的like数   | String |            | 是       |
 
-### *5.getTranslationsFromTemp(从暂存表获得词条释义)
+### 5.getTranslationsFromTemp(从暂存表获得词条释义)
 
  ***原名为`getTranslations`**
 
@@ -141,7 +141,7 @@
 | likes       | 释义的like数         | int    |            | 是       |
 | wordId      | 该释义在其词条内的id | int    | 可以为null | 否       |
 
-### *6.getTranslationsFromPersistence(从持久表中获取词条释义)
+### 6.getTranslationsFromPersistence(从持久表中获取词条释义)
 
 - **URI**：`/getTranslationsFromPersistence`
 - **Method**:`post`
@@ -169,7 +169,7 @@
 | likes       | 释义的like数         | int    |            | 是       |
 | wordId      | 该释义在其词条内的id | int    |            | 否       |
 
-### *7.submitTranslationsToTemp(提交词条释义到暂存表)
+### 7.submitTranslationsToTemp(提交词条释义到暂存表)
 
 ***原名为`submitTranslations`**
 
@@ -189,7 +189,7 @@
 | ---- | ---------- | ---- | ---------------------------- | -------- |
 | info | 接口状态码 | int  | 提交失败：0<br />提交成功：1 | 是       |
 
-### *8.addLikesToTemp(增加暂存表中释义的Like)
+### 8.addLikesToTemp(增加暂存表中释义的Like)
 
 - **URI**：`/addLikesToTemp`
 
@@ -207,7 +207,7 @@
 | ---- | ---------- | ---- | ---------------------------- | -------- |
 | info | 接口状态码 | int  | 提交失败：0<br />提交成功：1 | 是       |
 
-### *9.addLikesToPersistence(增加暂存表中释义的Like)
+### 9.addLikesToPersistence(增加暂存表中释义的Like)
 
 - **URI**：`/addLikesToPersistence`
 
@@ -225,7 +225,7 @@
 | ---- | ---------- | ---- | ---------------------------- | -------- |
 | info | 接口状态码 | int  | 提交失败：0<br />提交成功：1 | 是       |
 
-### *10.verifyUser(验证用户身份)
+### 10.verifyUser(验证用户身份)
 
 - **URI**：`/verifyUser`
 
@@ -245,14 +245,22 @@
 | ---- | ---------- | ---- | ---------------------------------------------------- | -------- |
 | info | 接口状态码 | int  | 用户名/密码错误：0<br />登陆成功：1<br />权限不足：2 | 是       |
 
-### *11.login(登录)
+### 11.addLikesToPersistence(向持久区中释义提交Like)
 
-**URI**：`/login`
+- **URI**：`/addLikesToPersistence`
 
-**说明**：跳转到`/WEB-INF/login`页面
+- **Method**:`post`
 
-### *12.backstage(后台)
+- 请求参数
 
-**URI**：`/backstage`
+| 字段        | 说明 | 类型   | 备注 | 是否必填 |
+| ----------- | ---- | ------ | ---- | -------- |
+| translation | 释义 | String |      | 是       |
 
-**说明**：跳转到`/WEB-INF/backstage`页面
+- 返回参数
+
+| 字段 | 说明       | 类型 | 备注                         | 是否必填 |
+| ---- | ---------- | ---- | ---------------------------- | -------- |
+| info | 接口状态码 | int  | 提交成功：1<br />提交失败：0 | 是       |
+
+- *用`session`存储某个用户是否提交过某个释义的`like`，如果提交过，那么再次提交时会让该释义的**`like`-1**，如果未提交过则会让该释义的**`like`+1**
