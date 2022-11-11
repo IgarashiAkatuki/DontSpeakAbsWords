@@ -1,6 +1,7 @@
 package com.midsummra.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.midsummra.constant.Constant;
 import com.midsummra.pojo.Word;
 import com.midsummra.service.WordService;
 import com.midsummra.utils.RegexUtils;
@@ -88,7 +89,7 @@ public class WordController {
     @RequestMapping("/getRandomQuestionnaire")
     @ResponseBody
     public String generateRandomQuestionnaire() throws Exception{
-        List<Word> randomWords = wordService.getRandomWords(2, 5);
+        List<Word> randomWords = wordService.getRandomWords(Constant.LikeThresholds, Constant.QuestionnaireLimits);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(randomWords);

@@ -2,6 +2,7 @@ package com.midsummra.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.midsummra.constant.Constant;
 import com.midsummra.pojo.Translation;
 import com.midsummra.service.TranslationService;
 import com.midsummra.service.WordService;
@@ -97,6 +98,22 @@ public class TranslationController {
         translation = RegexUtils.removeExtraSpace(translation);
         word = RegexUtils.replaceSpaceToUnderscore(word);
 
+        //如果持久区中有该释义，则直接给次释义的like+1;
+        if (!ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInPersistence(translation))){
+
+            ObjectMapper mapper = new ObjectMapper();
+            flag = translationService.addLikesToPersistence(translation);
+
+            if (flag == 1){
+                map.put("info","1");
+            }else {
+                map.put("info","0");
+            }
+
+            String json = mapper.writeValueAsString(map);
+            return json;
+        }
+
         int wordId = -1;
 
         if (ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInTemp(translation))){
@@ -115,7 +132,7 @@ public class TranslationController {
         }else {
             flag = translationService.addLikesToTemp(translation);
             //查询此释义现在的like数
-            if (translationService.queryTranslationLikes(translation) >= 5){
+            if (translationService.queryTranslationLikes(translation) >= Constant.TransformThresholds){
                 //如果持久表中已有释义
                 if (!ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInPersistence(translation))){
 
