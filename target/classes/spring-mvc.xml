@@ -14,9 +14,9 @@
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler/>
 
-<!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">-->
-<!--        <property name="prefix" value="/html/"/>-->
-<!--        <property name="suffix" value=".html"/>-->
-<!--    </bean>-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">
+        <property name="prefix" value="/html/"/>
+        <property name="suffix" value=".html"/>
+    </bean>
 
 </beans>

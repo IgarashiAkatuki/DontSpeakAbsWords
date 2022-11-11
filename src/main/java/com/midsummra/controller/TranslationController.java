@@ -1,5 +1,6 @@
 package com.midsummra.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.midsummra.pojo.Translation;
 import com.midsummra.service.TranslationService;
@@ -13,6 +14,8 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +30,8 @@ public class TranslationController {
     @Qualifier("wordServiceImpl")
     private WordService wordService;
 
+
+    //从暂存区获得释义
     @RequestMapping(value = "/getTranslationsFromTemp",produces = "text/html;charset = utf-8")
     @ResponseBody
     public String getTranslationsFromTemp(String word) throws Exception{
@@ -48,6 +53,9 @@ public class TranslationController {
         return json;
     }
 
+
+
+    //从持久区获得释义
     @RequestMapping(value = "/getTranslationsFromPersistence",produces = "text/html;charset = utf-8")
     @ResponseBody
     public String getTranslationsFromPersistence(String word) throws Exception{
@@ -68,6 +76,9 @@ public class TranslationController {
         return json;
     }
 
+
+
+    //向暂存区中提交释义
     @RequestMapping(value = "/submitTranslationsToTemp",produces = "text/html;charset = utf-8")
     @ResponseBody
     public String submitTranslationToTemp(String word,String translation) throws Exception{
@@ -136,6 +147,9 @@ public class TranslationController {
         return json;
     }
 
+
+
+    //向暂存区中提交点赞
     @RequestMapping(value = "/addLikesToTemp",produces = "text/html;charset = utf-8")
     @ResponseBody
     public String addLikesToTemp(String translation) throws Exception{
@@ -157,16 +171,70 @@ public class TranslationController {
         return json;
     }
 
+
+
+    //向持久区中释义提交点赞
     @RequestMapping(value = "/addLikesToPersistence",produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String addLikesToPersistence(String translation) throws Exception{
+    public String addLikesToPersistence(String translation,HttpServletRequest request) throws Exception{
         translation = RegexUtils.removeExtraSpace(translation);
 
+        HttpSession session = request.getSession();
         HashMap<String, String> map = new HashMap<>();
+        ObjectMapper mapper = new ObjectMapper();
         int flag = 0;
-        flag = translationService.addLikesToPersistence(translation);
+
+        Object attribute = session.getAttribute(translation);
+
+        if (ObjectUtils.isEmpty(attribute) || "0".equals((String) attribute)){
+
+            flag = translationService.addLikesToPersistence(translation);
+            session.setAttribute(translation,"1");
+
+        }else if ("1".equals((String) attribute)){
+
+            flag = translationService.removeLikesInPersistence(translation);
+            session.setAttribute(translation,"0");
+
+        }else {
+            session.setAttribute(translation,"0");
+        }
 
         if (flag == 1){
+            map.put("info","1");
+        }else {
+            map.put("info","0");
+        }
+
+        String json = mapper.writeValueAsString(map);
+
+        return json;
+
+//        if (ObjectUtils.isEmpty(session.getAttribute(translation)) || "0".equals(session.getAttribute(translation))){
+//            flag = translationService.addLikesToPersistence(translation);
+//        }
+//
+//        if (flag == 1){
+//            session.setAttribute(translation,"1");
+//            map.put("info","1");
+//        }else {
+//            map.put("info","0");
+//        }
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        String json = mapper.writeValueAsString(map);
+//
+//        return json;
+    }
+
+    @RequestMapping("/temp")
+    @ResponseBody
+    public String testTemp(String translation) throws JsonProcessingException {
+        translation = RegexUtils.removeExtraSpace(translation);
+        HashMap<String, String> map = new HashMap<>();
+//        int flag = 0;
+        if (!ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInPersistence(translation))){
+//            flag = 1;
             map.put("info","1");
         }else {
             map.put("info","0");
@@ -176,6 +244,8 @@ public class TranslationController {
         String json = mapper.writeValueAsString(map);
 
         return json;
+
     }
+
 
 }

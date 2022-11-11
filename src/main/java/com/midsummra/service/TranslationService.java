@@ -18,7 +18,7 @@ public interface TranslationService {
     public List<Translation> queryTranslationFromPersistence(String word);
     public int addTranslationToPersistence(Translation translation);
     public int addLikesToPersistence(String translation);
-
+    public int removeLikesInPersistence(String translation);
     public Translation queryTranslationByTranslationInPersistence(String translation);
 
 }

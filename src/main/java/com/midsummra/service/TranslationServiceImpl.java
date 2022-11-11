@@ -58,6 +58,11 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+    public int removeLikesInPersistence(String translation) {
+        return translationMapper.removeLikesInPersistence(translation);
+    }
+
+    @Override
     public Translation queryTranslationByTranslationInPersistence(String translation) {
         return translationMapper.queryTranslationByTranslationInPersistence(translation);
     }

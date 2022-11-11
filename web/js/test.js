@@ -112,3 +112,34 @@ function getRandomQuestionnaire() {
     })
 }
 
+function addLikes() {
+    let translation = prompt("InputTranslation");
+    $.ajax({
+        url:"/temp",
+        type:"POST",
+        data:{translation:translation},
+        dataType:"JSON",
+        success:function (data) {
+            if (data.info === "1"){
+                $.ajax({
+                    url:"/addLikesToPersistence",
+                    type:"POST",
+                    data:{translation:translation},
+                    dataType:"JSON",
+                    success:function (data) {
+                        text.text("添加成功")
+                    },
+                    error:function () {
+                        text.text("ERROR2")
+                    }
+                })
+            }else {
+                text.text("查询失败")
+            }
+        },
+        error:function () {
+            text.text("ERROR1")
+        }
+    })
+}
+

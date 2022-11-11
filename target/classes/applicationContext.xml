@@ -15,7 +15,7 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/html/admin/*"/>
+            <mvc:mapping path="/admin/*"/>
             <bean class="com.midsummra.interceptor.UserInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

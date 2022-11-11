@@ -45,4 +45,8 @@
     <select id="queryTranslationByTranslationInPersistence" parameterType="java.lang.String" resultMap="translation">
         select * from project_test.persistence where translation = #{translation}
     </select>
+
+    <update id="removeLikesInPersistence" parameterType="java.lang.String">
+        update project_test.persistence set likes = likes-1 where translation = #{translation}
+    </update>
 </mapper>
