@@ -15,7 +15,9 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
@@ -139,6 +141,9 @@ public class TranslationController {
                     flag = translationService.addLikesToPersistence(translation);
 
                 }else {
+
+                    wordId = wordService.getWordId(word);
+
                     Translation tempTranslation = new Translation();
                     tempTranslation.setWord(word);
                     tempTranslation.setTranslation(translation);
@@ -190,7 +195,7 @@ public class TranslationController {
 
 
 
-    //向持久区中释义提交点赞
+    //向持久区中释义提交点赞(使用session)
     @RequestMapping(value = "/addLikesToPersistence",produces = "text/html;charset = utf-8")
     @ResponseBody
     public String addLikesToPersistence(String translation,HttpServletRequest request) throws Exception{
@@ -265,4 +270,49 @@ public class TranslationController {
     }
 
 
+    //向持久区中释义提交点赞(使用cookies)
+    @RequestMapping(value = "/addLikesToPersistenceByCookies",produces = "text/html;charset = utf-8")
+    @ResponseBody
+    public String addLikesToPersistenceByCookies(String translation, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        translation = RegexUtils.removeExtraSpace(translation);
+
+        HashMap<String, String> map = new HashMap<>();
+        ObjectMapper mapper = new ObjectMapper();
+        int flag = 0;
+
+        flag = translationService.addLikesToPersistence(translation);
+
+        if (flag == 1){
+            map.put("info","1");
+
+            boolean containsCookies = false;
+
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals("userInfo")){
+
+                    containsCookies = true;
+
+                    cookie.setValue(cookie.getValue()+translation+":"+1+"|");
+                    cookie.setMaxAge(365*10000);
+                    response.addCookie(cookie);
+                    System.out.println(cookie);
+
+                    break;
+                }
+            }
+
+            if (!containsCookies){
+                Cookie cookie = new Cookie("userInfo","|"+translation+":"+1+"|");
+                cookie.setMaxAge(365*10000);
+                response.addCookie(cookie);
+            }
+
+        }else {
+            map.put("info","0");
+        }
+
+        String json = mapper.writeValueAsString(map);
+
+        return json;
+    }
 }

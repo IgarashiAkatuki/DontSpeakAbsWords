@@ -122,7 +122,7 @@ function addLikes() {
         success:function (data) {
             if (data.info === "1"){
                 $.ajax({
-                    url:"/addLikesToPersistence",
+                    url:"/addLikesToPersistenceByCookies",
                     type:"POST",
                     data:{translation:translation},
                     dataType:"JSON",
