@@ -5,6 +5,7 @@ import com.midsummra.constant.Constant;
 import com.midsummra.pojo.Word;
 import com.midsummra.service.WordService;
 import com.midsummra.utils.RegexUtils;
+import com.mysql.cj.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,15 @@ public class WordController {
     public String addWords(String word) throws Exception{
 
         word = RegexUtils.replaceSpaceToUnderscore(word);
+
+        if (StringUtils.isNullOrEmpty(word)){
+            HashMap<String, String> map = new HashMap<>();
+            map.put("info","0");
+
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(map);
+            return json;
+        }
 
         int returnValue = 0;
         HashMap<String, String> map = new HashMap<>();
