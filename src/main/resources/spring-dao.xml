@@ -52,4 +52,9 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
         <property name="mapperInterface" value="com.midsummra.mapper.UserMapper"/>
     </bean>
+
+    <bean id="erratumMapperBean" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.midsummra.mapper.ErratumMapper"/>
+    </bean>
 </beans>
