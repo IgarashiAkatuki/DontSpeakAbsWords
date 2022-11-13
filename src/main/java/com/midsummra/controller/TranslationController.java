@@ -40,6 +40,16 @@ public class TranslationController {
     public String getTranslationsFromTemp(String word) throws Exception{
 
         word = RegexUtils.replaceSpaceToUnderscore(word);
+
+        if (StringUtils.isNullOrEmpty(word)){
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("info","0");
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writeValueAsString(map);
+
+        }
+
         List<Translation> translations = translationService.queryTranslationFromTemp(word);
 
         String json = null;
@@ -63,6 +73,15 @@ public class TranslationController {
     @ResponseBody
     public String getTranslationsFromPersistence(String word) throws Exception{
         word = RegexUtils.replaceSpaceToUnderscore(word);
+
+        if (StringUtils.isNullOrEmpty(word)){
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("info","0");
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writeValueAsString(map);
+
+        }
         List<Translation> translations = translationService.queryTranslationFromTemp(word);
 
         String json = null;
@@ -88,7 +107,9 @@ public class TranslationController {
         int flag = 0;
         String temp = translation;
         HashMap<String, String> map = new HashMap<>();
-        if (StringUtils.isNullOrEmpty(temp.replace(" ",""))){
+
+
+        if (StringUtils.isNullOrEmpty(temp.replace(" ",""))||StringUtils.isNullOrEmpty(temp)){
             map.put("info","0");
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(map);
@@ -199,6 +220,7 @@ public class TranslationController {
     @RequestMapping(value = "/addLikesToPersistence",produces = "text/html;charset = utf-8")
     @ResponseBody
     public String addLikesToPersistence(String translation,HttpServletRequest request) throws Exception{
+
         translation = RegexUtils.removeExtraSpace(translation);
 
         HttpSession session = request.getSession();
@@ -249,25 +271,25 @@ public class TranslationController {
 //        return json;
     }
 
-    @RequestMapping("/temp")
-    @ResponseBody
-    public String testTemp(String translation) throws JsonProcessingException {
-        translation = RegexUtils.removeExtraSpace(translation);
-        HashMap<String, String> map = new HashMap<>();
-//        int flag = 0;
-        if (!ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInPersistence(translation))){
-//            flag = 1;
-            map.put("info","1");
-        }else {
-            map.put("info","0");
-        }
-
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(map);
-
-        return json;
-
-    }
+//    @RequestMapping("/temp")
+//    @ResponseBody
+//    public String testTemp(String translation) throws JsonProcessingException {
+//        translation = RegexUtils.removeExtraSpace(translation);
+//        HashMap<String, String> map = new HashMap<>();
+////        int flag = 0;
+//        if (!ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInPersistence(translation))){
+////            flag = 1;
+//            map.put("info","1");
+//        }else {
+//            map.put("info","0");
+//        }
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        String json = mapper.writeValueAsString(map);
+//
+//        return json;
+//
+//    }
 
 
     //向持久区中释义提交点赞(使用cookies)
@@ -315,4 +337,5 @@ public class TranslationController {
 
         return json;
     }
+
 }

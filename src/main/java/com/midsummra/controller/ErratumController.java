@@ -51,6 +51,7 @@ public class ErratumController {
             erratum.setDate(new Date());
             erratum.setTranslation(translation);
             erratum.setWord(word);
+            erratum.setReason(reason);
 
             flag = erratumService.addErratum(erratum);
 

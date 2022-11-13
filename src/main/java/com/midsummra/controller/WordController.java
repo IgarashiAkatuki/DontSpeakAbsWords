@@ -13,6 +13,9 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -98,8 +101,42 @@ public class WordController {
 
     @RequestMapping("/getRandomQuestionnaire")
     @ResponseBody
-    public String generateRandomQuestionnaire() throws Exception{
-        List<Word> randomWords = wordService.getRandomWords(Constant.LikeThresholds, Constant.QuestionnaireLimits);
+    public String generateRandomQuestionnaire(HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        Object temp = session.getAttribute("timestamp");
+        List<Word> randomWords = null;
+
+        if (ObjectUtils.isEmpty(temp)){
+
+            randomWords = wordService.getRandomWords(Constant.LikeThresholds, Constant.QuestionnaireLimits);
+            session.setAttribute("timestamp",new Date());
+
+        }else {
+            Date timestamp = (Date) temp;
+            Date currentDate = new Date();
+            long times = currentDate.getTime()-timestamp.getTime();
+
+            System.out.println(timestamp);
+            System.out.println(times);
+            if (times >= Constant.QuestionnaireCoolDown){
+
+                randomWords = wordService.getRandomWords(Constant.LikeThresholds, Constant.QuestionnaireLimits);
+                session.setAttribute("timestamp",currentDate);
+
+            }else {
+
+                HashMap<String, String> map = new HashMap<>();
+                long interval = (Constant.QuestionnaireCoolDown-times)/1000;
+                map.put("info","还有"+interval/60+"分"+(interval%60)+"秒，可以再次获取问卷");
+
+                ObjectMapper mapper = new ObjectMapper();
+                String json = mapper.writeValueAsString(map);
+
+                return json;
+            }
+        }
+
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(randomWords);
