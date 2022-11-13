@@ -20,6 +20,5 @@ public class Constant {
     public static final int LikeThresholds = Integer.parseInt(properties.getProperty("LikeThresholds"));
     public static final int TransformThresholds = Integer.parseInt(properties.getProperty("TransformThresholds"));
     public static final int QuestionnaireLimits = Integer.parseInt(properties.getProperty("QuestionnaireLimits"));
-
     public static final int QuestionnaireCoolDown = Integer.parseInt(properties.getProperty("QuestionnaireCoolDown"));
 }

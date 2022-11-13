@@ -82,7 +82,7 @@ public class TranslationController {
             return objectMapper.writeValueAsString(map);
 
         }
-        List<Translation> translations = translationService.queryTranslationFromTemp(word);
+        List<Translation> translations = translationService.queryTranslationFromPersistence(word);
 
         String json = null;
         if (!ObjectUtils.isEmpty(translations)){
