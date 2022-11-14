@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="trace">
+    <!-- 配置日志信息输出目的地 -->
+    <Appenders>
+        <!-- 输出到控制台 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--配置日志信息的格式 -->
+            <PatternLayout
+                    pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+            "/>
+        </Console>
+
+        <!-- 输出到文件，其中有一个append属性，默认为true，即不清空该文件原来的信息，采用添加的方式，若设为false，则会先清空原来的信息，再添加 -->
+        <File name="MyFile" fileName="D:/Log4j2.log" append="false">
+            <PatternLayout>
+                <!--配置日志信息的格式 -->
+                <pattern>%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</pattern>
+            </PatternLayout>
+        </File>
+
+    </Appenders>
+    <!-- 定义logger,只有定义了logger并引入了appender,appender才会有效 -->
+    <Loggers>
+        <!-- 将业务dao接口所在的包填写进去,并用在控制台和文件中输出 -->
+        <logger name="com.midsummra.mapper" level="TRACE"
+                additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="MyFile" />
+        </logger>
+
+        <Root level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="MyFile" />
+        </Root>
+    </Loggers>
+</Configuration>

@@ -241,7 +241,7 @@ public class TranslationController {
             session.setAttribute(translation,"0");
 
         }else {
-            session.setAttribute(translation,"0");
+            session.setAttribute(translation,"-1");
         }
 
         if (flag == 1){

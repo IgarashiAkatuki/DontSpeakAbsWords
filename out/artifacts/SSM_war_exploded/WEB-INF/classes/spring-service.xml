@@ -25,16 +25,16 @@
     </bean>
 
 
-    <aop:config>
-<!--        横切点-->
-        <aop:pointcut id="wordPointcut" expression="execution(* com.midsummra.service.WordServiceImpl.*(..))"/>
-        <aop:pointcut id="translationPointcut" expression="execution(* com.midsummra.service.TranslationServiceImpl.*(..))"/>
-        <aop:pointcut id="userPointcut" expression="execution(* com.midsummra.service.UserServiceImpl.*(..))"/>
-        <aop:pointcut id="erratumPointcut" expression="execution(* com.midsummra.service.ErratumServiceImpl.*(..))"/>
-<!--        后置增强输出日志-->
-        <aop:advisor advice-ref="afterLog" pointcut-ref="wordPointcut"/>
-        <aop:advisor advice-ref="afterLog" pointcut-ref="translationPointcut"/>
-        <aop:advisor advice-ref="afterLog" pointcut-ref="userPointcut"/>
-        <aop:advisor advice-ref="afterLog" pointcut-ref="erratumPointcut"/>
-    </aop:config>
+<!--    <aop:config>-->
+<!--&lt;!&ndash;        横切点&ndash;&gt;-->
+<!--        <aop:pointcut id="wordPointcut" expression="execution(* com.midsummra.service.WordServiceImpl.*(..))"/>-->
+<!--        <aop:pointcut id="translationPointcut" expression="execution(* com.midsummra.service.TranslationServiceImpl.*(..))"/>-->
+<!--        <aop:pointcut id="userPointcut" expression="execution(* com.midsummra.service.UserServiceImpl.*(..))"/>-->
+<!--        <aop:pointcut id="erratumPointcut" expression="execution(* com.midsummra.service.ErratumServiceImpl.*(..))"/>-->
+<!--&lt;!&ndash;        后置增强输出日志&ndash;&gt;-->
+<!--        <aop:advisor advice-ref="afterLog" pointcut-ref="wordPointcut"/>-->
+<!--        <aop:advisor advice-ref="afterLog" pointcut-ref="translationPointcut"/>-->
+<!--        <aop:advisor advice-ref="afterLog" pointcut-ref="userPointcut"/>-->
+<!--        <aop:advisor advice-ref="afterLog" pointcut-ref="erratumPointcut"/>-->
+<!--    </aop:config>-->
 </beans>

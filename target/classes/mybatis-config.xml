@@ -3,6 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <settings>
+        <setting name="logImpl" value="LOG4J2"/>
+    </settings>
     <mappers>
         <mapper class="com.midsummra.mapper.WordMapper"/>
         <mapper class="com.midsummra.mapper.TranslationMapper"/>
