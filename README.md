@@ -1,8 +1,10 @@
 # DontSpeakAbsWords
 给我好好说话(恼
-**最后更新于2022.11.13**
+**最后更新于2022.11.14**
 
+# 								DontSpeakAbsWords
 
+#### 																			黑话/拼音缩写翻译器
 
 ## Q&A
 
