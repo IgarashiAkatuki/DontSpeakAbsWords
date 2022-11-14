@@ -8,32 +8,44 @@
         https://www.springframework.org/schema/context/spring-context.xsd">
 <!--    扫描数据库配置文件-->
     <context:property-placeholder location="classpath:database.properties"/>
-<!--    配置数据库连接池-->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="driverClass" value="${driver}"/>
+
+<!--&lt;!&ndash;    配置数据库连接池&ndash;&gt;-->
+<!--    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+<!--        <property name="driverClass" value="${driver}"/>-->
+<!--        <property name="jdbcUrl" value="${url}"/>-->
+<!--        <property name="user" value="${jdbc.username}"/>-->
+<!--        <property name="password" value="${password}"/>-->
+
+<!--&lt;!&ndash;        c3p0连接池私有属性&ndash;&gt;-->
+<!--&lt;!&ndash;        连接池最大最小连接数&ndash;&gt;-->
+<!--        <property name="maxPoolSize" value="50"/>-->
+<!--        <property name="minPoolSize" value="10"/>-->
+<!--&lt;!&ndash;        初始连接数量&ndash;&gt;-->
+<!--        <property name="initialPoolSize" value="10"/>-->
+<!--&lt;!&ndash;        关闭连接后不自动commit&ndash;&gt;-->
+<!--        <property name="autoCommitOnClose" value="false"/>-->
+<!--&lt;!&ndash;        获取连接超时时间&ndash;&gt;-->
+<!--        <property name="checkoutTimeout" value="10000"/>-->
+<!--&lt;!&ndash;        当前获取连接失败重试次数&ndash;&gt;-->
+<!--        <property name="acquireRetryAttempts" value="3"/>-->
+<!--    </bean>-->
+
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+        <property name="driverClassName" value="${driver}"/>
         <property name="jdbcUrl" value="${url}"/>
-        <property name="user" value="${jdbc.username}"/>
+        <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${password}"/>
 
-<!--        c3p0连接池私有属性-->
-<!--        连接池最大最小连接数-->
-        <property name="maxPoolSize" value="50"/>
-        <property name="minPoolSize" value="10"/>
-<!--        初始连接数量-->
-        <property name="initialPoolSize" value="10"/>
-<!--        关闭连接后不自动commit-->
-        <property name="autoCommitOnClose" value="false"/>
-<!--        获取连接超时时间-->
-        <property name="checkoutTimeout" value="10000"/>
-<!--        当前获取连接失败重试次数-->
-        <property name="acquireRetryAttempts" value="3"/>
+        <property name="minimumIdle" value="10"/>
+        <property name="maximumPoolSize" value="10"/>
+
+        <property name="readOnly" value="false"/>
+        <property name="connectionTimeout" value="30000"/>
+        <property name="idleTimeout" value="600000"/>
+        <property name="maxLifetime" value="1800000"/>
+
     </bean>
-<!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-<!--    <property name="driverClassName" value="${driver}"/>-->
-<!--    <property name="url" value="${url}"/>-->
-<!--    <property name="username" value="${jdbc.username}"/>-->
-<!--    <property name="password" value="${password}"/>-->
-<!--</bean>-->
+
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
