@@ -36,6 +36,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.3.23" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:5.3.23" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:5.3.23" />
+          <element id="library" level="project" name="Maven: com.zaxxer:HikariCP:5.0.1" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="SSM/web/Web" />
