@@ -7,11 +7,11 @@
         <result property="wordId" column="word_id"/>
     </resultMap>
     <select id="queryTranslationFromTemp" resultMap="translation" parameterType="java.lang.String">
-        select * from project_test.temporary where word = #{word} order by likes desc
+        select * from project_test.temporary where word = #{word} order by likes+0 desc;
     </select>
 
     <select id="queryTranslationFromPersistence" resultMap="translation" parameterType="java.lang.String">
-        select * from project_test.persistence where word = #{word} order by likes desc
+        select * from project_test.persistence where word = #{word} order by likes+0 desc;
     </select>
 
     <insert id="addTranslationToTemp" parameterType="com.midsummra.pojo.Translation">

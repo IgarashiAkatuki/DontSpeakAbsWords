@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,20 +22,20 @@ public class SessionController {
     @ResponseBody
     public String getTranslationSession(@RequestParam(value = "translations") String[] translations, HttpServletRequest request) throws Exception{
 
-        HashMap<String, String> map = new HashMap<>();
+        ArrayList<Integer> list = new ArrayList<>();
         HttpSession session = request.getSession();
 
         for (int i = 0; i < translations.length; i++) {
             if (ObjectUtils.isEmpty(session.getAttribute(translations[i]))|| ((String)session.getAttribute(translations[i])).equals("0")){
-                map.put(translations[i],"0");
+                list.add(1);
             }else {
-                map.put(translations[i],"1");
+                list.add(0);
             }
 
         }
 
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(map);
+        String json = mapper.writeValueAsString(list);
 
         return json;
     }
