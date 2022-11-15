@@ -28,7 +28,7 @@
 
     <session-config>
 <!--        session失效时间-->
-        <session-timeout>7</session-timeout>
+        <session-timeout>14</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>/html/Test.html</welcome-file>

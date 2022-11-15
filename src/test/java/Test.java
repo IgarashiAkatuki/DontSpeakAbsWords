@@ -21,12 +21,12 @@ public class Test {
 //        List<Translation> xf = translationService.queryTranslationByName("xf");
 //        for (Translation translation : xf) {
 //            System.out.println(translation);
+////        }
+//        WordService wordServiceImpl = context.getBean("wordServiceImpl", WordService.class);
+//        List<Word> randomWords = wordServiceImpl.getRandomWords(1, 5);
+//        for (Word randomWord : randomWords) {
+//            System.out.println(randomWord);
 //        }
-        WordService wordServiceImpl = context.getBean("wordServiceImpl", WordService.class);
-        List<Word> randomWords = wordServiceImpl.getRandomWords(1, 5);
-        for (Word randomWord : randomWords) {
-            System.out.println(randomWord);
-        }
 //        for (Word word : wordServiceImpl.queryAllWord()) {
 //            System.out.println(word);
 //        }
@@ -54,5 +54,12 @@ public class Test {
         SimpleDateFormat sdf = new SimpleDateFormat();// 格式化时间
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss a");// a为am/pm的标记
         System.out.println(sdf.format(date));
+
+
+        TranslationService serviceImpl = (TranslationService) context.getBean("translationServiceImpl");
+        List<Translation> xf = serviceImpl.queryTranslationFromPersistence("xf");
+        for (Translation translation : xf) {
+            System.out.println(translation);
+        }
     }
 }
