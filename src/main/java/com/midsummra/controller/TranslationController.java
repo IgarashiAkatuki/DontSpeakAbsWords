@@ -109,7 +109,7 @@ public class TranslationController {
         HashMap<String, String> map = new HashMap<>();
 
 
-        if (StringUtils.isNullOrEmpty(temp.replace(" ",""))||StringUtils.isNullOrEmpty(temp)){
+        if (StringUtils.isNullOrEmpty(temp)||StringUtils.isNullOrEmpty(temp.replace(" ",""))){
             map.put("info","0");
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(map);

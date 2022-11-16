@@ -87,4 +87,16 @@ public class ErratumController {
 
         return json;
     }
+
+    @RequestMapping("/queryAllErratum")
+    @ResponseBody
+    public String queryAllErratum() throws Exception{
+
+        Erratum erratum = erratumService.queryAllErratum();
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(erratum);
+
+        return json;
+    }
 }

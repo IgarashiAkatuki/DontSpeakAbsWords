@@ -7,4 +7,5 @@ import java.util.Map;
 public interface ErratumMapper {
     public int addErratum(Erratum erratum);
     public int deleteErratum(int id);
+    public Erratum queryAllErratum();
 }

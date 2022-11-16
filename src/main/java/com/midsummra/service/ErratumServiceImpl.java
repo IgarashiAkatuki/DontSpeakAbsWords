@@ -21,4 +21,9 @@ public class ErratumServiceImpl implements ErratumService{
     public int deleteErratum(int id) {
         return erratumMapper.deleteErratum(id);
     }
+
+    @Override
+    public Erratum queryAllErratum() {
+        return erratumMapper.queryAllErratum();
+    }
 }

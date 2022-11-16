@@ -1,7 +1,8 @@
 # DontSpeakAbsWords
 给我好好说话(恼
-**最后更新于2022.11.14**
+**最后更新于2022.11.16**
 
+**http://demo.anosu.top/api/html/demo/index.html**
 # 								DontSpeakAbsWords
 
 #### 																			黑话/拼音缩写翻译器

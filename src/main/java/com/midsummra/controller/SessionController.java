@@ -27,9 +27,9 @@ public class SessionController {
 
         for (int i = 0; i < translations.length; i++) {
             if (ObjectUtils.isEmpty(session.getAttribute(translations[i]))|| ((String)session.getAttribute(translations[i])).equals("0")){
-                list.add(1);
-            }else {
                 list.add(0);
+            }else {
+                list.add(1);
             }
 
         }
