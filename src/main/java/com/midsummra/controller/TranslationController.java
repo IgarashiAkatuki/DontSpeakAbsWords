@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.midsummra.constant.Constant;
 import com.midsummra.pojo.Translation;
+import com.midsummra.pojo.Word;
 import com.midsummra.service.TranslationService;
 import com.midsummra.service.WordService;
 import com.midsummra.utils.RegexUtils;
@@ -140,6 +141,16 @@ public class TranslationController {
         int wordId = -1;
 
         if (ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInTemp(translation))){
+
+            if (ObjectUtils.isEmpty(wordService.queryWordByName(word))){
+
+                Word wordBean = new Word();
+                wordBean.setLikes(1);
+                wordBean.setWord(word);
+                wordBean.setDate(new Date());
+
+                flag = wordService.addWord(wordBean);
+            }
 
             wordId = wordService.getWordId(word);
 
