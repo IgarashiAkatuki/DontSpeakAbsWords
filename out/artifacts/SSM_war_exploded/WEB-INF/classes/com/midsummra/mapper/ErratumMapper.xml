@@ -10,4 +10,8 @@
     <delete id="deleteErratum" parameterType="int">
         delete from project_test.erratum where id = #{id}
     </delete>
+
+    <select id="queryAllErratum" resultType="com.midsummra.pojo.Erratum">
+        select * from project_test.erratum order by date
+    </select>
 </mapper>
