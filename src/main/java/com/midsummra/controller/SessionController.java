@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class SessionController {
 
     @RequestMapping(value = "/isLiked",produces = "text/html;charset = utf-8")

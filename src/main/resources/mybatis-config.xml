@@ -10,5 +10,6 @@
         <mapper class="com.midsummra.mapper.WordMapper"/>
         <mapper class="com.midsummra.mapper.TranslationMapper"/>
         <mapper class="com.midsummra.mapper.UserMapper"/>
+        <mapper class="com.midsummra.mapper.SourceMapper"/>
     </mappers>
 </configuration>

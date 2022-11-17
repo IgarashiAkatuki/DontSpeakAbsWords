@@ -26,6 +26,15 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <filter>
+        <filter-name>ipFilter</filter-name>
+        <filter-class>com.midsummra.filter.IpFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ipFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <session-config>
 <!--        session失效时间-->
         <session-timeout>14</session-timeout>
