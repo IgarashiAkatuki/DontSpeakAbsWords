@@ -10,6 +10,7 @@ public class Translation implements Serializable {
     private String translation;
     private int wordId;
     private int likes;
+    public String source;
 
     public Translation(){
 
@@ -69,6 +70,14 @@ public class Translation implements Serializable {
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     @Override

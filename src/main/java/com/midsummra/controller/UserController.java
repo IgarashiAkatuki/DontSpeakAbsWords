@@ -1,6 +1,7 @@
 package com.midsummra.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.midsummra.constant.Constant;
 import com.midsummra.pojo.User;
 import com.midsummra.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,12 +56,12 @@ public class UserController {
 
     @RequestMapping("/login")
     public String login(){
-        return "admin/LoginTest";
+        return "redirect:"+ Constant.LoginURL;
     }
 
     @RequestMapping("/backstage")
     public String toBackstage(){
-        return "admin/backstage";
+        return "redirect:"+Constant.BackstageURL;
     }
 
 }

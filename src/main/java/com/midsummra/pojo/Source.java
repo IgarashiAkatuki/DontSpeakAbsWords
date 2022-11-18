@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Source implements Serializable {
     private int id;
-    private String resource;
+    private String source;
     private String translation;
     private Date date;
     private String likes;
@@ -14,9 +14,9 @@ public class Source implements Serializable {
 
     };
 
-    public Source(int id, String resource, String translation, Date date, String likes) {
+    public Source(int id, String source, String translation, Date date, String likes) {
         this.id = id;
-        this.resource = resource;
+        this.source = source;
         this.translation = translation;
         this.date = date;
         this.likes = likes;
@@ -30,12 +30,12 @@ public class Source implements Serializable {
         this.id = id;
     }
 
-    public String getResource() {
-        return resource;
+    public String getSource() {
+        return source;
     }
 
-    public void setResource(String resource) {
-        this.resource = resource;
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public String getTranslation() {
@@ -64,9 +64,9 @@ public class Source implements Serializable {
 
     @Override
     public String toString() {
-        return "Resource{" +
+        return "Source{" +
                 "id=" + id +
-                ", resource='" + resource + '\'' +
+                ", source='" + source + '\'' +
                 ", translation='" + translation + '\'' +
                 ", date=" + date +
                 ", likes='" + likes + '\'' +

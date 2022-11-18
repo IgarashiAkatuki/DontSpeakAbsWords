@@ -26,7 +26,7 @@ public class UserInterceptor implements HandlerInterceptor {
         System.out.println("["+realIP+"]访问了/admin/login");
 
         //放行login页面
-        if (request.getRequestURI().contains("Login")) {
+        if (request.getRequestURI().contains("login")||request.getRequestURI().contains("verifyUser")) {
             return true;
         }
 
@@ -34,6 +34,7 @@ public class UserInterceptor implements HandlerInterceptor {
         User user = (User) session.getAttribute("userInfo");
 
         if (ObjectUtils.isEmpty(user)){
+            request.getRequestDispatcher("html/error/forbidden.html").forward(request,response);
             return false;
         }
 
@@ -45,6 +46,7 @@ public class UserInterceptor implements HandlerInterceptor {
             }
         }
 
+        request.getRequestDispatcher("html/error/forbidden.html").forward(request,response);
         return false;
     }
 

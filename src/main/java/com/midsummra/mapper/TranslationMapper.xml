@@ -49,4 +49,8 @@
     <update id="removeLikesInPersistence" parameterType="java.lang.String">
         update project_test.persistence set likes = likes-1 where translation = #{translation}
     </update>
+    
+    <update id="addSource">
+        update project_test.persistence set source = #{source} where translation = #{translation}
+    </update>
 </mapper>

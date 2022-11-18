@@ -3,7 +3,9 @@ package com.midsummra.service;
 import com.midsummra.mapper.TranslationMapper;
 import com.midsummra.pojo.Translation;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TranslationServiceImpl implements TranslationService{
     private TranslationMapper translationMapper;
@@ -65,6 +67,16 @@ public class TranslationServiceImpl implements TranslationService{
     @Override
     public Translation queryTranslationByTranslationInPersistence(String translation) {
         return translationMapper.queryTranslationByTranslationInPersistence(translation);
+    }
+
+    @Override
+    public int addSource(String translation,String source) {
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("translation",translation);
+        map.put("source",source);
+
+        return translationMapper.addSource(map);
     }
 
 }

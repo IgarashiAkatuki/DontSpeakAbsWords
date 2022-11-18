@@ -21,4 +21,7 @@ public class Constant {
     public static final int TransformThresholds = Integer.parseInt(properties.getProperty("TransformThresholds"));
     public static final int QuestionnaireLimits = Integer.parseInt(properties.getProperty("QuestionnaireLimits"));
     public static final int QuestionnaireCoolDown = Integer.parseInt(properties.getProperty("QuestionnaireCoolDown"));
+    public static final String LoginURL = properties.getProperty("LoginURL");
+    public static final String BackstageURL = properties.getProperty("BackstageURL");
+    public static final String ForbiddenPage = properties.getProperty("ForbiddenPage");
 }

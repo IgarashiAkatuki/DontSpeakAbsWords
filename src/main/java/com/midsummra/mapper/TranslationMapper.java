@@ -3,6 +3,7 @@ package com.midsummra.mapper;
 import com.midsummra.pojo.Translation;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TranslationMapper {
 //    暂存区方法
@@ -20,5 +21,6 @@ public interface TranslationMapper {
     public int addLikesToPersistence(String translation);
     public int removeLikesInPersistence(String translation);
     public Translation queryTranslationByTranslationInPersistence(String translation);
+    public int addSource(Map map);
 
 }

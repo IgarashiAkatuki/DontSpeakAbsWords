@@ -11,17 +11,25 @@
         http://www.springframework.org/schema/aop/spring-aop.xsd">
     <context:annotation-config/>
     <context:component-scan base-package="com.midsummra.service"/>
+
     <bean id="wordServiceImpl" class="com.midsummra.service.WordServiceImpl">
         <property name="wordMapper" ref="mapperBean"/>
     </bean>
+
     <bean id="translationServiceImpl" class="com.midsummra.service.TranslationServiceImpl">
         <property name="translationMapper" ref="translationMapperBean"/>
     </bean>
+
     <bean id="userServiceImpl" class="com.midsummra.service.UserServiceImpl">
         <property name="userMapper" ref="userMapperBean"/>
     </bean>
+
     <bean id="erratumServiceImpl" class="com.midsummra.service.ErratumServiceImpl">
         <property name="erratumMapper" ref="erratumMapperBean"/>
+    </bean>
+
+    <bean id="sourceServiceImpl" class="com.midsummra.service.SourceServiceImpl">
+        <property name="sourceMapper" ref="sourceMapperBean"/>
     </bean>
 
 

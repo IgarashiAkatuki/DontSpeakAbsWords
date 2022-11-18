@@ -15,8 +15,9 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/admin/backstage"/>
+            <mvc:mapping path="/admin/*"/>
             <bean class="com.midsummra.interceptor.UserInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+
 </beans>
