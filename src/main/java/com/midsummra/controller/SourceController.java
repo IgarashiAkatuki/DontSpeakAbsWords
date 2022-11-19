@@ -41,7 +41,7 @@ public class SourceController {
         ObjectMapper mapper = new ObjectMapper();
         HashMap<String, String> map = new HashMap<>();
 
-        if (!StringUtils.isNullOrEmpty(translation) && StringUtils.isNullOrEmpty(source)){
+        if (!StringUtils.isNullOrEmpty(translation) && !StringUtils.isNullOrEmpty(source)){
 
             int flag = 0;
 
@@ -49,15 +49,18 @@ public class SourceController {
 
                 flag = sourceService.addSourceLikes(translation, source);
 
+            }else {
+
+                Source tempSource = new Source();
+                tempSource.setDate(new Date());
+                tempSource.setLikes("1");
+                tempSource.setTranslation(translation);
+                tempSource.setSource(source);
+
+                flag = sourceService.addSource(tempSource);
+
             }
 
-            Source tempSource = new Source();
-            tempSource.setDate(new Date());
-            tempSource.setLikes("1");
-            tempSource.setTranslation(translation);
-            tempSource.setSource(source);
-
-            flag = sourceService.addSource(tempSource);
 
             if (flag == 1){
                 map.put("info","1");

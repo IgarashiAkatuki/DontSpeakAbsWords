@@ -1,6 +1,8 @@
 import com.midsummra.mapper.WordMapper;
+import com.midsummra.pojo.Source;
 import com.midsummra.pojo.Translation;
 import com.midsummra.pojo.Word;
+import com.midsummra.service.SourceService;
 import com.midsummra.service.TranslationService;
 import com.midsummra.service.WordService;
 import com.midsummra.service.WordServiceImpl;
@@ -61,5 +63,17 @@ public class Test {
         for (Translation translation : xf) {
             System.out.println(translation);
         }
+    }
+
+    @org.junit.Test
+    public void test1(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        SourceService bean = context.getBean("sourceServiceImpl", SourceService.class);
+        Source source = new Source();
+        source.setSource("test");
+        source.setDate(new Date());
+        source.setTranslation("晓峰");
+        source.setLikes("1");
+        System.out.println(bean.addSource(source));
     }
 }
