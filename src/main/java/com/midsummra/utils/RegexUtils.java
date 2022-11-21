@@ -14,6 +14,7 @@ public class RegexUtils {
             Pattern r = Pattern.compile(pattern);
             Matcher m = r.matcher(s);
             s = m.replaceAll("_");
+            s = s.toLowerCase();
         }
         return s;
     }
@@ -26,6 +27,7 @@ public class RegexUtils {
             Pattern r = Pattern.compile(pattern);
             Matcher m = r.matcher(s);
             s = m.replaceAll(" ");
+            s = s.toLowerCase();
         }
         return s;
     }
