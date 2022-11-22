@@ -7,20 +7,20 @@ import java.util.Map;
 
 public interface TranslationMapper {
 //    暂存区方法
-    public List<Translation> queryTranslationFromTemp(String word);
-    public int addLikesToTemp(String translation);
-    public int addTranslationToTemp(Translation translation);
-    public int deleteTranslationByName(String translation);
-    public Translation queryTranslationByTranslationInTemp(String translation);
-    public int queryTranslationLikes(String translation);
+     List<Translation> queryTranslationFromTemp(String word);
+     int addLikesToTemp(String translation);
+     int addTranslationToTemp(Translation translation);
+     int deleteTranslationByName(String translation);
+     Translation queryTranslationByTranslationInTemp(String translation);
+     int queryTranslationLikes(String translation);
 
 //    持久区方法
 
-    public List<Translation> queryTranslationFromPersistence(String word);
-    public int addTranslationToPersistence(Translation translation);
-    public int addLikesToPersistence(String translation);
-    public int removeLikesInPersistence(String translation);
-    public Translation queryTranslationByTranslationInPersistence(String translation);
-    public int addSource(Map map);
+     List<Translation> queryTranslationFromPersistence(String word);
+     int addTranslationToPersistence(Translation translation);
+     int addLikesToPersistence(String translation);
+     int removeLikesInPersistence(String translation);
+     Translation queryTranslationByTranslationInPersistence(String translation);
+     int addSource(Map map);
 
 }

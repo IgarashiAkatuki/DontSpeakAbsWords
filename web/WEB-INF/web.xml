@@ -42,4 +42,7 @@
     <welcome-file-list>
         <welcome-file>/html/Test.html</welcome-file>
     </welcome-file-list>
+    <listener>
+        <listener-class>com.midsummra.listener.UserSessionListener</listener-class>
+    </listener>
 </web-app>

@@ -7,16 +7,16 @@ import java.util.List;
 import java.util.Map;
 
 public interface WordMapper {
-    public int addWord(Word word);
-    public int deleteWordById(@Param("id") int id);
-    public int deleteWordByName(@Param("word") String word);
-    public int updateWord(Word word);
-    public Word queryWordById(@Param("id") int id);
-    public Word queryWordByName(@Param("name") String word);
-    public List<Word> queryAllWord();
-    public int addLikes(String word);
-    public List<Word> getRandomWords(Map map);
+     int addWord(Word word);
+     int deleteWordById(@Param("id") int id);
+     int deleteWordByName(@Param("word") String word);
+     int updateWord(Word word);
+     Word queryWordById(@Param("id") int id);
+     Word queryWordByName(@Param("name") String word);
+     List<Word> queryAllWord();
+     int addLikes(String word);
+     List<Word> getRandomWords(Map map);
 
-    public int getWordId(String word);
+     int getWordId(String word);
 
 }

@@ -7,9 +7,9 @@ import java.util.Map;
 
 public interface SourceMapper {
 
-    public int addSource(Source resource);
-    public List<Source> queryAllSource();
-    public int addSourceLikes(Map map);
-    public Source querySource(String translation);
+     int addSource(Source resource);
+     List<Source> queryAllSource();
+     int addSourceLikes(Map map);
+     Source querySource(String translation);
 
 }
