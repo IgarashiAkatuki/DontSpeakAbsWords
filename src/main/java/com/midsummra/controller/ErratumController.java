@@ -37,7 +37,7 @@ public class ErratumController {
         HashMap<String, String> map = new HashMap<>();
         int flag = 0;
 
-        Translation tempTranslation = translationService.queryTranslationByTranslationInPersistence(translation);
+        Translation tempTranslation = translationService.queryTranslationByTranslationInPersistenceFixed(word,translation);
 
         if (ObjectUtils.isEmpty(tempTranslation)){
             map.put("info","0");

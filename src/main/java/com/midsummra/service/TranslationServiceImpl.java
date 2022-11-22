@@ -20,8 +20,17 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+    @Deprecated
     public int addLikesToTemp(String translation) {
         return translationMapper.addLikesToTemp(translation);
+    }
+
+    @Override
+    public int addLikesToTempFixed(String word, String translation) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("word",word);
+        map.put("translation",translation);
+        return translationMapper.addLikesToTempFixed(map);
     }
 
     @Override
@@ -30,18 +39,45 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+    @Deprecated
     public int deleteTranslationByName(String translation) {
         return translationMapper.deleteTranslationByName(translation);
     }
 
     @Override
+    public int deleteTranslationByNameFixed(String word, String translation) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("word",word);
+        map.put("translation",translation);
+        return translationMapper.deleteTranslationByNameFixed(map);
+    }
+
+    @Override
+    @Deprecated
     public Translation queryTranslationByTranslationInTemp(String translation) {
         return translationMapper.queryTranslationByTranslationInTemp(translation);
     }
 
     @Override
+    public Translation queryTranslationByTranslationInTempFixed(String word, String translation) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("word",word);
+        map.put("translation",translation);
+        return translationMapper.queryTranslationByTranslationInTempFixed(map);
+    }
+
+    @Override
+    @Deprecated
     public int queryTranslationLikes(String translation) {
         return translationMapper.queryTranslationLikes(translation);
+    }
+
+    @Override
+    public int queryTranslationLikesFixed(String word, String translation) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("word",word);
+        map.put("translation",translation);
+        return translationMapper.queryTranslationLikesFixed(map);
     }
 
     @Override
@@ -55,18 +91,45 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+    @Deprecated
     public int addLikesToPersistence(String translation) {
         return translationMapper.addLikesToPersistence(translation);
     }
 
     @Override
+    public int addLikesToPersistenceFixed(String word, String translation) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("word",word);
+        map.put("translation",translation);
+        return translationMapper.addLikesToPersistenceFixed(map);
+    }
+
+    @Override
+    @Deprecated
     public int removeLikesInPersistence(String translation) {
         return translationMapper.removeLikesInPersistence(translation);
     }
 
     @Override
+    public int removeLikesInPersistenceFixed(String word, String translation) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("word",word);
+        map.put("translation",translation);
+        return translationMapper.removeLikesInPersistenceFixed(map);
+    }
+
+    @Override
+    @Deprecated
     public Translation queryTranslationByTranslationInPersistence(String translation) {
         return translationMapper.queryTranslationByTranslationInPersistence(translation);
+    }
+
+    @Override
+    public Translation queryTranslationByTranslationInPersistenceFixed(String word, String translation) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("word",word);
+        map.put("translation",translation);
+        return translationMapper.queryTranslationByTranslationInPersistenceFixed(map);
     }
 
     @Override

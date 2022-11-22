@@ -123,10 +123,10 @@ public class TranslationController {
         word = RegexUtils.replaceSpaceToUnderscore(word);
 
         //如果持久区中有该释义，则直接给次释义的like+1;
-        if (!ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInPersistence(translation))){
+        if (!ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInPersistenceFixed(word,translation))){
 
             ObjectMapper mapper = new ObjectMapper();
-            flag = translationService.addLikesToPersistence(translation);
+            flag = translationService.addLikesToPersistenceFixed(word,translation);
 
             if (flag == 1){
                 map.put("info","1");
@@ -140,7 +140,7 @@ public class TranslationController {
 
         int wordId = -1;
 
-        if (ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInTemp(translation))){
+        if (ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInTempFixed(word,translation))){
 
             if (ObjectUtils.isEmpty(wordService.queryWordByName(word))){
 
@@ -164,13 +164,13 @@ public class TranslationController {
             flag = translationService.addTranslationToTemp(tempTranslation);
 
         }else {
-            flag = translationService.addLikesToTemp(translation);
+            flag = translationService.addLikesToTempFixed(word,translation);
             //查询此释义现在的like数
-            if (translationService.queryTranslationLikes(translation) >= Constant.TransformThresholds){
+            if (translationService.queryTranslationLikesFixed(word,translation) >= Constant.TransformThresholds){
                 //如果持久表中已有释义
-                if (!ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInPersistence(translation))){
+                if (!ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInPersistenceFixed(word,translation))){
 
-                    flag = translationService.addLikesToPersistence(translation);
+                    flag = translationService.addLikesToPersistenceFixed(word,translation);
 
                 }else {
 
@@ -203,15 +203,17 @@ public class TranslationController {
 
 
 
-    //向暂存区中提交点赞
+    // 向暂存区中提交点赞
+    // 此方法于2022.11.22修改 新增需要word参数
     @RequestMapping(value = "/addLikesToTemp",produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String addLikesToTemp(String translation) throws Exception{
+    public String addLikesToTemp(String word, String translation) throws Exception{
         translation = RegexUtils.removeExtraSpace(translation);
+        word = RegexUtils.replaceSpaceToUnderscore(word);
 
         HashMap<String, String> map = new HashMap<>();
         int flag = 0;
-        flag = translationService.addLikesToTemp(translation);
+        flag = translationService.addLikesToTempFixed(word,translation);
 
         if (flag == 1){
             map.put("info","1");
@@ -228,11 +230,13 @@ public class TranslationController {
 
 
     //向持久区中释义提交点赞(使用session)
+    // 此方法于2022.11.22修改 新增需要word参数
     @RequestMapping(value = "/addLikesToPersistence",produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String addLikesToPersistence(String translation,HttpServletRequest request) throws Exception{
+    public String addLikesToPersistence(String word, String translation, HttpServletRequest request) throws Exception{
 
         translation = RegexUtils.removeExtraSpace(translation);
+        word = RegexUtils.replaceSpaceToUnderscore(word);
 
         HttpSession session = request.getSession();
         HashMap<String, String> map = new HashMap<>();
@@ -243,12 +247,12 @@ public class TranslationController {
 
         if (ObjectUtils.isEmpty(attribute) || "0".equals((String) attribute)){
 
-            flag = translationService.addLikesToPersistence(translation);
+            flag = translationService.addLikesToPersistenceFixed(word,translation);
             session.setAttribute(translation,"1");
 
         }else if ("1".equals((String) attribute)){
 
-            flag = translationService.removeLikesInPersistence(translation);
+            flag = translationService.removeLikesInPersistenceFixed(word,translation);
             session.setAttribute(translation,"0");
 
         }else {
@@ -306,14 +310,15 @@ public class TranslationController {
     //向持久区中释义提交点赞(使用cookies)
     @RequestMapping(value = "/addLikesToPersistenceByCookies",produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String addLikesToPersistenceByCookies(String translation, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String addLikesToPersistenceByCookies(String word, String translation, HttpServletRequest request, HttpServletResponse response) throws Exception {
         translation = RegexUtils.removeExtraSpace(translation);
+        word = RegexUtils.replaceSpaceToUnderscore(word);
 
         HashMap<String, String> map = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
         int flag = 0;
 
-        flag = translationService.addLikesToPersistence(translation);
+        flag = translationService.addLikesToPersistenceFixed(word,translation);
 
         if (flag == 1){
             map.put("info","1");

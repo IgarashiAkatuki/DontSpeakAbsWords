@@ -53,4 +53,35 @@
     <update id="addSource">
         update project_test.persistence set source = #{source} where translation = #{translation}
     </update>
+
+
+
+
+    <update id="addLikesToTempFixed">
+        update project_test.temporary set likes = likes+1 where translation = #{translation} and word = #{word}
+    </update>
+
+    <delete id="deleteTranslationByNameFixed">
+        delete from project_test.temporary where translation = #{translation} and word = #{word}
+    </delete>
+
+    <select id="queryTranslationByTranslationInTempFixed" resultMap="translation">
+        select * from project_test.temporary where translation = #{translation} and word = #{word}
+    </select>
+
+    <select id="queryTranslationLikesFixed" resultType="int">
+        select * from project_test.temporary where translation = #{translation} and word = #{word}
+    </select>
+
+    <update id="addLikesToPersistenceFixed">
+        update project_test.persistence set likes = likes+1 where translation = #{translation} and word = #{word}
+    </update>
+
+    <delete id="removeLikesInPersistenceFixed">
+        delete from project_test.persistence where translation = #{translation} and word = #{word}
+    </delete>
+
+    <select id="queryTranslationByTranslationInPersistenceFixed" resultMap="translation">
+        select * from project_test.persistence where translation = #{translation} and word = #{word}
+    </select>
 </mapper>
