@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 
-@Controller
+@Controller("/api")
 @RequestMapping("/admin")
 public class UserController {
     @Autowired

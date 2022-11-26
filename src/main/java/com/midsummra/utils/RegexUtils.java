@@ -9,6 +9,9 @@ public class RegexUtils {
     //将空格替换为下划线
     public static String replaceSpaceToUnderscore(String s){
         if (!StringUtils.isNullOrEmpty(s)){
+            if (s.length() > 100){
+                s = s.substring(0,100);
+            }
             s = s.trim();
             String pattern = "\\s+";
             Pattern r = Pattern.compile(pattern);
@@ -22,6 +25,9 @@ public class RegexUtils {
     //去除多余空格
     public static String removeExtraSpace(String s){
         if (!StringUtils.isNullOrEmpty(s)){
+            if (s.length() > 50){
+                s = s.substring(0,50);
+            }
             s = s.trim();
             String pattern = "\\s+";
             Pattern r = Pattern.compile(pattern);

@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-@Controller
+@Controller("/api")
 public class TranslationController {
     @Autowired
     @Qualifier("translationServiceImpl")

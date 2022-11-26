@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 @Controller
-@RequestMapping("/feedback")
+@RequestMapping("/api/feedback")
 public class ErratumController {
 
     @Autowired

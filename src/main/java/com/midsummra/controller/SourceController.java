@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-@Controller
+@RequestMapping("/api")
 public class SourceController {
 
     @Autowired
