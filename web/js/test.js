@@ -1,7 +1,7 @@
 var text = $("#text");
 function getWords() {
     $.ajax({
-        url:"/returnWords",
+        url:"/api/returnWords",
         type: "POST",
         success: function (data) {
             text.text(data)
@@ -18,7 +18,7 @@ function addWords() {
 
     if (word !== null && word !== ""){
         $.ajax({
-            url:"/addWords",
+            url:"/api/addWords",
             type:"POST",
             data:{word:word},
             dataType:"JSON",
@@ -38,7 +38,7 @@ function addWords() {
 $("#inputWords").blur(function (){
     let words = $("#inputWords").val();
     $.ajax({
-        url:"/getTranslationsFromTemp",
+        url:"/api/getTranslationsFromTemp",
         type:"POST",
         data:{word:words},
         dataType: "JSON",
@@ -61,7 +61,7 @@ function queryWord() {
     let word = prompt("您想为哪个抽象词贡献释义");
     if (word !== null && word !== ""){
         $.ajax({
-            url:"/queryWord",
+            url:"/api/queryWord",
             type:"POST",
             data:{word:word},
             dataType:"JSON",
@@ -85,7 +85,7 @@ function queryWord() {
 function submitTranslations(text) {
     let word = prompt("请填入["+text+"]的释义");
     $.ajax({
-        url:"/submitTranslationsToTemp",
+        url:"/api/submitTranslationsToTemp",
         type:"POST",
         data:{word:text,translation:word},
         dataType:"JSON",
@@ -100,7 +100,7 @@ function submitTranslations(text) {
 
 function getRandomQuestionnaire() {
     $.ajax({
-        url:"/getRandomQuestionnaire",
+        url:"/api/getRandomQuestionnaire",
         type:"POST",
         dataType:"JSON",
         success:function (data) {
@@ -115,7 +115,7 @@ function getRandomQuestionnaire() {
 function addLikes() {
     let translation = prompt("InputTranslation");
     $.ajax({
-        url:"/temp",
+        url:"/api/temp",
         type:"POST",
         data:{translation:translation},
         dataType:"JSON",

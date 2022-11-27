@@ -8,10 +8,10 @@
     </insert>
 
     <delete id="deleteErratum" parameterType="int">
-        delete from project_test.erratum where id = #{id}
+        delete from project_test.erratum where id = #{id} collate utf8mb4_bin
     </delete>
 
     <select id="queryAllErratum" resultType="com.midsummra.pojo.Erratum">
-        select * from project_test.erratum order by date
+        select * from project_test.erratum order by date collate utf8mb4_bin
     </select>
 </mapper>

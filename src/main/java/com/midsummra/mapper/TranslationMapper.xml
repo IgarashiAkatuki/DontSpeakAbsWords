@@ -7,51 +7,51 @@
         <result property="wordId" column="word_id"/>
     </resultMap>
     <select id="queryTranslationFromTemp" resultMap="translation" parameterType="java.lang.String">
-        select * from project_test.temporary where word = #{word} order by likes+0 desc;
+        select * from project_test.temporary where word = #{word} collate utf8mb4_bin order by likes+0 desc;
     </select>
 
     <select id="queryTranslationFromPersistence" resultMap="translation" parameterType="java.lang.String">
-        select * from project_test.persistence where word = #{word} order by likes+0 desc;
+        select * from project_test.persistence where word = #{word} collate utf8mb4_bin order by likes+0 desc;
     </select>
 
     <insert id="addTranslationToTemp" parameterType="com.midsummra.pojo.Translation">
-        insert into project_test.temporary (date, word, translation, word_id, likes) VALUES (#{date},#{word},#{translation},#{wordId},#{likes});
+        insert into project_test.temporary (date, word, translation, word_id, likes) VALUES (#{date},#{word},#{translation},#{wordId},#{likes})
     </insert>
 
     <insert id="addTranslationToPersistence" parameterType="com.midsummra.pojo.Translation">
-        insert into project_test.persistence (date, word, translation, word_id, likes) VALUES (#{date},#{word},#{translation},#{wordId},#{likes});
+        insert into project_test.persistence (date, word, translation, word_id, likes) VALUES (#{date},#{word},#{translation},#{wordId},#{likes})
     </insert>
 
     <update id="addLikesToTemp" parameterType="java.lang.String">
-        update project_test.temporary set likes = likes+1 where translation = #{translation}
+        update project_test.temporary set likes = likes+1 where translation = #{translation} collate utf8mb4_bin
     </update>
 
     <update id="addLikesToPersistence" parameterType="java.lang.String">
-        update project_test.persistence set likes = likes+1 where translation = #{translation}
+        update project_test.persistence set likes = likes+1 where translation = #{translation} collate utf8mb4_bin
     </update>
 
     <delete id="deleteTranslationByName" parameterType="java.lang.String">
-        delete from project_test.temporary where translation = #{translation}
+        delete from project_test.temporary where translation = #{translation} collate utf8mb4_bin
     </delete>
 
     <select id="queryTranslationByTranslationInTemp" resultMap="translation">
-        select * from project_test.temporary where translation = #{translation}
+        select * from project_test.temporary where translation = #{translation} collate utf8mb4_bin
     </select>
 
     <select id="queryTranslationLikes" parameterType="java.lang.String" resultType="int">
-        select temporary.likes from project_test.temporary where translation = #{translation}
+        select temporary.likes from project_test.temporary where translation = #{translation} collate utf8mb4_bin
     </select>
 
     <select id="queryTranslationByTranslationInPersistence" parameterType="java.lang.String" resultMap="translation">
-        select * from project_test.persistence where translation = #{translation}
+        select * from project_test.persistence where translation = #{translation} collate utf8mb4_bin
     </select>
 
     <update id="removeLikesInPersistence" parameterType="java.lang.String">
-        update project_test.persistence set likes = likes-1 where translation = #{translation}
+        update project_test.persistence set likes = likes-1 where translation = #{translation} collate utf8mb4_bin
     </update>
     
     <update id="addSource">
-        update project_test.persistence set source = #{source} where translation = #{translation}
+        update project_test.persistence set source = #{source} where translation = #{translation} collate utf8mb4_bin
     </update>
 
 

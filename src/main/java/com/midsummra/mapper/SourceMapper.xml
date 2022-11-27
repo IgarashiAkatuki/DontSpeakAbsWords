@@ -13,10 +13,10 @@
     </insert>
 
     <update id="addSourceLikes" parameterType="java.lang.String">
-        update project_test.source set likes = likes+1 where translation = #{translation} and source = #{resource}
+        update project_test.source set likes = likes+1 where translation = #{translation} and source = #{resource} collate utf8mb4_bin
     </update>
 
     <select id="querySource" parameterType="java.lang.String" resultType="com.midsummra.pojo.Source">
-        select * from project_test.source where translation = #{translation}
+        select * from project_test.source where translation = #{translation} collate utf8mb4_bin
     </select>
 </mapper>

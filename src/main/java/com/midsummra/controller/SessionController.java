@@ -1,7 +1,6 @@
 package com.midsummra.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mysql.cj.util.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @Controller
 @RequestMapping("/api")
