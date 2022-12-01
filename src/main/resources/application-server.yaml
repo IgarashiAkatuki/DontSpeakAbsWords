@@ -1,0 +1,34 @@
+server:
+  port: 8080
+  servlet:
+    #    context-path: /api
+    #    encoding:
+    #      charset: UTF-8
+    session:
+      timeout: 100m
+
+
+mybatis:
+  check-config-location: true
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*xml
+
+
+
+spring:
+  datasource:
+    username: root
+    password: DsAbsWord114514!^~
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/project_test?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=UTC
+    hikari:
+      maximum-pool-size: 10
+      auto-commit: true
+      minimum-idle: 10
+      read-only: false
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+logging:
+  config: classpath:log4j2.xml
+
