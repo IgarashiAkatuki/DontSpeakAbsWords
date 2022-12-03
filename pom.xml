@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>com.project</groupId>
 	<artifactId>Springboot-Test</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>Springboot-Test</name>
-	<description>Springboot-Test</description>
+	<version>1.0.1</version>
+	<name>DontSpeakAbsWords</name>
+	<description>DontSpeakAbsWords-SpringBootVer</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

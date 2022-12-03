@@ -2,18 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Backstage</title>
+    <title>DontSpeakAbsWords后台</title>
 </head>
 <body>
-<h1>后台</h1>
-<form action="">
-    <input type="text" id="translation" placeholder="translation">
-    <input type="text" id="source" placeholder="source"> <br>
-    <button type="button" onclick="submitSource()">提交</button>
-</form>
+<h2>后台</h2>
+<div id="erratum">
+    <h3>勘误统计</h3>
+    <ul>
+        <li  th:each="erratum : ${erratum}">
+            <span th:text="${erratum.id}"></span>
+            <span th:text="${erratum.word}"></span>
+            <span th:text="${erratum.translation}"></span>
+            <span th:text="${erratum.date}"></span>
+            <span th:text="${erratum.reason}"></span>
+        </li>
+    </ul>
+</div>
+<br>
+<div id="source">
+    <h3>出处统计</h3>
+    <ul>
+        <li th:each="sources : ${sources}">
+            <span th:text="${sources.id}"></span>
+            <span th:text="${sources.translation}"></span>
+            <span th:text="${sources.source}"></span>
+            <span th:text="${sources.likes}"></span>
+        </li>
+    </ul>
+</div>
 <a href="/logout">登出</a>
 <div id="text"></div>
 </body>
-<script src="/js/jquery-3.6.1.js"></script>
-<script src="/js/backstage.js"></script>
 </html>

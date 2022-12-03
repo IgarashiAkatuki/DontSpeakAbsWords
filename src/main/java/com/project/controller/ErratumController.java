@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api")
@@ -94,10 +95,10 @@ public class ErratumController {
     @ResponseBody
     public String queryAllErratum() throws Exception{
 
-        Erratum erratum = erratumService.queryAllErratum();
+        List<Erratum> errata = erratumService.queryAllErratum();
 
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(erratum);
+        String json = mapper.writeValueAsString(errata);
 
         return json;
     }
