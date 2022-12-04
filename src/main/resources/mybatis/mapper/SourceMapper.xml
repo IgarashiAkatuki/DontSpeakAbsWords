@@ -19,4 +19,8 @@
     <select id="querySource" parameterType="java.lang.String" resultType="com.project.pojo.Source">
         select * from project_test.source where translation = #{translation}
     </select>
+
+    <update id="submitSource">
+        update project_test.source set submitted = '是' where translation = #{translation} and source = #{source}
+    </update>
 </mapper>

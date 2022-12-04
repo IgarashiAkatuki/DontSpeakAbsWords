@@ -136,6 +136,23 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+    public int deleteTranslationFormPersistence(String word, String translation) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("word",word);
+        map.put("translation",translation);
+        return translationMapper.deleteTranslationFormPersistence(map);
+    }
+
+    @Override
+    public int updateTranslationInPersistence(String word, String translation, String newTranslation) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("word",word);
+        map.put("translation",translation);
+        map.put("newTranslation",newTranslation);
+        return translationMapper.updateTranslationInPersistence(map);
+    }
+
+    @Override
     public int addSource(String translation,String source) {
 
         HashMap<String, String> map = new HashMap<>();

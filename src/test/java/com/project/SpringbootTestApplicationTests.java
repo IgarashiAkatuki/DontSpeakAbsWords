@@ -4,6 +4,7 @@ import com.project.constant.WebConstant;
 import com.project.mapper.ErratumMapper;
 import com.project.pojo.Erratum;
 import com.project.service.ErratumService;
+import com.project.service.TranslationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,7 +15,11 @@ class SpringbootTestApplicationTests {
 
 	@Autowired
 	@Qualifier("erratumServiceImpl")
-	ErratumService service;
+	private ErratumService service;
+
+	@Autowired
+	@Qualifier("translationServiceImpl")
+	private TranslationService translationService;
 	@Autowired
 	private WebConstant constant;
 	@Test
@@ -24,10 +29,8 @@ class SpringbootTestApplicationTests {
 
 	@Test
 	void Test1(){
-		for (Erratum erratum : service.queryAllErratum()) {
-			System.out.println(erratum);
-		}
-
+		int i = translationService.deleteTranslationFormPersistence("xf", "TEst");
+		System.out.println(i);
 	}
 
 }

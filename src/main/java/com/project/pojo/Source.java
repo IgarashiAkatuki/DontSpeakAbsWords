@@ -9,6 +9,8 @@ public class Source {
     private Date date;
     private String likes;
 
+    private String submitted;
+
     public Source(){
 
     };
@@ -59,6 +61,14 @@ public class Source {
 
     public void setLikes(String likes) {
         this.likes = likes;
+    }
+
+    public String getSubmitted() {
+        return submitted;
+    }
+
+    public void setSubmitted(String submitted) {
+        this.submitted = submitted;
     }
 
     @Override

@@ -9,5 +9,6 @@ public interface SourceService {
     public List<Source> queryAllSource();
     public int addSourceLikes(String translation,String source);
     public Source querySource(String translation);
+    int submitSource(String translation,String source);
 
 }

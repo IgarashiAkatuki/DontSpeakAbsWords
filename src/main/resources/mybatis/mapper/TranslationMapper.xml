@@ -54,6 +54,14 @@
         update project_test.persistence set source = #{source} where translation = #{translation}
     </update>
 
+    <delete id="deleteTranslationFormPersistence">
+        delete from project_test.persistence where word = #{word} and translation = #{translation}
+    </delete>
+
+    <update id="updateTranslationInPersistence">
+        update project_test.persistence set translation = #{newTranslation} where translation = #{translation} and word = #{word}
+    </update>
+
 
 
 

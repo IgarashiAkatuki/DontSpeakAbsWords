@@ -51,5 +51,9 @@ public interface TranslationService {
     Translation queryTranslationByTranslationInPersistence(String translation);
     Translation queryTranslationByTranslationInPersistenceFixed(String word, String translation);
 
+    int deleteTranslationFormPersistence(String word,String translation);
+
+    int updateTranslationInPersistence(String word,String translation,String newTranslation);
+
     int addSource(String translation,String source);
 }

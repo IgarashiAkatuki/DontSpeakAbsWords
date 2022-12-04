@@ -56,5 +56,8 @@ public interface TranslationMapper {
     Translation queryTranslationByTranslationInPersistence(String translation);
     Translation queryTranslationByTranslationInPersistenceFixed(Map map);
 
+    int deleteTranslationFormPersistence(Map map);
+    int updateTranslationInPersistence(Map map);
+
     int addSource(Map map);
 }

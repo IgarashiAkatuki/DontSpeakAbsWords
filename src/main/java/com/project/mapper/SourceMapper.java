@@ -14,4 +14,6 @@ public interface SourceMapper {
     List<Source> queryAllSource();
     int addSourceLikes(Map map);
     Source querySource(String translation);
+
+    int submitSource(Map map);
 }

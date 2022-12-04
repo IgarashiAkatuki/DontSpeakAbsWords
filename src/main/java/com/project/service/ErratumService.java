@@ -8,4 +8,5 @@ public interface ErratumService {
     public int addErratum(Erratum erratum);
     public int deleteErratum(int id);
     public List<Erratum> queryAllErratum();
+    public int deleteTranslationErratum(String translation);
 }

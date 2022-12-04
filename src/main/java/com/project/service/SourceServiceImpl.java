@@ -40,4 +40,12 @@ public class SourceServiceImpl implements SourceService{
     public Source querySource(String translation){
         return sourceMapper.querySource(translation);
     }
+
+    @Override
+    public int submitSource(String translation, String source) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("translation",translation);
+        map.put("source",source);
+        return sourceMapper.submitSource(map);
+    }
 }

@@ -28,4 +28,9 @@ public class ErratumServiceImpl implements ErratumService{
     public List<Erratum> queryAllErratum() {
         return erratumMapper.queryAllErratum();
     }
+
+    @Override
+    public int deleteTranslationErratum(String translation) {
+        return erratumMapper.deleteTranslationErratum(translation);
+    }
 }

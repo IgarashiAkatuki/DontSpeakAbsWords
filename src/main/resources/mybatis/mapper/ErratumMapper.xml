@@ -14,4 +14,8 @@
     <select id="queryAllErratum" resultType="com.project.pojo.Erratum">
         select * from project_test.erratum order by date
     </select>
+
+    <delete id="deleteTranslationErratum" parameterType="java.lang.String">
+        delete from project_test.erratum where translation = #{translation}
+    </delete>
 </mapper>

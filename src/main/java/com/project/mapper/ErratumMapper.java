@@ -13,4 +13,6 @@ public interface ErratumMapper {
     int addErratum(Erratum erratum);
     int deleteErratum(int id);
     List<Erratum> queryAllErratum();
+
+    int deleteTranslationErratum(String translation);
 }
