@@ -10,12 +10,14 @@ import com.project.pojo.WordAO;
 import com.project.service.TranslationService;
 import com.project.service.WordService;
 import com.project.utils.RegexUtils;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -43,9 +45,10 @@ public class TranslationController {
     private Constant webConstant;
 
     // 从暂存区获得释义
-    @RequestMapping(value = "/getTranslationsFromTemp",produces = "text/html;charset = utf-8")
+    @ApiOperation("从暂存区获得释义")
+    @PostMapping(value = "/getTranslationsFromTemp",produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String getTranslationsFromTemp(@Valid WordAO wordAO,BindingResult result) throws Exception{
+    public String getTranslationsFromTemp( @Valid WordAO wordAO, BindingResult result) throws Exception{
 
         HashMap<String, String> map = new HashMap<>();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -94,7 +97,8 @@ public class TranslationController {
     }
 
     // 从持久区获得释义
-    @RequestMapping(value = "/getTranslationsFromPersistence",produces = "text/html;charset = utf-8")
+    @ApiOperation("从持久区获得释义")
+    @PostMapping(value = "/getTranslationsFromPersistence",produces = "text/html;charset = utf-8")
     @ResponseBody
     public String getTranslationsFromPersistence(@Valid WordAO wordAO,BindingResult result) throws Exception{
 
@@ -148,7 +152,8 @@ public class TranslationController {
     }
 
     //向暂存区中提交释义
-    @RequestMapping(value = "/submitTranslationsToTemp",produces = "text/html;charset = utf-8")
+    @ApiOperation("向暂存区中提交释义")
+    @PostMapping(value = "/submitTranslationsToTemp",produces = "text/html;charset = utf-8")
     @ResponseBody
     public String submitTranslationToTemp(@Valid TranslationAO translationAO,BindingResult result) throws Exception{
 
@@ -265,7 +270,8 @@ public class TranslationController {
     }
 
     //向持久区中释义提交点赞(使用session)
-    @RequestMapping(value = "/addLikesToPersistence",produces = "text/html;charset = utf-8")
+    @ApiOperation("向持久区中释义提交点赞")
+    @PostMapping(value = "/addLikesToPersistence",produces = "text/html;charset = utf-8")
     @ResponseBody
     public String addLikesToPersistence(@Valid TranslationAO translationAO,BindingResult result, HttpServletRequest request)throws Exception {
 

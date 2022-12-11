@@ -31,6 +31,9 @@ spring:
       connection-timeout: 30000
       idle-timeout: 600000
       max-lifetime: 1800000
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 
 logging:
@@ -41,3 +44,8 @@ constant:
   TransformThresholds: 2
   QuestionnaireLimits: 5
   QuestionnaireCoolDown: 60000
+  EnableSwagger : true
+
+
+config:
+  swagger: true

@@ -7,10 +7,13 @@ import com.project.service.SourceService;
 import com.project.service.TranslationService;
 import com.project.service.WordService;
 import com.project.utils.RegexUtils;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,9 +37,11 @@ public class SourceController {
     @Qualifier("wordServiceImpl")
     private WordService wordService;
 
-    @RequestMapping(value = "/addTranslationsSource",produces = "text/html;charset = utf-8")
+
+    @ApiOperation("添加翻译的出处")
+    @PostMapping(value = "/addTranslationsSource",produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String addTranslationsSource(String translation,String source) throws Exception{
+    public String addTranslationsSource(@ApiParam("翻译") String translation, @ApiParam("出处") String source) throws Exception{
 
         ObjectMapper mapper = new ObjectMapper();
         HashMap<String, String> map = new HashMap<>();
@@ -77,7 +82,7 @@ public class SourceController {
         return json;
     }
 
-    @RequestMapping(value = "/admin/queryAllSource",produces = "text/html;charset = utf-8")
+    @PostMapping(value = "/admin/queryAllSource",produces = "text/html;charset = utf-8")
     @ResponseBody
     public String QueryAllSource() throws Exception{
 
@@ -97,7 +102,7 @@ public class SourceController {
         return json;
     }
 
-    @RequestMapping(value = "/admin/addSource",produces = "text/html;charset = utf-8")
+    @PostMapping(value = "/admin/addSource",produces = "text/html;charset = utf-8")
     @ResponseBody
     public String addSource(String translation,String source) throws Exception{
 

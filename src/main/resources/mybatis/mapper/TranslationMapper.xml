@@ -27,8 +27,8 @@
 
     <insert id="addTranslToTemp" parameterType="com.project.entity.Translation">
         insert into project_test.temporary
-        (date, word, translation, word_id)
-        VALUES (#{date},#{word},#{translation},#{wordId})
+        (date, word, translation, word_id,likes)
+        VALUES (#{date},#{word},#{translation},#{wordId},#{likes})
     </insert>
 
     <delete id="deleteTranslInTemp" parameterType="map">

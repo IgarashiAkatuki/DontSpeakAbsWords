@@ -1,8 +1,11 @@
 package com.project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,9 +19,10 @@ import java.util.ArrayList;
 public class SessionController {
 
     // 通过session判断是否点赞过，用于前端视图渲染
-    @RequestMapping(value = "/isLiked",produces = "text/html;charset = utf-8")
+    @ApiOperation(value = "翻译是否被点赞")
+    @PostMapping(value = "/isLiked",produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String getTranslationSession(@RequestParam(value = "translations") String[] translations, HttpServletRequest request) throws Exception{
+    public String getTranslationSession(@ApiParam("翻译") @RequestParam(value = "translations") String[] translations, HttpServletRequest request) throws Exception{
 
         ArrayList<Integer> list = new ArrayList<>();
         HttpSession session = request.getSession();

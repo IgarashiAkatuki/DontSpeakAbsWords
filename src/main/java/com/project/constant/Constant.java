@@ -19,6 +19,8 @@ public class Constant {
     // 问卷冷却时间
     private int QuestionnaireCoolDown;
 
+    private boolean EnableSwagger;
+
 
     public int getLikeThresholds() {
         return LikeThresholds;
@@ -50,5 +52,13 @@ public class Constant {
 
     public void setQuestionnaireCoolDown(int questionnaireCoolDown) {
         QuestionnaireCoolDown = questionnaireCoolDown;
+    }
+
+    public boolean isEnableSwagger() {
+        return EnableSwagger;
+    }
+
+    public void setEnableSwagger(boolean enableSwagger) {
+        this.EnableSwagger = enableSwagger;
     }
 }

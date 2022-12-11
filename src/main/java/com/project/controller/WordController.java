@@ -7,23 +7,20 @@ import com.project.pojo.QuestionnaireAO;
 import com.project.pojo.WordAO;
 import com.project.service.WordService;
 import com.project.utils.RegexUtils;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +38,7 @@ public class WordController {
     private WordService wordService;
 
     // 获取全部的词条数据
-    @RequestMapping(value = "/admin/returnWords",produces = "text/html;charset = utf-8")
+    @PostMapping(value = "/admin/returnWords",produces = "text/html;charset = utf-8")
     @ResponseBody
     public String returnWords() throws Exception {
 
@@ -53,10 +50,10 @@ public class WordController {
         return json;
     }
 
-    @RequestMapping(value = "/addWords",produces = "text/html;charset = utf-8")
+    @ApiOperation("添加词条")
+    @PostMapping(value = "/addWords",produces = "text/html;charset = utf-8")
     @ResponseBody
     //使用JSR303验证
-
     public String addWords(@Valid WordAO words, BindingResult result) throws Exception{
 
         ObjectMapper mapper = new ObjectMapper();
@@ -103,7 +100,9 @@ public class WordController {
 
         return mapper.writeValueAsString(map);
     }
-    @RequestMapping(value = "/queryWord",produces = "text/html;charset = utf-8")
+
+    @ApiOperation("查询词条")
+    @PostMapping(value = "/queryWord",produces = "text/html;charset = utf-8")
     @ResponseBody
     @Valid
     public String queryWord(@Valid WordAO words, BindingResult result) throws Exception{
@@ -140,7 +139,8 @@ public class WordController {
         return mapper.writeValueAsString(map);
     }
 
-    @RequestMapping("/getRandomQuestionnaire")
+    @ApiOperation("获取随机问卷")
+    @PostMapping("/getRandomQuestionnaire")
     @ResponseBody
 
     public String generateRandomQuestionnaire(@Valid QuestionnaireAO questionnaireAO, HttpServletRequest request, BindingResult result) throws Exception{

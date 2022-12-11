@@ -26,6 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/swagger-ui/**").hasAuthority("admin")
+                .antMatchers("/swagger").hasAuthority("NULL")
                 .antMatchers("/api/admin/**").hasAnyAuthority("admin")
                 .antMatchers("/admin/login").permitAll()
                 .antMatchers("/admin/**").access("hasAnyAuthority('admin')");

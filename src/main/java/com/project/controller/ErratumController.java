@@ -6,10 +6,14 @@ import com.project.entity.Erratum;
 import com.project.entity.Translation;
 import com.project.service.ErratumService;
 import com.project.service.TranslationService;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,9 +36,10 @@ public class ErratumController {
     @Qualifier("constant")
     private Constant constant;
 
-    @RequestMapping(value = "/addErratum", produces = "text/html;charset = utf-8")
+    @ApiOperation(value = "添加勘误")
+    @PostMapping(value = "/addErratum", produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String addErratum(String word, String translation, String reason) throws Exception {
+    public String addErratum( String word, String translation, @ApiParam("错误原因") String reason) throws Exception {
 
         ObjectMapper mapper = new ObjectMapper();
         HashMap<String, String> map = new HashMap<>();
@@ -70,7 +75,7 @@ public class ErratumController {
         }
     }
 
-    @RequestMapping(value = "/admin/deleteErratum", produces = "text/html;charset = utf-8")
+    @PostMapping(value = "/admin/deleteErratum", produces = "text/html;charset = utf-8")
     @ResponseBody
     public String deleteErratum(int id) throws Exception {
 
@@ -91,7 +96,7 @@ public class ErratumController {
         return json;
     }
 
-    @RequestMapping("/admin/queryAllErratum")
+    @PostMapping("/admin/queryAllErratum")
     @ResponseBody
     public String queryAllErratum() throws Exception {
 
