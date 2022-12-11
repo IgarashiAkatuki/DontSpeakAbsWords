@@ -1,6 +1,6 @@
 # DontSpeakAbsWords
 给我好好说话(恼
-**最后更新于2022.11.26**
+**最后更新于2022.12.11**
 
 **http://test.midsummra.com/**
 # 								DontSpeakAbsWords
@@ -41,3 +41,6 @@
 
 **请用抽象话填满我qwq**
 **Github：https://github.com/IgarashiAkatuki/DontSpeakAbsWords**
+
+---
+By Midsummra & Jitsu
