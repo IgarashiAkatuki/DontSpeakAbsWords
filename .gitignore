@@ -13,6 +13,7 @@ target/
 .springBeans
 .sts4-cache
 target
+test
 src/main/resources/application-server.yaml
 
 ### IntelliJ IDEA ###
