@@ -1,10 +1,10 @@
 package com.project.filter;
 
-import com.project.uitls.IpUtils;
-
+import com.project.utils.IpUtils;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Date;
 
 public class IpFilter implements Filter {
     @Override
@@ -16,7 +16,9 @@ public class IpFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
         String realIP = IpUtils.getRealIP((HttpServletRequest) servletRequest);
-        System.out.println(realIP);
+
+        Date date = new Date();
+        System.out.println("["+date.getTime()+"]"+realIP);
 
         filterChain.doFilter(servletRequest,servletResponse);
     }

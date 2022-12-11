@@ -9,17 +9,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.sql.DataSource;
-
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private DataSource dataSource;
-
-    @Autowired
-    @Qualifier("adminDetailService")
+    @Qualifier("userDetailsService")
     UserDetailsService userDetailsService;
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -44,5 +40,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout().logoutSuccessUrl("/").deleteCookies();
         http.csrf().disable();
     }
-
 }

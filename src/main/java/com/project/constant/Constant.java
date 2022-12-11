@@ -1,21 +1,24 @@
 package com.project.constant;
 
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "constant")
-@PropertySource("classpath:constant.properties")
-public class WebConstant {
+public class Constant {
+
+    // like阈值(word的like数达到多少时会被随机到)
     private int  LikeThresholds;
+
+    // 存在temp中的翻译like数多少时会被转移到PS
     private int TransformThresholds;
+
+    // 问卷数目大小
     private int QuestionnaireLimits;
+
+    // 问卷冷却时间
     private int QuestionnaireCoolDown;
-    private String LoginURL;
-    private String BackstageURL;
-    private String ForbiddenPage;
+
 
     public int getLikeThresholds() {
         return LikeThresholds;
@@ -47,29 +50,5 @@ public class WebConstant {
 
     public void setQuestionnaireCoolDown(int questionnaireCoolDown) {
         QuestionnaireCoolDown = questionnaireCoolDown;
-    }
-
-    public String getLoginURL() {
-        return LoginURL;
-    }
-
-    public void setLoginURL(String loginURL) {
-        LoginURL = loginURL;
-    }
-
-    public String getBackstageURL() {
-        return BackstageURL;
-    }
-
-    public void setBackstageURL(String backstageURL) {
-        BackstageURL = backstageURL;
-    }
-
-    public String getForbiddenPage() {
-        return ForbiddenPage;
-    }
-
-    public void setForbiddenPage(String forbiddenPage) {
-        ForbiddenPage = forbiddenPage;
     }
 }

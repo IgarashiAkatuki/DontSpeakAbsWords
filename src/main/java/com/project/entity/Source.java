@@ -1,26 +1,24 @@
-package com.project.pojo;
+package com.project.entity;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
-public class Source {
+public class Source implements Serializable {
+
     private int id;
+
     private String source;
+
     private String translation;
-    private Date date;
+
     private String likes;
+
+    private Date date;
 
     private String submitted;
 
-    public Source(){
-
-    };
-
-    public Source(int id, String source, String translation, Date date, String likes) {
-        this.id = id;
-        this.source = source;
-        this.translation = translation;
-        this.date = date;
-        this.likes = likes;
+    public Source() {
     }
 
     public int getId() {
@@ -47,20 +45,20 @@ public class Source {
         this.translation = translation;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public String getLikes() {
         return likes;
     }
 
     public void setLikes(String likes) {
         this.likes = likes;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getSubmitted() {
@@ -77,8 +75,21 @@ public class Source {
                 "id=" + id +
                 ", source='" + source + '\'' +
                 ", translation='" + translation + '\'' +
-                ", date=" + date +
                 ", likes='" + likes + '\'' +
+                ", date=" + date +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Source source1 = (Source) o;
+        return id == source1.id && Objects.equals(source, source1.source) && Objects.equals(translation, source1.translation) && Objects.equals(likes, source1.likes) && Objects.equals(date, source1.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, source, translation, likes, date);
     }
 }

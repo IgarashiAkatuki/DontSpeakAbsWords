@@ -1,59 +1,65 @@
 package com.project.service;
 
-import com.project.pojo.Translation;
+import com.project.entity.Translation;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TranslationService {
-    //    暂存区方法
-    List<Translation> queryTranslationFromTemp(String word);
 
-    // 此方法有bug，已停止使用，请用加Fixed后缀的同名方法替代
-    @Deprecated
-    int addLikesToTemp(String translation);
-    int addLikesToTempFixed(String word,String translation);
+    // ---------------应用在暂存区的方法---------------
 
-    int addTranslationToTemp(Translation translation);
+    // 获取暂存区中所有的翻译
+    List<Translation> queryAllTranslInTemp();
 
-    // 此方法有bug，已停止使用，请用加Fixed后缀的同名方法替代
-    @Deprecated
-    int deleteTranslationByName(String translation);
-    int deleteTranslationByNameFixed(String word,String translation);
+    // 获取暂存区中所有的翻译
+    List<Translation> queryTranslInTempByWord(String word);
 
-    // 此方法有bug，已停止使用，请用加Fixed后缀的同名方法替代
-    @Deprecated
-    Translation queryTranslationByTranslationInTemp(String translation);
-    Translation queryTranslationByTranslationInTempFixed(String word,String translation);
+    // 给暂存区中的翻译增加点赞
+    // map中存储的数据: word,translation
+    int addLikeToTemp(String word,String translation);
 
-    // 此方法有bug，已停止使用，请用加Fixed后缀的同名方法替代
-    @Deprecated
-    int queryTranslationLikes(String translation);
-    int queryTranslationLikesFixed(String word,String translation);
+    // 提交翻译到暂存区
+    int addTranslToTemp(Translation translation);
 
-//    持久区方法
+    // 删除暂存区中的翻译
+    // map中存储的数据: word,translation
+    int deleteTranslInTemp(String word,String translation);
 
-    List<Translation> queryTranslationFromPersistence(String word);
+    // 查找暂存区中的翻译
+    // map中存储的数据: word,translation
+    Translation queryTranslInTemp(String word,String translation);
 
-    int addTranslationToPersistence(Translation translation);
+    // 查找暂存区中翻译的点赞数
+    // map中存储的数据: word,translation
+    int queryTranslLikeInTemp(String word,String translation);
 
-    // 此方法有bug，已停止使用，请用加Fixed后缀的同名方法替代
-    @Deprecated
-    int addLikesToPersistence(String translation);
-    int addLikesToPersistenceFixed(String word, String translation);
+    // ---------------应用在持久区的方法---------------
 
-    // 此方法有bug，已停止使用，请用加Fixed后缀的同名方法替代
-    @Deprecated
-    int removeLikesInPersistence(String translation);
-    int removeLikesInPersistenceFixed(String word, String translation);
+    // 查找持久区中词条的翻译
+    List<Translation> queryTranslInPSByWord(String word);
 
-    // 此方法有bug，已停止使用，请用加Fixed后缀的同名方法替代
-    @Deprecated
-    Translation queryTranslationByTranslationInPersistence(String translation);
-    Translation queryTranslationByTranslationInPersistenceFixed(String word, String translation);
+    // 向持久区中添加翻译
+    int addTranslToPS(Translation translation);
 
-    int deleteTranslationFormPersistence(String word,String translation);
+    // 给持久区中的翻译增加点赞
+    // map中存储的数据: word,translation
+    int addTranslLikeInPS(String word,String translation);
 
-    int updateTranslationInPersistence(String word,String translation,String newTranslation);
+    // 给持久区中的翻译取消点赞
+    // map中存储的数据: word,translation
+    int deleteTranslLikeInPS(String word,String translation);
 
-    int addSource(String translation,String source);
+    // 在持久区中查找翻译
+    // map中存储的数据: word,translation
+    Translation queryTranslInPS(String word,String translation);
+
+    // 删除持久区中的翻译
+    // map中存储的数据: word,translation
+    int deleteTranslInPS(String word,String translation);
+
+    // 更新持久区中的翻译
+    // map中存储的数据: word,newTranslation,oldTranslation
+    int updateTranslInPS(String word,String newTranslation,String oldTranslation);
 }

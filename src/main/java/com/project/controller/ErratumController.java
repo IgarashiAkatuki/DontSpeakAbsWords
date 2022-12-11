@@ -1,9 +1,9 @@
 package com.project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.constant.WebConstant;
-import com.project.pojo.Erratum;
-import com.project.pojo.Translation;
+import com.project.constant.Constant;
+import com.project.entity.Erratum;
+import com.project.entity.Translation;
 import com.project.service.ErratumService;
 import com.project.service.TranslationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,26 +29,26 @@ public class ErratumController {
     private TranslationService translationService;
 
     @Autowired
-    @Qualifier("webConstant")
-    private WebConstant webConstant;
+    @Qualifier("constant")
+    private Constant constant;
 
-    @RequestMapping(value = "/addErratum",produces = "text/html;charset = utf-8")
+    @RequestMapping(value = "/addErratum", produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String addErratum(String word,String translation,String reason) throws Exception{
+    public String addErratum(String word, String translation, String reason) throws Exception {
 
         ObjectMapper mapper = new ObjectMapper();
         HashMap<String, String> map = new HashMap<>();
         int flag = 0;
 
-        Translation tempTranslation = translationService.queryTranslationByTranslationInPersistenceFixed(word,translation);
+        Translation tempTranslation = translationService.queryTranslInPS(word, translation);
 
-        if (ObjectUtils.isEmpty(tempTranslation)){
-            map.put("info","0");
+        if (ObjectUtils.isEmpty(tempTranslation)) {
+            map.put("info", "0");
             String json = mapper.writeValueAsString(map);
 
             return json;
 
-        }else {
+        } else {
 
             Erratum erratum = new Erratum();
             erratum.setDate(new Date());
@@ -58,10 +58,10 @@ public class ErratumController {
 
             flag = erratumService.addErratum(erratum);
 
-            if (flag == 1){
-                map.put("info","1");
-            }else {
-                map.put("info","0");
+            if (flag == 1) {
+                map.put("info", "1");
+            } else {
+                map.put("info", "0");
             }
 
             String json = mapper.writeValueAsString(map);
@@ -70,20 +70,20 @@ public class ErratumController {
         }
     }
 
-    @RequestMapping(value = "/admin/deleteErratum",produces = "text/html;charset = utf-8")
+    @RequestMapping(value = "/admin/deleteErratum", produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String deleteErratum(int id) throws Exception{
+    public String deleteErratum(int id) throws Exception {
 
         HashMap<String, String> map = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
         int flag = 0;
 
-        flag = erratumService.deleteErratum(id);
+        flag = erratumService.deleteErratumById(id);
 
-        if (flag == 1){
-            map.put("info","1");
-        }else {
-            map.put("info","0");
+        if (flag == 1) {
+            map.put("info", "1");
+        } else {
+            map.put("info", "0");
         }
 
         String json = mapper.writeValueAsString(map);
@@ -93,7 +93,7 @@ public class ErratumController {
 
     @RequestMapping("/admin/queryAllErratum")
     @ResponseBody
-    public String queryAllErratum() throws Exception{
+    public String queryAllErratum() throws Exception {
 
         List<Erratum> errata = erratumService.queryAllErratum();
 

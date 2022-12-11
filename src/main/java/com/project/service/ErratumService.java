@@ -1,12 +1,24 @@
 package com.project.service;
 
-import com.project.pojo.Erratum;
+import com.project.entity.Erratum;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 public interface ErratumService {
-    public int addErratum(Erratum erratum);
-    public int deleteErratum(int id);
-    public List<Erratum> queryAllErratum();
-    public int deleteTranslationErratum(String translation);
+
+    // 添加勘误
+    int addErratum(Erratum erratum);
+
+    // 通过id删除勘误
+    int deleteErratumById(int id);
+
+    // 通过翻译删除勘误
+    int deleteErratumByTransl(String translation);
+
+    // 查询全部勘误
+    List<Erratum> queryAllErratum();
+
+
 }

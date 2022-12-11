@@ -1,12 +1,11 @@
 package com.project.service;
 
+import com.project.entity.User;
 import com.project.mapper.UserMapper;
-import com.project.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 
 @Service
@@ -17,8 +16,8 @@ public class UserServiceImpl implements UserService{
     private UserMapper userMapper;
 
     @Override
-    public User getUser(String username) {
-        return userMapper.getUser(username);
+    public User queryUser(String username) {
+        return userMapper.queryUser(username);
     }
 
     @Override
@@ -27,10 +26,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public int refreshDate(String username, Date date) {
+    public int setUserEnable(String username, Boolean flag) {
+
         HashMap<String, Object> map = new HashMap<>();
         map.put("username",username);
-        map.put("date",date);
-        return userMapper.refreshDate(map);
+        map.put("flag",flag);
+
+        return userMapper.setUserEnable(map);
     }
 }

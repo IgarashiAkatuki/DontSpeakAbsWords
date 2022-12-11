@@ -4,10 +4,8 @@ import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
-public class TempTranslations implements Serializable {
-
+public class TempTranslations {
     @NotNull(message = "id不能为空")
     private int id;
 

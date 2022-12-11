@@ -2,23 +2,26 @@ package com.project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysql.cj.util.StringUtils;
-import com.project.constant.WebConstant;
-import com.project.pojo.Translation;
-import com.project.pojo.Word;
+import com.project.constant.Constant;
+import com.project.entity.Translation;
+import com.project.entity.Word;
+import com.project.pojo.TranslationAO;
+import com.project.pojo.WordAO;
 import com.project.service.TranslationService;
 import com.project.service.WordService;
-import com.project.uitls.RegexUtils;
+import com.project.utils.RegexUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +29,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/api")
 public class TranslationController {
+
     @Autowired
     @Qualifier("translationServiceImpl")
     private TranslationService translationService;
@@ -35,102 +39,158 @@ public class TranslationController {
     private WordService wordService;
 
     @Autowired
-    @Qualifier("webConstant")
-    private WebConstant webConstant;
+    @Qualifier("constant")
+    private Constant webConstant;
 
-
-    //从暂存区获得释义
+    // 从暂存区获得释义
     @RequestMapping(value = "/getTranslationsFromTemp",produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String getTranslationsFromTemp(String word) throws Exception{
+    public String getTranslationsFromTemp(@Valid WordAO wordAO,BindingResult result) throws Exception{
+
+        HashMap<String, String> map = new HashMap<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // JSR303验证失败直接返回错误原因[info]
+        if (result.hasErrors()){
+            List<FieldError> fieldErrors = result.getFieldErrors();
+            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
+
+            map.put("info",defaultMessage);
+            return objectMapper.writeValueAsString(map);
+        }
+
+        // 获取word值
+        String word = wordAO.getWord();
+
+        // 验证word是否为空
+        word = word.trim();
+        if (word.isEmpty()){
+            map.put("info","输入的值不能为空");
+            return objectMapper.writeValueAsString(map);
+        }
 
         word = RegexUtils.replaceSpaceToUnderscore(word);
 
         if (StringUtils.isNullOrEmpty(word)){
 
-            HashMap<String, String> map = new HashMap<>();
             map.put("info","0");
-            ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.writeValueAsString(map);
 
         }
 
-        List<Translation> translations = translationService.queryTranslationFromTemp(word);
-
+        List<Translation> translations = translationService.queryTranslInTempByWord(word);
         String json = null;
+
         if (!ObjectUtils.isEmpty(translations)){
-            ObjectMapper objectMapper = new ObjectMapper();
+
             json = objectMapper.writeValueAsString(translations);
         }else {
-            HashMap<String, String> map = new HashMap<>();
+
             map.put("info","0");
-            ObjectMapper objectMapper = new ObjectMapper();
             json = objectMapper.writeValueAsString(map);
         }
 
         return json;
     }
 
-
-
-    //从持久区获得释义
+    // 从持久区获得释义
     @RequestMapping(value = "/getTranslationsFromPersistence",produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String getTranslationsFromPersistence(String word) throws Exception{
+    public String getTranslationsFromPersistence(@Valid WordAO wordAO,BindingResult result) throws Exception{
+
+        HashMap<String, String> map = new HashMap<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // JSR303验证失败直接返回错误原因[info]
+        if (result.hasErrors()){
+            List<FieldError> fieldErrors = result.getFieldErrors();
+            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
+
+            map.put("info",defaultMessage);
+            return objectMapper.writeValueAsString(map);
+        }
+
+        // 获取word值
+        String word = wordAO.getWord();
+
+        // 验证word是否为空
+        word = word.trim();
+        if (word.isEmpty()){
+            map.put("info","输入的值不能为空");
+            return objectMapper.writeValueAsString(map);
+        }
+
         word = RegexUtils.replaceSpaceToUnderscore(word);
 
         if (StringUtils.isNullOrEmpty(word)){
 
-            HashMap<String, String> map = new HashMap<>();
             map.put("info","0");
-            ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.writeValueAsString(map);
 
         }
-        List<Translation> translations = translationService.queryTranslationFromPersistence(word);
 
+        // 获取释义
+        List<Translation> translations = translationService.queryTranslInPSByWord(word);
         String json = null;
+
+        // 如果存在释义
         if (!ObjectUtils.isEmpty(translations)){
-            ObjectMapper objectMapper = new ObjectMapper();
+
             json = objectMapper.writeValueAsString(translations);
+
         }else {
-            HashMap<String, String> map = new HashMap<>();
+
             map.put("info","0");
-            ObjectMapper objectMapper = new ObjectMapper();
             json = objectMapper.writeValueAsString(map);
         }
 
         return json;
     }
-
-
 
     //向暂存区中提交释义
     @RequestMapping(value = "/submitTranslationsToTemp",produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String submitTranslationToTemp(String word,String translation) throws Exception{
-        int flag = 0;
-        String temp = translation;
+    public String submitTranslationToTemp(@Valid TranslationAO translationAO,BindingResult result) throws Exception{
+
         HashMap<String, String> map = new HashMap<>();
+        ObjectMapper mapper = new ObjectMapper();
 
+        // JSR303验证失败直接返回错误原因[info]
+        if (result.hasErrors()){
+            List<FieldError> fieldErrors = result.getFieldErrors();
+            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
 
-        if (StringUtils.isNullOrEmpty(temp)||StringUtils.isNullOrEmpty(temp.replace(" ",""))){
-            map.put("info","0");
-            ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(map);
-            return json;
+            map.put("info",defaultMessage);
+            return mapper.writeValueAsString(map);
         }
 
+        int flag = 0;
+//        if (StringUtils.isNullOrEmpty(temp)||StringUtils.isNullOrEmpty(temp.replace(" ",""))){
+//            map.put("info","0");
+//            ObjectMapper mapper = new ObjectMapper();
+//            String json = mapper.writeValueAsString(map);
+//            return json;
+//        }
 
-        //去除多余的空格
+        String translation = translationAO.getTranslation();
+        String word = translationAO.getWord();
+
+        // 如果word和translation去除首尾空格后为空，错误原因[info]
+        word = word.trim();
+        translation = translation.trim();
+        if (word.isEmpty() || translation.isEmpty()){
+            map.put("info","输入的值不能为空");
+            return mapper.writeValueAsString(map);
+        }
+
+        // 获得translation和word数据并且去除多余的空格
         translation = RegexUtils.removeExtraSpace(translation);
         word = RegexUtils.replaceSpaceToUnderscore(word);
 
         //如果持久区中有该释义，则直接给次释义的like+1;
-        if (!ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInPersistenceFixed(word,translation))){
+        if (!ObjectUtils.isEmpty(translationService.queryTranslInPS(word,translation))){
 
-            ObjectMapper mapper = new ObjectMapper();
-            flag = translationService.addLikesToPersistenceFixed(word,translation);
+            flag = translationService.addTranslLikeInPS(word,translation);
 
             if (flag == 1){
                 map.put("info","1");
@@ -144,8 +204,10 @@ public class TranslationController {
 
         int wordId = -1;
 
-        if (ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInTempFixed(word,translation))){
+        // 如果暂存区中没有此翻译
+        if (ObjectUtils.isEmpty(translationService.queryTranslInTemp(word,translation))){
 
+            // 如果不存在这个词条，则添加这个词条并且添加这个词条的翻译到暂存区
             if (ObjectUtils.isEmpty(wordService.queryWordByName(word))){
 
                 Word wordBean = new Word();
@@ -165,16 +227,16 @@ public class TranslationController {
             tempTranslation.setDate(new Date());
             tempTranslation.setWordId(wordId);
 
-            flag = translationService.addTranslationToTemp(tempTranslation);
+            flag = translationService.addTranslToTemp(tempTranslation);
 
         }else {
-            flag = translationService.addLikesToTempFixed(word,translation);
+            flag = translationService.addLikeToTemp(word,translation);
             //查询此释义现在的like数
-            if (translationService.queryTranslationLikesFixed(word,translation) >= webConstant.getTransformThresholds()){
+            if (translationService.queryTranslLikeInTemp(word,translation) >= webConstant.getTransformThresholds()){
                 //如果持久表中已有释义
-                if (!ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInPersistenceFixed(word,translation))){
+                if (!ObjectUtils.isEmpty(translationService.queryTranslInPS(word,translation))){
 
-                    flag = translationService.addLikesToPersistenceFixed(word,translation);
+                    flag = translationService.addTranslLikeInPS(word,translation);
 
                 }else {
 
@@ -186,11 +248,9 @@ public class TranslationController {
                     tempTranslation.setDate(new Date());
                     tempTranslation.setLikes(0);
                     tempTranslation.setWordId(wordId);
-                    flag = translationService.addTranslationToPersistence(tempTranslation);
+                    flag = translationService.addTranslToPS(tempTranslation);
                 }
-
             }
-
         }
 
         if (flag == 1){
@@ -199,158 +259,63 @@ public class TranslationController {
             map.put("info","0");
         }
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(map);
-
-        return json;
-    }
-
-
-
-    // 向暂存区中提交点赞
-    // 此方法于2022.11.22修改 新增需要word参数
-    @RequestMapping(value = "/addLikesToTemp",produces = "text/html;charset = utf-8")
-    @ResponseBody
-    public String addLikesToTemp(String word, String translation) throws Exception{
-        translation = RegexUtils.removeExtraSpace(translation);
-        word = RegexUtils.replaceSpaceToUnderscore(word);
-
-        HashMap<String, String> map = new HashMap<>();
-        int flag = 0;
-        flag = translationService.addLikesToTempFixed(word,translation);
-
-        if (flag == 1){
-            map.put("info","1");
-        }else {
-            map.put("info","0");
-        }
-
-        ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(map);
 
         return json;
     }
-
-
 
     //向持久区中释义提交点赞(使用session)
-    // 此方法于2022.11.22修改 新增需要word参数
     @RequestMapping(value = "/addLikesToPersistence",produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String addLikesToPersistence(String word, String translation, HttpServletRequest request) throws Exception{
+    public String addLikesToPersistence(@Valid TranslationAO translationAO,BindingResult result, HttpServletRequest request)throws Exception {
+
+        HashMap<String, String> map = new HashMap<>();
+        ObjectMapper mapper = new ObjectMapper();
+        HttpSession session = request.getSession();
+
+        // JSR303验证失败直接返回错误原因[info]
+        if (result.hasErrors()) {
+            List<FieldError> fieldErrors = result.getFieldErrors();
+            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
+
+            map.put("info", defaultMessage);
+            return mapper.writeValueAsString(map);
+        }
+        String word = translationAO.getWord();
+        String translation = translationAO.getTranslation();
+
+        // 如果word和translation去除首尾空格后为空，错误原因[info]
+        word = word.trim();
+        translation = translation.trim();
+        if (word.isEmpty() || translation.isEmpty()) {
+            map.put("info", "输入的值不能为空");
+            return mapper.writeValueAsString(map);
+        }
 
         translation = RegexUtils.removeExtraSpace(translation);
         word = RegexUtils.replaceSpaceToUnderscore(word);
 
-        HttpSession session = request.getSession();
-        HashMap<String, String> map = new HashMap<>();
-        ObjectMapper mapper = new ObjectMapper();
         int flag = 0;
-
         Object attribute = session.getAttribute(translation);
 
-        if (ObjectUtils.isEmpty(attribute) || "0".equals((String) attribute)){
+        if (ObjectUtils.isEmpty(attribute) || "0".equals((String) attribute)) {
 
-            flag = translationService.addLikesToPersistenceFixed(word,translation);
-            session.setAttribute(translation,"1");
+            flag = translationService.addTranslLikeInPS(word, translation);
+            session.setAttribute(translation, "1");
 
-        }else if ("1".equals((String) attribute)){
+        } else if ("1".equals((String) attribute)) {
 
-            flag = translationService.removeLikesInPersistenceFixed(word,translation);
-            session.setAttribute(translation,"0");
+            flag = translationService.deleteTranslLikeInPS(word, translation);
+            session.setAttribute(translation, "0");
 
-        }else {
-            session.setAttribute(translation,"-1");
+        } else {
+            session.setAttribute(translation, "-1");
         }
 
-        if (flag == 1){
-            map.put("info","1");
-        }else {
-            map.put("info","0");
-        }
-
-        String json = mapper.writeValueAsString(map);
-
-        return json;
-
-//        if (ObjectUtils.isEmpty(session.getAttribute(translation)) || "0".equals(session.getAttribute(translation))){
-//            flag = translationService.addLikesToPersistence(translation);
-//        }
-//
-//        if (flag == 1){
-//            session.setAttribute(translation,"1");
-//            map.put("info","1");
-//        }else {
-//            map.put("info","0");
-//        }
-//
-//        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writeValueAsString(map);
-//
-//        return json;
-    }
-
-//    @RequestMapping("/temp")
-//    @ResponseBody
-//    public String testTemp(String translation) throws JsonProcessingException {
-//        translation = RegexUtils.removeExtraSpace(translation);
-//        HashMap<String, String> map = new HashMap<>();
-////        int flag = 0;
-//        if (!ObjectUtils.isEmpty(translationService.queryTranslationByTranslationInPersistence(translation))){
-////            flag = 1;
-//            map.put("info","1");
-//        }else {
-//            map.put("info","0");
-//        }
-//
-//        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writeValueAsString(map);
-//
-//        return json;
-//
-//    }
-
-
-    //向持久区中释义提交点赞(使用cookies)
-    @RequestMapping(value = "/addLikesToPersistenceByCookies",produces = "text/html;charset = utf-8")
-    @ResponseBody
-    public String addLikesToPersistenceByCookies(String word, String translation, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        translation = RegexUtils.removeExtraSpace(translation);
-        word = RegexUtils.replaceSpaceToUnderscore(word);
-
-        HashMap<String, String> map = new HashMap<>();
-        ObjectMapper mapper = new ObjectMapper();
-        int flag = 0;
-
-        flag = translationService.addLikesToPersistenceFixed(word,translation);
-
-        if (flag == 1){
-            map.put("info","1");
-
-            boolean containsCookies = false;
-
-            for (Cookie cookie : request.getCookies()) {
-                if (cookie.getName().equals("userInfo")){
-
-                    containsCookies = true;
-
-                    cookie.setValue(cookie.getValue()+translation+":"+1+"|");
-                    cookie.setMaxAge(365*10000);
-                    response.addCookie(cookie);
-                    System.out.println(cookie);
-
-                    break;
-                }
-            }
-
-            if (!containsCookies){
-                Cookie cookie = new Cookie("userInfo","|"+translation+":"+1+"|");
-                cookie.setMaxAge(365*10000);
-                response.addCookie(cookie);
-            }
-
-        }else {
-            map.put("info","0");
+        if (flag == 1) {
+            map.put("info", "1");
+        } else {
+            map.put("info", "0");
         }
 
         String json = mapper.writeValueAsString(map);

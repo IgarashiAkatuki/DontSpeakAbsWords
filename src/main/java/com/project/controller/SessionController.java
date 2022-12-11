@@ -7,16 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @Controller
 @RequestMapping("/api")
 public class SessionController {
 
+    // 通过session判断是否点赞过，用于前端视图渲染
     @RequestMapping(value = "/isLiked",produces = "text/html;charset = utf-8")
     @ResponseBody
     public String getTranslationSession(@RequestParam(value = "translations") String[] translations, HttpServletRequest request) throws Exception{
@@ -35,22 +34,6 @@ public class SessionController {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(list);
-
-        return json;
-    }
-
-    @RequestMapping(value = "/admin/getUsersNum",produces = "text/html;charset = utf-8")
-    @ResponseBody
-    public String getUsersNum(HttpSession httpSession) throws Exception{
-
-        ServletContext servletContext = httpSession.getServletContext();
-        int nums = (int)servletContext.getAttribute("sessionSetSize");
-
-        HashMap<String, String> map = new HashMap<>();
-        map.put("nums",nums+"");
-
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(map);
 
         return json;
     }

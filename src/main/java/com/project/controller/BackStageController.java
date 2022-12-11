@@ -1,8 +1,8 @@
 package com.project.controller;
 
-import com.project.pojo.Erratum;
-import com.project.pojo.Source;
-import com.project.pojo.TempSource;
+import com.project.entity.Erratum;
+import com.project.entity.Source;
+import com.project.pojo.SourceAO;
 import com.project.pojo.TempTranslations;
 import com.project.service.ErratumService;
 import com.project.service.SourceService;
@@ -38,27 +38,27 @@ public class BackStageController {
     @RequestMapping("/info")
     public String getErratumInfo(Model model){
 
-            List<Erratum> errata = erratumService.queryAllErratum();
-            List<Source> sources = sourceService.queryAllSource();
-            model.addAttribute("erratum",errata);
-            model.addAttribute("sources",sources);
+        List<Erratum> errata = erratumService.queryAllErratum();
+        List<Source> sources = sourceService.queryAllSource();
+        model.addAttribute("erratum",errata);
+        model.addAttribute("sources",sources);
 
-            return "admin/backstage";
+        return "admin/backstage";
     }
 
     @PostMapping("/deleteTranslation")
-    public String deleteTranslation(@Validated TempTranslations translations,BindingResult result,Model model){
+    public String deleteTranslation(@Validated TempTranslations translations, BindingResult result, Model model){
         if (result.hasErrors()){
             List<FieldError> fieldErrors = result.getFieldErrors();
             model.addAttribute("translationError",fieldErrors.get(0).getDefaultMessage());
 
             return "forward:/admin/info";
         }else {
-            int info = translationService.deleteTranslationFormPersistence(translations.getWord(), translations.getTranslation());
+            int info = translationService.deleteTranslInPS(translations.getWord(), translations.getTranslation());
             if (info != 1){
                 model.addAttribute("translationError","删除失败");
             }else {
-                erratumService.deleteTranslationErratum(translations.getTranslation());
+                erratumService.deleteErratumByTransl(translations.getTranslation());
                 model.addAttribute("translationError","提交成功");
             }
 
@@ -75,11 +75,11 @@ public class BackStageController {
             return "forward:/admin/info";
         }else {
             if (!translations.getNewTranslation().isEmpty()){
-                int info = translationService.updateTranslationInPersistence(translations.getWord(), translations.getTranslation(), translations.getNewTranslation());
+                int info = translationService.updateTranslInPS(translations.getWord(), translations.getTranslation(), translations.getNewTranslation());
                 if (info != 1){
                     model.addAttribute("translationError","更改失败");
                 }else {
-                    erratumService.deleteErratum(translations.getId());
+                    erratumService.deleteErratumById(translations.getId());
                     model.addAttribute("translationError","提交成功");
                 }
                 return "forward:/admin/info";
@@ -91,7 +91,7 @@ public class BackStageController {
     }
 
     @PostMapping("/submitSource")
-    public String submitSource(@Validated TempSource tempSource,BindingResult result,Model model){
+    public String submitSource(@Validated SourceAO tempSource, BindingResult result, Model model){
         if (result.hasErrors()){
             List<FieldError> fieldErrors = result.getFieldErrors();
             model.addAttribute("sourceError",fieldErrors.get(0).getDefaultMessage());
@@ -99,11 +99,10 @@ public class BackStageController {
             return "forward:/admin/info";
         }else {
             if (!tempSource.getSource().isEmpty()){
-                int info = translationService.addSource(tempSource.getTranslation(), tempSource.getSource());
+                int info = sourceService.submitSourceToTransl(tempSource.getTranslation(), tempSource.getSource());
                 if (info != 1){
                     model.addAttribute("sourceError","提交失败");
                 }else {
-                    sourceService.submitSource(tempSource.getTranslation(),tempSource.getSource());
                     model.addAttribute("sourceError","提交成功");
                 }
                 return "forward:/admin/info";

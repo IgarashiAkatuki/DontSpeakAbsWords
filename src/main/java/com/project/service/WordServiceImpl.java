@@ -1,13 +1,16 @@
 package com.project.service;
 
+import com.project.entity.Word;
 import com.project.mapper.WordMapper;
-import com.project.pojo.Word;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 
 @Service
 public class WordServiceImpl implements WordService{
@@ -33,11 +36,6 @@ public class WordServiceImpl implements WordService{
     }
 
     @Override
-    public int updateWord(Word word) {
-        return wordMapper.updateWord(word);
-    }
-
-    @Override
     public Word queryWordById(int id) {
         return wordMapper.queryWordById(id);
     }
@@ -53,15 +51,17 @@ public class WordServiceImpl implements WordService{
     }
 
     @Override
-    public int addLikes(String word) {
-        return wordMapper.addLikes(word);
+    public int addWordLike(String word) {
+        return wordMapper.addWordLike(word);
     }
 
     @Override
-    public List<Word> getRandomWords(int likes,int limits) {
+    public List<Word> getRandomWords(int like,int limit) {
+
         HashMap<String, Integer> map = new HashMap<>();
-        map.put("likes",likes);
-        map.put("limits",limits);
+        map.put("like",like);
+        map.put("limit",limit);
+
         return wordMapper.getRandomWords(map);
     }
 

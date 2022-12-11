@@ -3,15 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.mapper.UserMapper">
-    <select id="getUser" resultType="com.project.pojo.User">
+
+    <select id="queryUser"  resultType="com.project.entity.User">
         select * from project_test.user where username = #{username}
     </select>
 
-    <insert id="addUser" parameterType="com.project.pojo.User">
-        insert into project_test.user ( username, password, permission, date) values (#{username},#{password},#{permission},#{date})
+    <insert id="addUser" parameterType="com.project.entity.User">
+        insert into project_test.user (username, password, date, authority, enabled,email)
+        values (#{username},#{password},#{date},#{authority},#{enabled},#{email})
     </insert>
 
-    <update id="refreshDate">
-        update project_test.user set date = #{date} where username = #{username}
+    <update id="setUserEnable" parameterType="map">
+        update project_test.user set enabled = #{enabled} where username = #{username}
     </update>
 </mapper>

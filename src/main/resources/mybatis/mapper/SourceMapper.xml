@@ -4,23 +4,33 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.mapper.SourceMapper">
 
-    <select id="queryAllSource" resultType="com.project.pojo.Source">
+    <resultMap id="source" type="com.project.entity.Source"/>
+
+
+    <insert id="submitSource" parameterType="com.project.entity.Source">
+        insert into project_test.source (source, translation, date) values (#{source},#{translation},#{date})
+    </insert>
+
+    <select id="queryAllSource" resultMap="source">
         select * from project_test.source
     </select>
 
-    <insert id="addSource" parameterType="com.project.pojo.Source">
-        insert into project_test.source (source, translation, date, likes) values (#{source},#{translation},#{date},#{likes})
-    </insert>
-
-    <update id="addSourceLikes" parameterType="java.lang.String">
-        update project_test.source set likes = likes+1 where translation = #{translation} and source = #{source}
-    </update>
-
-    <select id="querySource" parameterType="java.lang.String" resultType="com.project.pojo.Source">
-        select * from project_test.source where translation = #{translation}
+    <select id="querySourceByTransl" parameterType="java.lang.String" resultMap="source">
+        select * from project_test.source where translation = #{translation} collate utf8mb4_bin
     </select>
 
-    <update id="submitSource">
-        update project_test.source set submitted = '是' where translation = #{translation} and source = #{source}
+    <select id="querySourceByName" parameterType="map" resultMap="source">
+        select * from project_test.source where translation = #{translation} and source = #{source} collate utf8mb4_bin
+    </select>
+
+    <update id="submitSourceInPS" parameterType="map">
+        update project_test.persistence set source = #{source} where translation = #{translation} collate utf8mb4_bin
+    </update>
+    <update id="submitSourceInSource" parameterType="map">
+        update project_test.source set submitted = '是' where  source = #{source} and translation = #{translation} collate utf8mb4_bin
+    </update>
+
+    <update id="addSourceLike" parameterType="map">
+        update project_test.source set likes = likes+1 where translation = #{translation} and source = #{source} collate utf8mb4_bin
     </update>
 </mapper>

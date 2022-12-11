@@ -4,6 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <settings>
+<!--        开启log4j2支持-->
         <setting name="logImpl" value="LOG4J2"/>
     </settings>
 </configuration>

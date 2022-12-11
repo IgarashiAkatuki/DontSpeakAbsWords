@@ -2,11 +2,11 @@ package com.project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysql.cj.util.StringUtils;
-import com.project.pojo.Source;
+import com.project.entity.Source;
 import com.project.service.SourceService;
 import com.project.service.TranslationService;
 import com.project.service.WordService;
-import com.project.uitls.RegexUtils;
+import com.project.utils.RegexUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -21,6 +21,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/api")
 public class SourceController {
+
     @Autowired
     @Qualifier("sourceServiceImpl")
     private SourceService sourceService;
@@ -44,9 +45,9 @@ public class SourceController {
 
             int flag = 0;
 
-            if (!ObjectUtils.isEmpty(sourceService.querySource(translation))){
+            if (!ObjectUtils.isEmpty(sourceService.querySourceByName(translation,source))){
 
-                flag = sourceService.addSourceLikes(translation, source);
+                flag = sourceService.addSourceLike(translation, source);
 
             }else {
 
@@ -56,7 +57,7 @@ public class SourceController {
                 tempSource.setTranslation(translation);
                 tempSource.setSource(source);
 
-                flag = sourceService.addSource(tempSource);
+                flag = sourceService.submitSource(tempSource);
 
             }
 
@@ -109,7 +110,7 @@ public class SourceController {
             translation = RegexUtils.removeExtraSpace(translation);
             source = RegexUtils.removeExtraSpace(source);
 
-            flag = translationService.addSource(translation, source);
+            flag = sourceService.submitSourceToTransl(translation, source);
 
             if (flag == 1){
                 map.put("info","1");
