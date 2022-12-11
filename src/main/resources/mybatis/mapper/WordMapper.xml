@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.WordMapper">
+
+    <resultMap id="Word" type="com.project.entity.Word">
+        <result column="word_id" property="wordId"/>
+    </resultMap>
+
+    <insert id="addWord" parameterType="com.project.entity.Word">
+        insert into project_test.words (date, word,likes) VALUES (#{date},#{word},#{likes})
+    </insert>
+
+    <delete id="deleteWordById" parameterType="int">
+        delete from project_test.words where word_id = #{id} collate utf8mb4_bin
+    </delete>
+
+    <delete id="deleteWordByName" >
+        delete from project_test.words where word = #{word} collate utf8mb4_bin
+    </delete>
+
+    <select id="queryWordById" parameterType="int" resultMap="Word">
+        select * from project_test.words where word_id = #{id} collate utf8mb4_bin
+    </select>
+
+    <select id="queryWordByName" resultMap="Word">
+        select * from project_test.words where word = #{name} collate utf8mb4_bin
+    </select>
+
+    <select id="queryAllWord" resultMap="Word">
+        select * from project_test.words
+    </select>
+
+    <update id="addWordLike" >
+        update project_test.words set likes = likes+1 where word = #{word} collate utf8mb4_bin
+    </update>
+
+    <select id="getRandomWords" resultMap="Word">
+        select * from project_test.words  where likes > #{like} collate utf8mb4_bin order by rand() limit #{limit}
+    </select>
+
+    <select id="getWordId"  resultType="int">
+        select word_id from project_test.words where word = #{word}
+    </select>
+</mapper>

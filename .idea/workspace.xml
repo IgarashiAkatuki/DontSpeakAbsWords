@@ -5,85 +5,101 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8db82083-596b-487c-ad2a-759cfb7999ad" name="Changes" comment="2022-12-11 Code Refactoring">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/DontSpeakAbsWordsApplication.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/DontSpeakAbsWordsApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/constant/Constant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/entity/Erratum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/entity/Source.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/entity/Translation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/entity/Word.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/filter/AdminFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/pojo/QuestionnaireAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/pojo/SourceAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/pojo/TranslationAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/pojo/WordAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/service/UserDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/utils/IpUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/project/utils/RegexUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.377a1eab.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.377a1eab.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.7e858bda.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.7e858bda.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.7e858bda.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.8efaa719.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.8efaa719.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.8efaa719.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.871eebe1.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.871eebe1.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.871eebe1.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.c23c3ef9.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.c23c3ef9.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.c23c3ef9.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/temp.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/project/DontSpeakAbsWordsApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/SpringbootTestApplication.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/config/LogAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/config/LogAspect.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/config/SpringmvcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/config/SpringmvcConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/constant/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/constant/Constant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/constant/WebConstant.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controller/BackStageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/controller/BackStageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controller/ErratumController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/controller/ErratumController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controller/SessionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/controller/SessionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controller/SourceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/controller/SourceController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controller/TranslationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/controller/TranslationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controller/UserController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controller/WordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/controller/WordController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/entity/Erratum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/entity/Erratum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/entity/Source.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/entity/Source.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/entity/Translation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/entity/Translation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/entity/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/entity/Word.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/filter/AdminFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/entity/Admin.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/filter/CharacterFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/filter/CharacterFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/filter/IpFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/filter/IpFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/interceptor/UserInterceptor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/listener/SessionListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/mapper/AdminMapper.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/mapper/ErratumMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/mapper/ErratumMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/mapper/SourceMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/mapper/SourceMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/mapper/TranslationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/mapper/TranslationMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/mapper/UserMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/mapper/WordMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/mapper/WordMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/pojo/QuestionnaireAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/pojo/SourceAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/pojo/Erratum.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/pojo/Source.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/pojo/TempSource.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/pojo/TempTranslations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/pojo/TempTranslations.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/pojo/TranslationAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/pojo/WordAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/pojo/Translation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/pojo/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/pojo/Word.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/AdminDetailService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/AdminService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/AdminServiceImpl.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/ErratumService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/ErratumService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/ErratumServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/ErratumServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/SourceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/SourceService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/SourceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/SourceServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/TranslationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/TranslationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/TranslationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/TranslationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/UserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/UserDetailsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/WordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/WordService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/WordServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/WordServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/utils/IpUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/utils/IpUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/utils/RegexUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/uitls/IpUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/uitls/RegexUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-test.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/banner.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/constant.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/AdminMapper.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/ErratumMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/ErratumMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/SourceMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/SourceMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/TranslationMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/TranslationMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/UserMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/WordMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/WordMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mybatis-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/backstage.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/jquery-3.6.1.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/app.377a1eab.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/app.377a1eab.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/app.7e858bda.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/app.7e858bda.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/app.7e858bda.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/app.8efaa719.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/app.8efaa719.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/app.8efaa719.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.871eebe1.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.871eebe1.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.871eebe1.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.c23c3ef9.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.c23c3ef9.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.c23c3ef9.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/LoginTest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/backstage.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/temp.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/project/DontSpeakAbsWordsApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/app.40537267.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/app.40537267.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.ec017d1a.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/chunk-vendors.ec017d1a.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/project/SpringbootTestApplicationTests.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,24 +126,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Project.color": "00195b",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Project/SSM",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "MavenSettings",
-    "show.run.dashboard.notification": "false",
-    "spring.configuration.checksum": "0c31f75aa16dfc998679f25fc432c8a1"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Project.color&quot;: &quot;00195b&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Project/SSM&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;68703e9115955ec3ecd8dd6aa8145623&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Spring Boot.DontSpeakAbsWordsApplication">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Springboot-Test" />
@@ -170,23 +180,7 @@
       <updated>1670592275331</updated>
       <workItem from="1670592276492" duration="64000" />
       <workItem from="1670748848894" duration="336000" />
-      <workItem from="1670749191307" duration="306000" />
     </task>
-    <task id="LOCAL-00001" summary="2022-12-11 Code Refactoring">
-      <created>1670749242453</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1670749242453</updated>
-    </task>
-    <task id="LOCAL-00002" summary="2022-12-11 Code Refactoring">
-      <created>1670749249893</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1670749249893</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

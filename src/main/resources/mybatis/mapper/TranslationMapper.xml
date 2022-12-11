@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.TranslationMapper">
+
+    <resultMap id="translation" type="com.project.entity.Translation">
+        <result property="wordId" column="word_id"/>
+    </resultMap>
+
+<!--[应用在暂存区的方法]-->
+
+    <select id="queryAllTranslInTemp" resultMap="translation">
+        select * from project_test.temporary
+    </select>
+
+    <select id="queryTranslInTempByWord"  resultMap="translation">
+        select * from project_test.temporary where word = #{word} collate utf8mb4_bin order by likes+0 desc
+    </select>
+
+    <update id="addLikeToTemp" parameterType="map">
+        update project_test.temporary
+        set likes = likes+1
+        where  word = #{word} and translation = #{translation}
+        collate utf8mb4_bin
+    </update>
+
+    <insert id="addTranslToTemp" parameterType="com.project.entity.Translation">
+        insert into project_test.temporary
+        (date, word, translation, word_id)
+        VALUES (#{date},#{word},#{translation},#{wordId})
+    </insert>
+
+    <delete id="deleteTranslInTemp" parameterType="map">
+        delete from project_test.temporary where word = #{word} and translation = #{translation} collate utf8mb4_bin
+    </delete>
+
+    <select id="queryTranslInTemp" resultMap="translation" parameterType="map">
+        select * from project_test.temporary where word = #{word} and translation = #{translation} collate utf8mb4_bin
+    </select>
+
+    <select id="queryTranslLikeInTemp" resultType="int" parameterType="map">
+        select project_test.temporary.likes+0 from project_test.temporary
+        where word = #{word} and translation = #{translation}
+        collate utf8mb4_bin
+    </select>
+
+<!--[应用在持久区的方法]-->
+
+    <select id="queryTranslInPSByWord"  resultMap="translation">
+        select * from project_test.persistence where word = #{word} collate utf8mb4_bin order by likes+0 desc
+    </select>
+
+    <insert id="addTranslToPS" parameterType="com.project.entity.Translation">
+        insert into project_test.persistence
+        (date, word, translation, word_id)
+        values (#{date},#{word},#{translation},#{wordId})
+    </insert>
+    
+    <update id="addTranslLikeInPS" parameterType="map">
+        update project_test.persistence 
+        set likes = likes+1
+        where word = #{word} and translation = #{translation}
+        collate utf8mb4_bin
+    </update>
+    
+    <update id="deleteTranslLikeInPS" parameterType="map">
+        update project_test.persistence
+        set likes = likes-1
+        where word = #{word} and translation = #{translation}
+        collate utf8mb4_bin
+    </update>
+
+    <select id="queryTranslInPS" parameterType="map" resultMap="translation">
+        select * from project_test.persistence where word = #{word} and translation = #{translation} collate utf8mb4_bin
+    </select>
+
+    <delete id="deleteTranslInPS" parameterType="map">
+        delete from project_test.persistence where word = #{word} and translation = #{translation} collate utf8mb4_bin
+    </delete>
+
+    <update id="updateTranslInPS" parameterType="map">
+        update project_test.persistence set translation = #{newTranslation}
+        where word = #{word} and translation = #{oldTranslation}
+        collate utf8mb4_bin
+    </update>
+
+</mapper>
