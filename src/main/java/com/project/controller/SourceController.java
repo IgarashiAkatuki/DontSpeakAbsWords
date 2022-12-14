@@ -2,11 +2,14 @@ package com.project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysql.cj.util.StringUtils;
+import com.project.common.response.ErrorInfo;
+import com.project.common.response.ResponseStatusCode;
+import com.project.common.response.Result;
 import com.project.entity.Source;
 import com.project.service.SourceService;
 import com.project.service.TranslationService;
 import com.project.service.WordService;
-import com.project.utils.RegexUtils;
+import com.project.common.utils.RegexUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +42,9 @@ public class SourceController {
 
 
     @ApiOperation("添加翻译的出处")
-    @PostMapping(value = "/addTranslationsSource",produces = "text/html;charset = utf-8")
+    @PostMapping(value = "/addTranslationsSource")
     @ResponseBody
-    public String addTranslationsSource(@ApiParam("翻译") String translation, @ApiParam("出处") String source) throws Exception{
-
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap<String, String> map = new HashMap<>();
+    public Result addTranslationsSource(@ApiParam("翻译") String translation, @ApiParam("出处") String source) throws Exception{
 
         if (!StringUtils.isNullOrEmpty(translation) && !StringUtils.isNullOrEmpty(source)){
 
@@ -66,20 +66,15 @@ public class SourceController {
 
             }
 
-
             if (flag == 1){
-                map.put("info","1");
+                return Result.suc();
             }else {
-                map.put("info","0");
+                return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(), ResponseStatusCode.FAILED.getResultMsg()));
             }
 
         }else {
-            map.put("info","0");
+            return Result.error(new ErrorInfo(ResponseStatusCode.NOT_FOUND.getResultCode(), ResponseStatusCode.NOT_FOUND.getResultMsg()));
         }
-
-        String json = mapper.writeValueAsString(map);
-
-        return json;
     }
 
     @PostMapping(value = "/admin/queryAllSource",produces = "text/html;charset = utf-8")

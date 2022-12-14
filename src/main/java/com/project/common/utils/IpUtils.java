@@ -1,4 +1,4 @@
-package com.project.utils;
+package com.project.common.utils;
 
 import com.mysql.cj.util.StringUtils;
 

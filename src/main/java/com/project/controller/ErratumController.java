@@ -1,12 +1,14 @@
 package com.project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.common.response.ErrorInfo;
+import com.project.common.response.ResponseStatusCode;
+import com.project.common.response.Result;
 import com.project.constant.Constant;
 import com.project.entity.Erratum;
 import com.project.entity.Translation;
 import com.project.service.ErratumService;
 import com.project.service.TranslationService;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,22 +39,17 @@ public class ErratumController {
     private Constant constant;
 
     @ApiOperation(value = "添加勘误")
-    @PostMapping(value = "/addErratum", produces = "text/html;charset = utf-8")
+    @PostMapping(value = "/addErratum")
     @ResponseBody
-    public String addErratum( String word, String translation, @ApiParam("错误原因") String reason) throws Exception {
+    public Result addErratum( @ApiParam("词条")String word, @ApiParam("词条翻译") String translation, @ApiParam("错误原因") String reason) throws Exception {
 
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap<String, String> map = new HashMap<>();
         int flag = 0;
 
         Translation tempTranslation = translationService.queryTranslInPS(word, translation);
 
         if (ObjectUtils.isEmpty(tempTranslation)) {
-            map.put("info", "0");
-            String json = mapper.writeValueAsString(map);
 
-            return json;
-
+            return Result.error(new ErrorInfo(ResponseStatusCode.NOT_FOUND.getResultCode(), ResponseStatusCode.NOT_FOUND.getResultMsg()));
         } else {
 
             Erratum erratum = new Erratum();
@@ -64,14 +61,11 @@ public class ErratumController {
             flag = erratumService.addErratum(erratum);
 
             if (flag == 1) {
-                map.put("info", "1");
+                return Result.suc(new ErrorInfo(ResponseStatusCode.SUCCESS.getResultCode(), ResponseStatusCode.SUCCESS.getResultMsg()));
             } else {
-                map.put("info", "0");
+                return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(), ResponseStatusCode.FAILED.getResultMsg()));
             }
 
-            String json = mapper.writeValueAsString(map);
-
-            return json;
         }
     }
 

@@ -1,6 +1,6 @@
 package com.project.filter;
 
-import com.project.utils.IpUtils;
+import com.project.common.utils.IpUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

@@ -1,12 +1,15 @@
 package com.project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.common.response.ErrorInfo;
+import com.project.common.response.ResponseStatusCode;
+import com.project.common.response.Result;
 import com.project.constant.Constant;
 import com.project.entity.Word;
 import com.project.pojo.QuestionnaireAO;
 import com.project.pojo.WordAO;
 import com.project.service.WordService;
-import com.project.utils.RegexUtils;
+import com.project.common.utils.RegexUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -51,29 +53,26 @@ public class WordController {
     }
 
     @ApiOperation("添加词条")
-    @PostMapping(value = "/addWords",produces = "text/html;charset = utf-8")
+    @PostMapping(value = "/addWords")
     @ResponseBody
     //使用JSR303验证
-    public String addWords(@Valid WordAO words, BindingResult result) throws Exception{
-
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap<String, String> map = new HashMap<>();
+    public Result addWords(@Valid WordAO words, BindingResult result) throws Exception{
 
         // JSR303验证失败直接返回错误原因[info]
         if (result.hasErrors()){
             List<FieldError> fieldErrors = result.getFieldErrors();
             String defaultMessage = fieldErrors.get(0).getDefaultMessage();
 
-            map.put("info",defaultMessage);
-            return mapper.writeValueAsString(map);
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
         }
 
         String word = words.getWord();
         // 如果word去除首尾空格后为空，错误原因[info]
         word = word.trim();
         if (word.isEmpty()){
-            map.put("info","输入的值不能为空");
-            return mapper.writeValueAsString(map);
+
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
+
         }
 
         word = RegexUtils.removeExtraSpace(word);
@@ -96,64 +95,58 @@ public class WordController {
             returnValue = wordService.addWordLike(word);
         }
 
-        map.put("info",returnValue+"");
+        if (returnValue == 1){
 
-        return mapper.writeValueAsString(map);
+            return Result.suc();
+        }else {
+            return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(), ResponseStatusCode.FAILED.getResultMsg()));
+        }
     }
 
     @ApiOperation("查询词条")
-    @PostMapping(value = "/queryWord",produces = "text/html;charset = utf-8")
+    @PostMapping(value = "/queryWord")
     @ResponseBody
     @Valid
-    public String queryWord(@Valid WordAO words, BindingResult result) throws Exception{
-
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap<String, String> map = new HashMap<>();
+    public Result queryWord(@Valid WordAO words, BindingResult result) throws Exception{
 
         // JSR303验证失败直接返回错误原因[info]
         if (result.hasErrors()){
             List<FieldError> fieldErrors = result.getFieldErrors();
             String defaultMessage = fieldErrors.get(0).getDefaultMessage();
 
-            map.put("info",defaultMessage);
-            return mapper.writeValueAsString(map);
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
         }
 
         String word = words.getWord();
         // 如果word去除首尾空格后为空，错误原因[info]
         word = word.trim();
         if (word.isEmpty()){
-            map.put("info","输入的值不能为空");
-            return mapper.writeValueAsString(map);
+
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
         }
 
 
         Word temp = wordService.queryWordByName(word);
 
         if (ObjectUtils.isEmpty(temp)){
-            map.put("info","0");
+            return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(), ResponseStatusCode.FAILED.getResultMsg()));
         }else {
-            map.put("info","1");
+            return Result.suc();
         }
-
-        return mapper.writeValueAsString(map);
     }
 
     @ApiOperation("获取随机问卷")
     @PostMapping("/getRandomQuestionnaire")
     @ResponseBody
 
-    public String generateRandomQuestionnaire(@Valid QuestionnaireAO questionnaireAO, HttpServletRequest request, BindingResult result) throws Exception{
+    public Result generateRandomQuestionnaire(@Valid QuestionnaireAO questionnaireAO, HttpServletRequest request, BindingResult result) throws Exception{
 
-        HashMap<String, String> map = new HashMap<>();
-        ObjectMapper mapper = new ObjectMapper();
 
         if (result.hasErrors()){
             List<FieldError> fieldErrors = result.getFieldErrors();
             String defaultMessage = fieldErrors.get(0).getDefaultMessage();
 
-            map.put("info",defaultMessage);
-            return mapper.writeValueAsString(map);
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
 
         }
 
@@ -187,16 +180,10 @@ public class WordController {
             }else {
 
                 long interval = (constant.getQuestionnaireCoolDown()-times)/1000;
-                map.put("info","还有"+interval/60+"分"+(interval%60)+"秒，可以再次获取问卷");
-
-                String json = mapper.writeValueAsString(map);
-
-                return json;
+                return Result.error(new ErrorInfo(100,"还有"+interval/60+"分"+(interval%60)+"秒，可以再次获取问卷"));
             }
         }
 
-        String json = mapper.writeValueAsString(randomWords);
-
-        return json;
+        return Result.suc(randomWords);
     }
 }

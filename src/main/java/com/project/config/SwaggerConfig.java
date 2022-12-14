@@ -22,7 +22,7 @@ import static springfox.documentation.spi.DocumentationType.OAS_30;
 
 @Configuration
 //@EnableWebMvc
-@EnableOpenApi
+// 当配置文件中config.swagger为true时开启swagger
 @ConditionalOnProperty(
         name = "config.swagger",
         havingValue = "true"
@@ -32,7 +32,7 @@ public class SwaggerConfig {
     @Autowired
     private Constant constant;
 
-    // 当配置文件中config.swagger为true时开启swagger
+
     @Bean
     public Docket docket(){
         return new Docket(OAS_30)

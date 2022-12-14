@@ -2,6 +2,9 @@ package com.project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysql.cj.util.StringUtils;
+import com.project.common.response.ErrorInfo;
+import com.project.common.response.ResponseStatusCode;
+import com.project.common.response.Result;
 import com.project.constant.Constant;
 import com.project.entity.Translation;
 import com.project.entity.Word;
@@ -9,7 +12,7 @@ import com.project.pojo.TranslationAO;
 import com.project.pojo.WordAO;
 import com.project.service.TranslationService;
 import com.project.service.WordService;
-import com.project.utils.RegexUtils;
+import com.project.common.utils.RegexUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,20 +49,16 @@ public class TranslationController {
 
     // 从暂存区获得释义
     @ApiOperation("从暂存区获得释义")
-    @PostMapping(value = "/getTranslationsFromTemp",produces = "text/html;charset = utf-8")
+    @PostMapping(value = "/getTranslationsFromTemp")
     @ResponseBody
-    public String getTranslationsFromTemp( @Valid WordAO wordAO, BindingResult result) throws Exception{
-
-        HashMap<String, String> map = new HashMap<>();
-        ObjectMapper objectMapper = new ObjectMapper();
+    public Result getTranslationsFromTemp( @Valid WordAO wordAO, BindingResult result) throws Exception{
 
         // JSR303验证失败直接返回错误原因[info]
         if (result.hasErrors()){
             List<FieldError> fieldErrors = result.getFieldErrors();
             String defaultMessage = fieldErrors.get(0).getDefaultMessage();
 
-            map.put("info",defaultMessage);
-            return objectMapper.writeValueAsString(map);
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
         }
 
         // 获取word值
@@ -68,50 +67,41 @@ public class TranslationController {
         // 验证word是否为空
         word = word.trim();
         if (word.isEmpty()){
-            map.put("info","输入的值不能为空");
-            return objectMapper.writeValueAsString(map);
+
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
         }
 
         word = RegexUtils.replaceSpaceToUnderscore(word);
 
         if (StringUtils.isNullOrEmpty(word)){
 
-            map.put("info","0");
-            return objectMapper.writeValueAsString(map);
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
 
         }
 
         List<Translation> translations = translationService.queryTranslInTempByWord(word);
-        String json = null;
 
         if (!ObjectUtils.isEmpty(translations)){
 
-            json = objectMapper.writeValueAsString(translations);
+            return Result.suc(translations);
         }else {
 
-            map.put("info","0");
-            json = objectMapper.writeValueAsString(map);
+            return Result.error(new ErrorInfo(ResponseStatusCode.NOT_FOUND.getResultCode(), ResponseStatusCode.NOT_FOUND.getResultMsg()));
         }
-
-        return json;
     }
 
     // 从持久区获得释义
     @ApiOperation("从持久区获得释义")
-    @PostMapping(value = "/getTranslationsFromPersistence",produces = "text/html;charset = utf-8")
+    @PostMapping(value = "/getTranslationsFromPersistence")
     @ResponseBody
-    public String getTranslationsFromPersistence(@Valid WordAO wordAO,BindingResult result) throws Exception{
-
-        HashMap<String, String> map = new HashMap<>();
-        ObjectMapper objectMapper = new ObjectMapper();
+    public Result getTranslationsFromPersistence(@Valid WordAO wordAO,BindingResult result) throws Exception{
 
         // JSR303验证失败直接返回错误原因[info]
         if (result.hasErrors()){
             List<FieldError> fieldErrors = result.getFieldErrors();
             String defaultMessage = fieldErrors.get(0).getDefaultMessage();
 
-            map.put("info",defaultMessage);
-            return objectMapper.writeValueAsString(map);
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
         }
 
         // 获取word值
@@ -120,17 +110,15 @@ public class TranslationController {
         // 验证word是否为空
         word = word.trim();
         if (word.isEmpty()){
-            map.put("info","输入的值不能为空");
-            return objectMapper.writeValueAsString(map);
+
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
         }
 
         word = RegexUtils.replaceSpaceToUnderscore(word);
 
         if (StringUtils.isNullOrEmpty(word)){
 
-            map.put("info","0");
-            return objectMapper.writeValueAsString(map);
-
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
         }
 
         // 获取释义
@@ -140,33 +128,25 @@ public class TranslationController {
         // 如果存在释义
         if (!ObjectUtils.isEmpty(translations)){
 
-            json = objectMapper.writeValueAsString(translations);
-
+            return Result.suc(translations);
         }else {
 
-            map.put("info","0");
-            json = objectMapper.writeValueAsString(map);
+            return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(), ResponseStatusCode.FAILED.getResultMsg()));
         }
-
-        return json;
     }
 
     //向暂存区中提交释义
     @ApiOperation("向暂存区中提交释义")
-    @PostMapping(value = "/submitTranslationsToTemp",produces = "text/html;charset = utf-8")
+    @PostMapping(value = "/submitTranslationsToTemp")
     @ResponseBody
-    public String submitTranslationToTemp(@Valid TranslationAO translationAO,BindingResult result) throws Exception{
-
-        HashMap<String, String> map = new HashMap<>();
-        ObjectMapper mapper = new ObjectMapper();
+    public Result submitTranslationToTemp(@Valid TranslationAO translationAO,BindingResult result) throws Exception{
 
         // JSR303验证失败直接返回错误原因[info]
         if (result.hasErrors()){
             List<FieldError> fieldErrors = result.getFieldErrors();
             String defaultMessage = fieldErrors.get(0).getDefaultMessage();
 
-            map.put("info",defaultMessage);
-            return mapper.writeValueAsString(map);
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
         }
 
         int flag = 0;
@@ -184,8 +164,8 @@ public class TranslationController {
         word = word.trim();
         translation = translation.trim();
         if (word.isEmpty() || translation.isEmpty()){
-            map.put("info","输入的值不能为空");
-            return mapper.writeValueAsString(map);
+
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
         }
 
         // 获得translation和word数据并且去除多余的空格
@@ -198,13 +178,10 @@ public class TranslationController {
             flag = translationService.addTranslLikeInPS(word,translation);
 
             if (flag == 1){
-                map.put("info","1");
+                return Result.suc();
             }else {
-                map.put("info","0");
+                return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(), ResponseStatusCode.FAILED.getResultMsg()));
             }
-
-            String json = mapper.writeValueAsString(map);
-            return json;
         }
 
         int wordId = -1;
@@ -259,24 +236,18 @@ public class TranslationController {
         }
 
         if (flag == 1){
-            map.put("info","1");
+            return Result.suc();
         }else {
-            map.put("info","0");
+            return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(), ResponseStatusCode.FAILED.getResultMsg()));
         }
-
-        String json = mapper.writeValueAsString(map);
-
-        return json;
     }
 
     //向持久区中释义提交点赞(使用session)
     @ApiOperation("向持久区中释义提交点赞")
-    @PostMapping(value = "/addLikesToPersistence",produces = "text/html;charset = utf-8")
+    @PostMapping(value = "/addLikesToPersistence")
     @ResponseBody
-    public String addLikesToPersistence(@Valid TranslationAO translationAO,BindingResult result, HttpServletRequest request)throws Exception {
+    public Result addLikesToPersistence(@Valid TranslationAO translationAO,BindingResult result, HttpServletRequest request)throws Exception {
 
-        HashMap<String, String> map = new HashMap<>();
-        ObjectMapper mapper = new ObjectMapper();
         HttpSession session = request.getSession();
 
         // JSR303验证失败直接返回错误原因[info]
@@ -284,8 +255,7 @@ public class TranslationController {
             List<FieldError> fieldErrors = result.getFieldErrors();
             String defaultMessage = fieldErrors.get(0).getDefaultMessage();
 
-            map.put("info", defaultMessage);
-            return mapper.writeValueAsString(map);
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
         }
         String word = translationAO.getWord();
         String translation = translationAO.getTranslation();
@@ -294,8 +264,8 @@ public class TranslationController {
         word = word.trim();
         translation = translation.trim();
         if (word.isEmpty() || translation.isEmpty()) {
-            map.put("info", "输入的值不能为空");
-            return mapper.writeValueAsString(map);
+
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
         }
 
         translation = RegexUtils.removeExtraSpace(translation);
@@ -319,14 +289,10 @@ public class TranslationController {
         }
 
         if (flag == 1) {
-            map.put("info", "1");
+            return Result.suc();
         } else {
-            map.put("info", "0");
+            return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(), ResponseStatusCode.FAILED.getResultMsg()));
         }
-
-        String json = mapper.writeValueAsString(map);
-
-        return json;
     }
 
 }

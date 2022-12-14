@@ -51,10 +51,10 @@ public class SpringmvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-        //告知系统static 当成 静态资源访问
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:");
-        registry.addResourceHandler("/preview/static/**").addResourceLocations("classpath:");
+        registry.addResourceHandler("/statics/**").addResourceLocations("classpath:/statics/");
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+        registry.addResourceHandler("/swagger/**").addResourceLocations("classpath:/statics/swagger/");
     }
 }
 
