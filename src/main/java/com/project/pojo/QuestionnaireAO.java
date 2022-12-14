@@ -11,8 +11,8 @@ import java.io.Serializable;
 @ApiModel("QuestionnaireAO实体类")
 public class QuestionnaireAO implements Serializable {
 
-    @Max(value = 20,message = "问卷题目最大为20")
-    @Min(value = 5,message = "问卷题目最少为5")
+    @Max(value = 21,message = "问卷题目最大为20")
+    @Min(value = 4,message = "问卷题目最少为5")
     @NotNull(message = "问卷题目数不能为空")
     @ApiModelProperty("问卷题目数量")
     private int limit;

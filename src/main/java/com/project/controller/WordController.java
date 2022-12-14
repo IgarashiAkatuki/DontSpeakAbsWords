@@ -56,7 +56,7 @@ public class WordController {
     @PostMapping(value = "/addWords")
     @ResponseBody
     //使用JSR303验证
-    public Result addWords(@Valid WordAO words, BindingResult result) throws Exception{
+    public Result addWords(@Valid WordAO words, BindingResult result) {
 
         // JSR303验证失败直接返回错误原因[info]
         if (result.hasErrors()){
@@ -107,7 +107,7 @@ public class WordController {
     @PostMapping(value = "/queryWord")
     @ResponseBody
     @Valid
-    public Result queryWord(@Valid WordAO words, BindingResult result) throws Exception{
+    public Result queryWord(@Valid WordAO words, BindingResult result){
 
         // JSR303验证失败直接返回错误原因[info]
         if (result.hasErrors()){
@@ -138,8 +138,7 @@ public class WordController {
     @ApiOperation("获取随机问卷")
     @PostMapping("/getRandomQuestionnaire")
     @ResponseBody
-
-    public Result generateRandomQuestionnaire(@Valid QuestionnaireAO questionnaireAO, HttpServletRequest request, BindingResult result) throws Exception{
+    public Result generateRandomQuestionnaire(@Valid QuestionnaireAO questionnaireAO,  BindingResult result, HttpServletRequest request){
 
 
         if (result.hasErrors()){

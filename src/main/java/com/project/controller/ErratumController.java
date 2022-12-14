@@ -41,7 +41,7 @@ public class ErratumController {
     @ApiOperation(value = "添加勘误")
     @PostMapping(value = "/addErratum")
     @ResponseBody
-    public Result addErratum( @ApiParam("词条")String word, @ApiParam("词条翻译") String translation, @ApiParam("错误原因") String reason) throws Exception {
+    public Result addErratum( @ApiParam("词条")String word, @ApiParam("词条翻译") String translation, @ApiParam("错误原因") String reason){
 
         int flag = 0;
 

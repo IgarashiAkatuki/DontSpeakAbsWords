@@ -44,7 +44,7 @@ public class SourceController {
     @ApiOperation("添加翻译的出处")
     @PostMapping(value = "/addTranslationsSource")
     @ResponseBody
-    public Result addTranslationsSource(@ApiParam("翻译") String translation, @ApiParam("出处") String source) throws Exception{
+    public Result addTranslationsSource(@ApiParam("翻译") String translation, @ApiParam("出处") String source){
 
         if (!StringUtils.isNullOrEmpty(translation) && !StringUtils.isNullOrEmpty(source)){
 

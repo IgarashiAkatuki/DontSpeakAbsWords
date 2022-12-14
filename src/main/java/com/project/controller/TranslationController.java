@@ -51,7 +51,7 @@ public class TranslationController {
     @ApiOperation("从暂存区获得释义")
     @PostMapping(value = "/getTranslationsFromTemp")
     @ResponseBody
-    public Result getTranslationsFromTemp( @Valid WordAO wordAO, BindingResult result) throws Exception{
+    public Result getTranslationsFromTemp( @Valid WordAO wordAO, BindingResult result){
 
         // JSR303验证失败直接返回错误原因[info]
         if (result.hasErrors()){
@@ -94,7 +94,7 @@ public class TranslationController {
     @ApiOperation("从持久区获得释义")
     @PostMapping(value = "/getTranslationsFromPersistence")
     @ResponseBody
-    public Result getTranslationsFromPersistence(@Valid WordAO wordAO,BindingResult result) throws Exception{
+    public Result getTranslationsFromPersistence(@Valid WordAO wordAO,BindingResult result){
 
         // JSR303验证失败直接返回错误原因[info]
         if (result.hasErrors()){
@@ -139,7 +139,7 @@ public class TranslationController {
     @ApiOperation("向暂存区中提交释义")
     @PostMapping(value = "/submitTranslationsToTemp")
     @ResponseBody
-    public Result submitTranslationToTemp(@Valid TranslationAO translationAO,BindingResult result) throws Exception{
+    public Result submitTranslationToTemp(@Valid TranslationAO translationAO,BindingResult result){
 
         // JSR303验证失败直接返回错误原因[info]
         if (result.hasErrors()){
@@ -246,7 +246,7 @@ public class TranslationController {
     @ApiOperation("向持久区中释义提交点赞")
     @PostMapping(value = "/addLikesToPersistence")
     @ResponseBody
-    public Result addLikesToPersistence(@Valid TranslationAO translationAO,BindingResult result, HttpServletRequest request)throws Exception {
+    public Result addLikesToPersistence(@Valid TranslationAO translationAO,BindingResult result, HttpServletRequest request){
 
         HttpSession session = request.getSession();
 
