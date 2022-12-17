@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.StatisticsMapper">
+
+    <resultMap id="statistic" type="com.project.entity.Statistics">
+        <result property="selectTranslCount" column="select_transl_count"/>
+        <result property="addWordCount" column="add_word_count"/>
+        <result property="addTranslCount" column="add_transl_count"/>
+        <result property="QuestionnaireCount" column="questionnaire_count"/>
+    </resultMap>
+
+    <insert id="addStatistic" parameterType="com.project.entity.Statistics">
+        insert into project_test.statistics
+        (date, select_transl_count, add_word_count, add_transl_count, questionnaire_count)
+        VALUES
+        (#{date},#{selectTranslCount},#{addWordCount},#{addTranslCount},#{QuestionnaireCount})
+    </insert>
+    
+    <select id="selectQuestionnaireCount" parameterType="int">
+        select project_test.statistics.questionnaire_count from project_test.statistics order by date DESC limit #{limit};
+    </select>
+
+    <select id="selectWordCount" parameterType="int">
+        select project_test.statistics.add_word_count from project_test.statistics order by date DESC limit #{limit};
+    </select>
+    
+    <select id="selectTranslCount" parameterType="int">
+        select project_test.statistics.add_transl_count from project_test.statistics order by date DESC limit #{limit};
+    </select>
+    
+    <select id="selectSelections" parameterType="int">
+        select project_test.statistics.select_transl_count from project_test.statistics order by date DESC limit #{limit};
+    </select>
+
+    <select id="selectAll" parameterType="int" resultMap="statistic">
+        select * from project_test.statistics order by date DESC limit #{limit};
+    </select>
+</mapper>
