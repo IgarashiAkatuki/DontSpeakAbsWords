@@ -1,10 +1,14 @@
 package com.project.config;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -14,6 +18,7 @@ import java.util.Date;
 
 @Aspect
 @Component
+@Slf4j
 public class LogAspect {
 
     @Autowired
@@ -27,7 +32,8 @@ public class LogAspect {
     public void beforeLog(JoinPoint joinPoint){
         String name = joinPoint.getSignature().getName();
         Date date = new Date();
-        System.out.println("["+date+"]执行了"+name);
+//        System.out.println("["+date+"]执行了"+name);
+        log.debug("==> "+name);
     }
 
     // 记录API调用次数

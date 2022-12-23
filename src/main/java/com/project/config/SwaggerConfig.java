@@ -24,7 +24,7 @@ import static springfox.documentation.spi.DocumentationType.OAS_30;
 //@EnableWebMvc
 // 当配置文件中config.swagger为true时开启swagger
 @ConditionalOnProperty(
-        name = "config.swagger",
+        name = "config.enableSwagger",
         havingValue = "true"
 )
 public class SwaggerConfig {

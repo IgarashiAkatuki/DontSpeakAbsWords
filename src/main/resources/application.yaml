@@ -41,9 +41,10 @@ constant:
   TransformThresholds: 2
   QuestionnaireLimits: 5
   QuestionnaireCoolDown: 60000
-  EnableSwagger : true
+  EnableSwagger: true
 
 
 config:
-  swagger: true
+  enableSwagger: true
   enableSecurity: true
+  enableStatistic: true

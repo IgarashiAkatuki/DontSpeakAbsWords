@@ -1,8 +1,10 @@
 package com.project.service;
 
+import com.project.constant.Constant;
 import com.project.entity.Statistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -20,9 +22,18 @@ public class ScheduledService {
     @Qualifier("statisticsServiceImpl")
     private StatisticsService statisticsService;
 
+
+    @Autowired
+    @Qualifier("constant")
+    private Constant constant;
+
     // 秒 分 时 日 月 星期 年
     // 一天四次存储数据
     @Scheduled(cron = "0 * 0,6,12,18 * * ?")
+    @ConditionalOnProperty(
+            name =   "config.enableStatistic",
+            havingValue = "true"
+    )
     void saveAccessData(){
         Object selectTranslCount = context.getAttribute("selectTranslCount");
         Object addTranslCount = context.getAttribute("addTranslCount");
