@@ -29,7 +29,7 @@ public class ScheduledService {
 
     // 秒 分 时 日 月 星期 年
     // 一天四次存储数据
-    @Scheduled(cron = "0 * 0,6,12,18 * * ?")
+    @Scheduled(cron = "0 0 0,6,12,18 * * ?")
     @ConditionalOnProperty(
             name =   "config.enableStatistic",
             havingValue = "true"

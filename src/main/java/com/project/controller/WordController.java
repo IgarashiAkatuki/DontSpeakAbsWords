@@ -56,15 +56,15 @@ public class WordController {
     @PostMapping(value = "/addWords")
     @ResponseBody
     //使用JSR303验证
-    public Result addWords(@Valid WordAO words, BindingResult result) {
+    public Result addWords(@Valid WordAO words) {
 
-        // JSR303验证失败直接返回错误原因[info]
-        if (result.hasErrors()){
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
-
-            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
-        }
+//        // JSR303验证失败直接返回错误原因[info]
+//        if (result.hasErrors()){
+//            List<FieldError> fieldErrors = result.getFieldErrors();
+//            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
+//
+//            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
+//        }
 
         String word = words.getWord();
         // 如果word去除首尾空格后为空，错误原因[info]
@@ -107,15 +107,15 @@ public class WordController {
     @PostMapping(value = "/queryWord")
     @ResponseBody
     @Valid
-    public Result queryWord(@Valid WordAO words, BindingResult result){
+    public Result queryWord(@Valid WordAO words){
 
-        // JSR303验证失败直接返回错误原因[info]
-        if (result.hasErrors()){
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
-
-            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
-        }
+//        // JSR303验证失败直接返回错误原因[info]
+//        if (result.hasErrors()){
+//            List<FieldError> fieldErrors = result.getFieldErrors();
+//            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
+//
+//            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
+//        }
 
         String word = words.getWord();
         // 如果word去除首尾空格后为空，错误原因[info]
@@ -138,16 +138,16 @@ public class WordController {
     @ApiOperation("获取随机问卷")
     @PostMapping("/getRandomQuestionnaire")
     @ResponseBody
-    public Result generateRandomQuestionnaire(@Valid QuestionnaireAO questionnaireAO,  BindingResult result, HttpServletRequest request){
+    public Result generateRandomQuestionnaire(@Valid QuestionnaireAO questionnaireAO, HttpServletRequest request){
 
-
-        if (result.hasErrors()){
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
-
-            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
-
-        }
+//
+//        if (result.hasErrors()){
+//            List<FieldError> fieldErrors = result.getFieldErrors();
+//            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
+//
+//            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
+//
+//        }
 
         int questionnaireLimits = constant.getQuestionnaireLimits();
         if (questionnaireAO.getLimit() != 0){

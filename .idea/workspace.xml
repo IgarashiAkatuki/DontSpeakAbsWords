@@ -4,11 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8db82083-596b-487c-ad2a-759cfb7999ad" name="Changes" comment="" />
+    <list default="true" id="8db82083-596b-487c-ad2a-759cfb7999ad" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.657793da.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.657793da.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.657793da.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/common/response/ErrorInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/common/response/ResponseStatusCode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/common/response/Result.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/common/utils/IpUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/common/utils/RegexUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/ScheduledService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/ScheduledService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/banner.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -33,7 +50,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Project/Project-Refactor/DontSpeakAbsWords",
+    "last_opened_file_path": "D:/Project/Project-Refactor",
     "settings.editor.selected.configurable": "MavenSettings"
   }
 }]]></component>
@@ -46,10 +63,22 @@
       <option name="presentableId" value="Default" />
       <updated>1670592275331</updated>
       <workItem from="1670592276492" duration="64000" />
+      <workItem from="1671785742755" duration="1020000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

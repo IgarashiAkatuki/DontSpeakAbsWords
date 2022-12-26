@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.project</groupId>
     <artifactId>DontSpeakAbsWords</artifactId>
-    <version>1.2.1-DEV</version>
+    <version>1.2.3-DEV</version>
     <name>DontSpeakAbsWords</name>
     <description>DontSpeakAbsWords</description>
     <properties>
@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <exclusions><!-- 去掉springboot默认配置 -->
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>

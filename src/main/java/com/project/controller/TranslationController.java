@@ -51,15 +51,15 @@ public class TranslationController {
     @ApiOperation("从暂存区获得释义")
     @PostMapping(value = "/getTranslationsFromTemp")
     @ResponseBody
-    public Result getTranslationsFromTemp( @Valid WordAO wordAO, BindingResult result){
+    public Result getTranslationsFromTemp( @Valid WordAO wordAO){
 
         // JSR303验证失败直接返回错误原因[info]
-        if (result.hasErrors()){
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
-
-            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
-        }
+//        if (result.hasErrors()){
+//            List<FieldError> fieldErrors = result.getFieldErrors();
+//            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
+//
+//            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
+//        }
 
         // 获取word值
         String word = wordAO.getWord();
@@ -94,15 +94,15 @@ public class TranslationController {
     @ApiOperation("从持久区获得释义")
     @PostMapping(value = "/getTranslationsFromPersistence")
     @ResponseBody
-    public Result getTranslationsFromPersistence(@Valid WordAO wordAO,BindingResult result){
+    public Result getTranslationsFromPersistence(@Valid WordAO wordAO){
 
         // JSR303验证失败直接返回错误原因[info]
-        if (result.hasErrors()){
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
-
-            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
-        }
+//        if (result.hasErrors()){
+//            List<FieldError> fieldErrors = result.getFieldErrors();
+//            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
+//
+//            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
+//        }
 
         // 获取word值
         String word = wordAO.getWord();
@@ -139,15 +139,15 @@ public class TranslationController {
     @ApiOperation("向暂存区中提交释义")
     @PostMapping(value = "/submitTranslationsToTemp")
     @ResponseBody
-    public Result submitTranslationToTemp(@Valid TranslationAO translationAO,BindingResult result){
+    public Result submitTranslationToTemp(@Valid TranslationAO translationAO){
 
         // JSR303验证失败直接返回错误原因[info]
-        if (result.hasErrors()){
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
-
-            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
-        }
+//        if (result.hasErrors()){
+//            List<FieldError> fieldErrors = result.getFieldErrors();
+//            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
+//
+//            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
+//        }
 
         int flag = 0;
 //        if (StringUtils.isNullOrEmpty(temp)||StringUtils.isNullOrEmpty(temp.replace(" ",""))){
@@ -246,17 +246,17 @@ public class TranslationController {
     @ApiOperation("向持久区中释义提交点赞")
     @PostMapping(value = "/addLikesToPersistence")
     @ResponseBody
-    public Result addLikesToPersistence(@Valid TranslationAO translationAO,BindingResult result, HttpServletRequest request){
+    public Result addLikesToPersistence(@Valid TranslationAO translationAO, HttpServletRequest request){
 
         HttpSession session = request.getSession();
 
-        // JSR303验证失败直接返回错误原因[info]
-        if (result.hasErrors()) {
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
-
-            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
-        }
+//        // JSR303验证失败直接返回错误原因[info]
+//        if (result.hasErrors()) {
+//            List<FieldError> fieldErrors = result.getFieldErrors();
+//            String defaultMessage = fieldErrors.get(0).getDefaultMessage();
+//
+//            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), defaultMessage));
+//        }
         String word = translationAO.getWord();
         String translation = translationAO.getTranslation();
 
