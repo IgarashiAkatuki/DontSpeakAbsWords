@@ -5,7 +5,7 @@
 * **本网站旨在翻译包括但不限于`游戏/亚文化黑话`，`拼音缩写/谐音`，`汉字缩写/谐音`，`emoji谐音`等内容**
 * **欢迎各位老爷来贡献你们所知道的`抽象词`，您可以点击`添加词条`来贡献，或者也可以点击`获取问卷`来填写调查问卷(现在填写问卷还有~~涩~~图看)**
 
-**https://midsummra.com/**
+**<a herf = "https://midsummra.com/">https://midsummra.com/</a>**
 
 > 给我好好说话(恼
 > **最后更新于2022.12.27**
@@ -47,7 +47,7 @@
 ---
 
 **请用抽象话填满我qwq**
-**Github：https://github.com/IgarashiAkatuki/DontSpeakAbsWords**
+**<a herf="https://github.com/IgarashiAkatuki/DontSpeakAbsWords">Github：https://github.com/IgarashiAkatuki/DontSpeakAbsWords </a>**
 
 ---
 By Midsummra & Jitsu
