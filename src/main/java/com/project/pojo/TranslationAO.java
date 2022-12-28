@@ -2,6 +2,7 @@ package com.project.pojo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,6 +22,10 @@ public class TranslationAO implements Serializable {
     @ApiModelProperty("词条的翻译")
     private String translation;
 
+    @Nullable
+    @ApiModelProperty("词条的来源")
+    private String source;
+
     public TranslationAO(){};
 
     public String getWord() {
@@ -39,11 +44,21 @@ public class TranslationAO implements Serializable {
         this.translation = translation;
     }
 
+    @Nullable
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(@Nullable String source) {
+        this.source = source;
+    }
+
     @Override
     public String toString() {
         return "TranslationAO{" +
                 "word='" + word + '\'' +
                 ", translation='" + translation + '\'' +
+                ", source='" + source + '\'' +
                 '}';
     }
 }

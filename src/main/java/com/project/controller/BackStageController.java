@@ -1,22 +1,32 @@
 package com.project.controller;
 
+import com.mysql.cj.util.StringUtils;
+import com.project.common.response.ResponseStatusCode;
+import com.project.common.utils.RegexUtils;
 import com.project.entity.Erratum;
 import com.project.entity.Source;
+import com.project.entity.Translation;
+import com.project.entity.Word;
 import com.project.pojo.SourceAO;
 import com.project.pojo.TempTranslations;
+import com.project.pojo.TranslationAO;
 import com.project.service.ErratumService;
 import com.project.service.SourceService;
 import com.project.service.TranslationService;
+import com.project.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -34,6 +44,10 @@ public class BackStageController {
     @Autowired
     @Qualifier("translationServiceImpl")
     private TranslationService translationService;
+
+    @Autowired
+    @Qualifier("wordServiceImpl")
+    private WordService wordService;
 
     @RequestMapping("/info")
     public String getErratumInfo(Model model){
@@ -111,5 +125,50 @@ public class BackStageController {
                 return "forward:/admin/info";
             }
         }
+    }
+
+    @PostMapping("/submitTranslToPS")
+    public String submitTranslToPS(@Validated TranslationAO translationAO, BindingResult result, Model model){
+
+        if (result.hasErrors()){
+            List<FieldError> fieldErrors = result.getFieldErrors();
+            String s = fieldErrors.get(0).getDefaultMessage();
+            model.addAttribute("info",s);
+
+            return "forward:/admin/info";
+        }
+
+        String translation = RegexUtils.removeExtraSpace(translationAO.getTranslation());
+        String word = RegexUtils.replaceSpaceToUnderscore(translationAO.getWord());
+
+        if (StringUtils.isNullOrEmpty(translation) || StringUtils.isNullOrEmpty(word)){
+            model.addAttribute("info", ResponseStatusCode.INVALID_PARAMETER.getResultMsg());
+        }
+
+        Word temp = wordService.queryWordByName(word);
+        if (ObjectUtils.isEmpty(temp)){
+            Word tempWord = new Word();
+            tempWord.setLikes(1);
+            tempWord.setDate(new Date());
+            tempWord.setWord(word);
+            int flag = wordService.addWord(tempWord);
+        }
+
+        Translation transl = new Translation();
+        transl.setDate(new Date());
+        transl.setLikes(1);
+        transl.setWord(word);
+        transl.setTranslation(translation);
+        if (!StringUtils.isNullOrEmpty(translationAO.getSource())){
+            transl.setSource(translationAO.getSource());
+        }
+        int flag = translationService.addTranslToPS(transl);
+
+        if (flag == 1){
+            model.addAttribute("info",ResponseStatusCode.SUCCESS.getResultMsg());
+        }else {
+            model.addAttribute("info",ResponseStatusCode.FAILED.getResultMsg());
+        }
+        return "forward:/admin/info";
     }
 }

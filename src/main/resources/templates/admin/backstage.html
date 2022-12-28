@@ -6,6 +6,20 @@
 </head>
 <body>
 <h2>后台</h2>
+<div id="addTransl">
+    <h3>添加词条</h3>
+    <span th:text="${info}"></span>
+    <form action="/admin/submitTranslToPS" method="post">
+        <span>词条</span><br>
+        <input type="text" id="word" name="word"><br>
+        <span>释义</span><br>
+        <input type="text" id="transl" name="translation"><br>
+        <span>来源</span><br>
+        <input type="text" id="sources" name="source"><br>
+        <button type="submit">提交</button>
+        <br>
+    </form>
+</div>
 <div id="erratum">
     <h3>勘误统计</h3>
     <div th:text="${translationError}"></div>
