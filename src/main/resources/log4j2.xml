@@ -100,6 +100,11 @@
             <AppenderRef ref="Filelog"/>
         </logger>
 
+        <logger name="com.project.service.ProjectInit" level="TRACE" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="Filelog"/>
+        </logger>
+
         <Root level="INFO">
             <appender-ref ref="Console"/>
             <appender-ref ref="Filelog"/>

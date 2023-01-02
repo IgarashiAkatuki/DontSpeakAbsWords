@@ -2,6 +2,7 @@ package com.project;
 
 import com.project.constant.Constant;
 import com.project.entity.Word;
+import com.project.service.Hanzi2EmojiService;
 import com.project.service.TranslationService;
 import com.project.service.WordService;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,9 @@ class DontSpeakAbsWordsApplicationTests {
     @Autowired
     TranslationService translationService;
 
+    @Autowired
+    Hanzi2EmojiService service;
+
     @Test
     void contextLoads() {
         Word word = new Word();
@@ -30,6 +34,11 @@ class DontSpeakAbsWordsApplicationTests {
         word.setDate(new Date());
         word.setLikes(1);
         wordService.addWord(word);
+    }
+
+    @Test
+    void EmojiTest(){
+        service.Hanzi2Emoji("你妈死了");
     }
 
 }
