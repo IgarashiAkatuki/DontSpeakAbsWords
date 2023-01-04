@@ -1,4 +1,4 @@
-# [DontSpeakAbsWords](https://midsummra.com/)
+# [DontSpeakAbsWords](https://www.midsummra.com/)
 
 ## **黑话/缩写翻译网站**
 
