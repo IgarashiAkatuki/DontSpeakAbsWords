@@ -2,11 +2,16 @@ package com.project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 @Service
+@ConditionalOnProperty(
+        name = "config.enableHanzi2Pinyin",
+        havingValue = "true"
+)
 public class Hanzi2EmojiService {
 
     @Autowired

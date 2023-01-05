@@ -52,4 +52,6 @@ config:
   # 是否启用数据记录
   enableStatistic: true
   # 是否启用汉字转Emoji功能(初始化redis)
-  enableHanzi2Pinyin: true
+  enableHanzi2Pinyin: false
+  # 是否开启模糊查询模块(初始化redis)
+  enableFuzzyQuery: true

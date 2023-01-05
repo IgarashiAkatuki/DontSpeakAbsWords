@@ -1,10 +1,9 @@
-package com.project.service;
+package com.project.Init;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -17,21 +16,22 @@ import java.util.Set;
 
 @Slf4j
 @Component
-@SuppressWarnings("rawtypes")
-public class ProjectInit {
+@SuppressWarnings("all")
+@ConditionalOnProperty(
+        name = "config.enableHanzi2Pinyin",
+        havingValue = "true"
+)
+public class RedisInit {
 
     @Autowired
     @Qualifier("redisTemplate")
     private RedisTemplate template;
 
-    @ConditionalOnProperty(
-            name = "config.enableHanzi2Pinyin",
-            havingValue = "true"
-    )
+
     @PostConstruct
     public void loadDataToRedis() throws Exception{
 
-        InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("EmojiData.txt");
+        InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("initResources/EmojiData.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
 
         long start = System.currentTimeMillis();

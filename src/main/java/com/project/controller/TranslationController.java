@@ -1,10 +1,10 @@
 package com.project.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysql.cj.util.StringUtils;
 import com.project.common.response.ErrorInfo;
 import com.project.common.response.ResponseStatusCode;
 import com.project.common.response.Result;
+import com.project.common.utils.FuzzyQueryUtils;
 import com.project.constant.Constant;
 import com.project.entity.Translation;
 import com.project.entity.Word;
@@ -16,10 +16,10 @@ import com.project.common.utils.RegexUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -46,6 +45,10 @@ public class TranslationController {
     @Autowired
     @Qualifier("constant")
     private Constant webConstant;
+
+    @Autowired
+    @Qualifier("fuzzyQueryUtils")
+    private FuzzyQueryUtils fuzzyQueryUtils;
 
     // 从暂存区获得释义
     @ApiOperation("从暂存区获得释义")
@@ -135,9 +138,13 @@ public class TranslationController {
         }
     }
 
-    //向暂存区中提交释义
+//    向暂存区中提交释义
+    @ConditionalOnProperty(
+            name = "config.enableFuzzyQuery",
+            havingValue = "false"
+    )
     @ApiOperation("向暂存区中提交释义")
-    @PostMapping(value = "/submitTranslationsToTemp")
+    @GetMapping(value = "/submitTranslationsToTemp")
     @ResponseBody
     public Result submitTranslationToTemp(@Valid TranslationAO translationAO){
 
@@ -196,6 +203,7 @@ public class TranslationController {
                 wordBean.setLikes(1);
                 wordBean.setWord(word);
                 wordBean.setDate(new Date());
+
 
                 flag = wordService.addWord(wordBean);
             }
@@ -291,6 +299,153 @@ public class TranslationController {
         if (flag == 1) {
             return Result.suc();
         } else {
+            return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(), ResponseStatusCode.FAILED.getResultMsg()));
+        }
+    }
+
+// ===================================================================================================
+// 模糊查询相关
+    @ConditionalOnProperty(
+            name = "config.enableFuzzyQuery",
+            havingValue = "true"
+
+    )
+    @ApiOperation("在持久区进行模糊查询")
+    @ResponseBody
+    @PostMapping("/fuzzyQuery")
+    public Result fuzzyQuery(@Valid WordAO wordAO){
+        // 获取word值
+        String word = wordAO.getWord();
+
+        // 验证word是否为空
+        word = word.trim();
+        if (word.isEmpty()){
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
+        }
+
+        word = RegexUtils.replaceSpaceToUnderscore(word);
+
+        if (StringUtils.isNullOrEmpty(word)){
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
+        }
+
+        // 获取释义
+        List<Translation> translations = translationService.fuzzyQueryInPS(word);
+
+        // 如果存在释义
+        if (!ObjectUtils.isEmpty(translations)){
+            return Result.suc(translations);
+        }else {
+            return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(), ResponseStatusCode.FAILED.getResultMsg()));
+        }
+    }
+
+    //向暂存区中提交释义
+    @ConditionalOnProperty(
+            name = "config.enableFuzzyQuery",
+            havingValue = "true"
+    )
+    @ApiOperation("向暂存区中提交释义")
+    @PostMapping(value = "/submitTranslationsToTemp")
+    @ResponseBody
+    public Result submitTranslationToTempFuzzy(@Valid TranslationAO translationAO){
+
+
+        int flag = 0;
+
+
+        String translation = translationAO.getTranslation();
+        String word = translationAO.getWord();
+
+        // 如果word和translation去除首尾空格后为空，错误原因[info]
+        word = word.trim();
+        translation = translation.trim();
+        if (word.isEmpty() || translation.isEmpty()){
+
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
+        }
+
+        // 获得translation和word数据并且去除多余的空格
+        translation = RegexUtils.removeExtraSpace(translation);
+        word = RegexUtils.replaceSpaceToUnderscore(word);
+
+        //如果持久区中有该释义，则直接给次释义的like+1;
+        if (!ObjectUtils.isEmpty(translationService.queryTranslInPS(word,translation))){
+
+            flag = translationService.addTranslLikeInPS(word,translation);
+
+            if (flag == 1){
+                return Result.suc();
+            }else {
+                return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(), ResponseStatusCode.FAILED.getResultMsg()));
+            }
+        }
+
+        int wordId = -1;
+
+        // 如果暂存区中没有此翻译
+        if (ObjectUtils.isEmpty(translationService.queryTranslInTemp(word,translation))){
+
+            // 如果不存在这个词条，则添加这个词条并且添加这个词条的翻译到暂存区
+            if (ObjectUtils.isEmpty(wordService.queryWordByName(word))){
+
+                Word wordBean = new Word();
+                wordBean.setLikes(1);
+                wordBean.setWord(word);
+                wordBean.setDate(new Date());
+
+
+                flag = wordService.addWord(wordBean);
+            }
+
+            wordId = wordService.getWordId(word);
+
+            Translation tempTranslation = new Translation();
+            tempTranslation.setTranslation(translation);
+            tempTranslation.setWord(word);
+            tempTranslation.setLikes(1);
+            tempTranslation.setDate(new Date());
+            tempTranslation.setWordId(wordId);
+
+            flag = translationService.addTranslToTemp(tempTranslation);
+
+        }else {
+            flag = translationService.addLikeToTemp(word,translation);
+            //查询此释义现在的like数
+            if (translationService.queryTranslLikeInTemp(word,translation) >= webConstant.getTransformThresholds()){
+                //如果持久表中已有释义
+                if (!ObjectUtils.isEmpty(translationService.queryTranslInPS(word,translation))){
+
+                    flag = translationService.addTranslLikeInPS(word,translation);
+
+                }else {
+                    String fuzzyWord = null;
+                    wordId = wordService.getWordId(word);
+                    try{
+                        fuzzyWord = fuzzyQueryUtils.setFuzzyWord(word);
+                    }catch (Exception e){
+                        System.out.println("Redis未启用");
+                    }
+
+
+                    Translation tempTranslation = new Translation();
+                    tempTranslation.setWord(word);
+                    tempTranslation.setTranslation(translation);
+                    tempTranslation.setDate(new Date());
+                    tempTranslation.setLikes(0);
+                    tempTranslation.setWordId(wordId);
+
+                    if (fuzzyWord != null){
+                        tempTranslation.setFuzzyWord(fuzzyWord);
+                    }
+                    flag = translationService.addTranslToPS(tempTranslation);
+                }
+            }
+        }
+
+        if (flag == 1){
+            return Result.suc();
+        }else {
             return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(), ResponseStatusCode.FAILED.getResultMsg()));
         }
     }

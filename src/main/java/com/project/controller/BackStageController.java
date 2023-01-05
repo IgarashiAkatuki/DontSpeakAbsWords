@@ -2,6 +2,7 @@ package com.project.controller;
 
 import com.mysql.cj.util.StringUtils;
 import com.project.common.response.ResponseStatusCode;
+import com.project.common.utils.FuzzyQueryUtils;
 import com.project.common.utils.RegexUtils;
 import com.project.entity.Erratum;
 import com.project.entity.Source;
@@ -16,6 +17,7 @@ import com.project.service.TranslationService;
 import com.project.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
@@ -24,7 +26,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
 import java.util.List;
@@ -48,6 +49,10 @@ public class BackStageController {
     @Autowired
     @Qualifier("wordServiceImpl")
     private WordService wordService;
+
+    @Autowired
+    @Qualifier("fuzzyQueryUtils")
+    private FuzzyQueryUtils fuzzyQueryUtils;
 
     @RequestMapping("/info")
     public String getErratumInfo(Model model){
@@ -127,6 +132,9 @@ public class BackStageController {
         }
     }
 
+    @ConditionalOnBean(
+            name = "fuzzyQueryUtils"
+    )
     @PostMapping("/submitTranslToPS")
     public String submitTranslToPS(@Validated TranslationAO translationAO, BindingResult result, Model model){
 
@@ -153,12 +161,16 @@ public class BackStageController {
             tempWord.setWord(word);
             int flag = wordService.addWord(tempWord);
         }
+        temp = wordService.queryWordByName(word);
+        String fuzzyWord = fuzzyQueryUtils.setFuzzyWord(word);
 
         Translation transl = new Translation();
         transl.setDate(new Date());
         transl.setLikes(1);
         transl.setWord(word);
+        transl.setWordId(temp.getWordId());
         transl.setTranslation(translation);
+        transl.setFuzzyWord(fuzzyWord);
         if (!StringUtils.isNullOrEmpty(translationAO.getSource())){
             transl.setSource(translationAO.getSource());
         }

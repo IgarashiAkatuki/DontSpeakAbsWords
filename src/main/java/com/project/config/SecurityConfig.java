@@ -47,4 +47,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout().logoutSuccessUrl("/").deleteCookies();
         http.csrf().disable();
     }
+
 }

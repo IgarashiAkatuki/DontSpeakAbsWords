@@ -62,4 +62,6 @@ public interface TranslationService {
     // 更新持久区中的翻译
     // map中存储的数据: word,newTranslation,oldTranslation
     int updateTranslInPS(String word,String newTranslation,String oldTranslation);
+
+    List<Translation> fuzzyQueryInPS(String word);
 }

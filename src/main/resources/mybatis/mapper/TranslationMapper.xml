@@ -6,6 +6,7 @@
 
     <resultMap id="translation" type="com.project.entity.Translation">
         <result property="wordId" column="word_id"/>
+        <result property="fuzzyWord" column="fuzzy_word"/>
     </resultMap>
 
 <!--[应用在暂存区的方法]-->
@@ -53,8 +54,8 @@
 
     <insert id="addTranslToPS" parameterType="com.project.entity.Translation">
         insert into project_test.persistence
-        (date, word, translation, word_id)
-        values (#{date},#{word},#{translation},#{wordId})
+        (date, word, translation, word_id, fuzzy_word)
+        values (#{date},#{word},#{translation},#{wordId}, #{fuzzyWord})
     </insert>
     
     <update id="addTranslLikeInPS" parameterType="map">
@@ -84,5 +85,9 @@
         where word = #{word} and translation = #{oldTranslation}
         collate utf8mb4_bin
     </update>
+    
+    <select id="fuzzyQueryInPS" parameterType="java.lang.String" resultMap="translation">
+        select * from project_test.persistence where fuzzy_word like #{word} collate utf8mb4_bin order by persistence.likes+0 desc limit 50
+    </select>
 
 </mapper>

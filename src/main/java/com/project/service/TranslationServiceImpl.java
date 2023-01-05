@@ -4,7 +4,9 @@ import com.project.entity.Translation;
 import com.project.mapper.TranslationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +17,10 @@ public class TranslationServiceImpl implements TranslationService{
     @Autowired
     @Qualifier("translationMapper")
     private TranslationMapper translationMapper;
+
+    @Autowired
+    @Qualifier("redisTemplate")
+    private RedisTemplate template;
 
     @Override
     public List<Translation> queryAllTranslInTemp() {
@@ -130,5 +136,21 @@ public class TranslationServiceImpl implements TranslationService{
         map.put("oldTranslation",oldTranslation);
 
         return translationMapper.updateTranslInPS(map);
+    }
+
+    @Override
+    public List<Translation> fuzzyQueryInPS(String word) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < word.length(); i++) {
+            Object temp = template.opsForValue().get(word.charAt(i)+"");
+            if (ObjectUtils.isEmpty(temp)){
+                sb.append(word.charAt(i));
+            }else {
+                sb.append((String) temp);
+            }
+        }
+
+        String fuzzyWord = "%"+sb+"%";
+        return translationMapper.fuzzyQueryInPS(fuzzyWord);
     }
 }

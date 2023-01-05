@@ -9,6 +9,7 @@ import com.project.service.Hanzi2EmojiService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/api")
+@ConditionalOnProperty(
+        name = "config.enableHanzi2Pinyin",
+        havingValue = "true"
+)
 public class Hanzi2EmojiController {
 
     @Autowired

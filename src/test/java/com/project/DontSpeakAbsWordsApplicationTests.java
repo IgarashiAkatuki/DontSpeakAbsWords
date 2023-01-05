@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Date;
-import java.util.List;
+
 
 @SpringBootTest
 class DontSpeakAbsWordsApplicationTests {
@@ -24,21 +23,10 @@ class DontSpeakAbsWordsApplicationTests {
     @Autowired
     TranslationService translationService;
 
-    @Autowired
-    Hanzi2EmojiService service;
 
     @Test
     void contextLoads() {
-        Word word = new Word();
-        word.setWord("114");
-        word.setDate(new Date());
-        word.setLikes(1);
-        wordService.addWord(word);
     }
 
-    @Test
-    void EmojiTest(){
-        service.Hanzi2Emoji("你妈死了");
-    }
 
 }

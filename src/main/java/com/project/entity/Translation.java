@@ -20,6 +20,8 @@ public class Translation implements Serializable {
 
     private int wordId;
 
+    private String fuzzyWord;
+
     public Translation() {
     }
 
@@ -77,6 +79,14 @@ public class Translation implements Serializable {
 
     public void setWordId(int wordId) {
         this.wordId = wordId;
+    }
+
+    public String getFuzzyWord() {
+        return fuzzyWord;
+    }
+
+    public void setFuzzyWord(String fuzzyWord) {
+        this.fuzzyWord = fuzzyWord;
     }
 
     @Override

@@ -66,5 +66,8 @@ public interface TranslationMapper {
     // map中存储的数据: word,newTranslation,oldTranslation
     int updateTranslInPS(Map map);
 
+    // 模糊查询
+    List<Translation> fuzzyQueryInPS(String word);
+
 
 }
