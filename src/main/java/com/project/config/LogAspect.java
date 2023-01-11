@@ -50,7 +50,7 @@ public class LogAspect {
                 context.setAttribute("selectTranslCount",(int)temp+1);
             }
 
-        }else if ("submitTranslationToTemp".equals(name)){
+        }else if ("submitTranslationToTemp".equals(name) || "submitTranslationToTempFuzzy".equals(name)){
             Object temp = context.getAttribute("addTranslCount");
             if (ObjectUtils.isEmpty(temp)){
                 context.setAttribute("addTranslCount",1);
