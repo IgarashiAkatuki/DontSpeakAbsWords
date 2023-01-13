@@ -24,16 +24,22 @@ public class FuzzyQueryUtils {
 
         for (int i = 0; i < word.length(); i++) {
             char alphabetic = word.charAt(i);
-            Object temp = redisTemplate.opsForValue().get(alphabetic+"");
             if ((alphabetic >= 'a' && alphabetic <= 'z') || (alphabetic >= 'A' && alphabetic <= 'Z') || Character.isDigit(alphabetic)){
                 sb.append(alphabetic);
                 continue;
             }
+            Object temp = redisTemplate.opsForValue().get(alphabetic+"");
             if (ObjectUtils.isEmpty(temp)){
                 sb.append(alphabetic);
             }else {
                 sb.append((String) temp);
+                sb.append("_");
             }
+
+        }
+
+        if (sb.charAt(sb.length()-1) == '_'){
+            sb.delete(sb.length()-1,sb.length());
         }
         return sb.toString();
     }

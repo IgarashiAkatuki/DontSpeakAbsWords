@@ -147,7 +147,12 @@ public class TranslationServiceImpl implements TranslationService{
                 sb.append(word.charAt(i));
             }else {
                 sb.append((String) temp);
+                sb.append("_");
             }
+        }
+
+        if (sb.charAt(sb.length()-1) == '_'){
+            sb.delete(sb.length()-1,sb.length());
         }
 
         String fuzzyWord = "%"+sb+"%";
