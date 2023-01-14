@@ -90,4 +90,8 @@
         select * from project_test.persistence where fuzzy_word like #{word} collate utf8mb4_bin order by persistence.likes+0 desc limit 50
     </select>
 
+    <select id="fuzzyQueryInPS4Alphabet" parameterType="java.lang.String" resultMap="translation">
+        select * from project_test.persistence where word like #{word} collate utf8mb4_bin order by persistence.likes+0 desc limit 50
+    </select>
+
 </mapper>

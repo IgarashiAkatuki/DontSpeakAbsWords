@@ -140,22 +140,33 @@ public class TranslationServiceImpl implements TranslationService{
 
     @Override
     public List<Translation> fuzzyQueryInPS(String word) {
-        StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < word.length(); i++) {
-            Object temp = template.opsForValue().get(word.charAt(i)+"");
-            if (ObjectUtils.isEmpty(temp)){
-                sb.append(word.charAt(i));
+            char alphabetic = word.charAt(i);
+            if ((alphabetic >= 'a' && alphabetic <= 'z') || (alphabetic >= 'A' && alphabetic <= 'Z') || Character.isDigit(alphabetic)){
+                continue;
             }else {
-                sb.append((String) temp);
-                sb.append("_");
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < word.length(); j++) {
+                    Object temp = template.opsForValue().get(word.charAt(j)+"");
+                    if (ObjectUtils.isEmpty(temp)){
+                        sb.append(word.charAt(j));
+                    }else {
+                        sb.append((String) temp);
+                        sb.append("_");
+                    }
+                }
+
+                if (sb.charAt(sb.length()-1) == '_'){
+                    sb.delete(sb.length()-1,sb.length());
+                }
+
+                String fuzzyWord = "%"+sb+"%";
+                return translationMapper.fuzzyQueryInPS(fuzzyWord);
             }
         }
 
-        if (sb.charAt(sb.length()-1) == '_'){
-            sb.delete(sb.length()-1,sb.length());
-        }
-
-        String fuzzyWord = "%"+sb+"%";
-        return translationMapper.fuzzyQueryInPS(fuzzyWord);
+        String fuzzyWord = "%"+word+"%";
+        return translationMapper.fuzzyQueryInPS4Alphabet(fuzzyWord);
     }
 }

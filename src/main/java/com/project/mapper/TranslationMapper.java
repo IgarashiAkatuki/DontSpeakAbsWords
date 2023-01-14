@@ -69,5 +69,8 @@ public interface TranslationMapper {
     // 模糊查询
     List<Translation> fuzzyQueryInPS(String word);
 
+    // 模糊查询(仅对纯字母生效)
+    List<Translation> fuzzyQueryInPS4Alphabet(String word);
+
 
 }

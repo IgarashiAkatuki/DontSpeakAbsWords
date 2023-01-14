@@ -35,7 +35,7 @@ public class FuzzyQueryInit {
         System.out.println("=====================");
         System.out.println("正在初始化数据...");
 
-        if (redisTemplate.keys("峰").isEmpty()){
+        if (redisTemplate.keys("*").size() <= 20700){
             String str = null;
             while ((str = reader.readLine()) != null){
                 String[] s = str.split(" ");
@@ -44,6 +44,8 @@ public class FuzzyQueryInit {
                     nums++;
                 }
             }
+        }else {
+            nums = redisTemplate.keys("*").size();
         }
 
         long end = System.currentTimeMillis();
