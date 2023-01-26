@@ -16,13 +16,13 @@
 
 - **推荐的格式：将[释义]和[出处]分开填写**
 
-![image-20230126173028250](C:\Users\16780\AppData\Roaming\Typora\typora-user-images\image-20230126173028250.png)
+![image](https://user-images.githubusercontent.com/109781981/214804033-b14b8926-e8ed-441d-9520-c9d21af0edf3.png)
 
-![image-20230126173229487](C:\Users\16780\AppData\Roaming\Typora\typora-user-images\image-20230126173229487.png)
+![image](https://user-images.githubusercontent.com/109781981/214804048-fb3ad7f1-db30-42ee-a226-c3cbed6b468a.png)
 
 - **不推荐的格式：将[释义]和[出处]一起填入[释义]框**
 
-![image-20230126173045859](C:\Users\16780\AppData\Roaming\Typora\typora-user-images\image-20230126173045859.png)
+![image](https://user-images.githubusercontent.com/109781981/214804060-abce08d4-cad1-455c-bc45-b35accfd2471.png)
 
 ---
 **正确的填写格式可以帮助我们更好的收集整理数据，也可以让您所提交的释义更快的被查询到**
