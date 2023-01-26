@@ -8,7 +8,7 @@
 
 
     <insert id="submitSource" parameterType="com.project.entity.Source">
-        insert into project_test.source (source, translation, date) values (#{source},#{translation},#{date})
+        insert into project_test.source (source, translation, date, url) values (#{source},#{translation},#{date}, #{url})
     </insert>
 
     <select id="queryAllSource" resultMap="source">
@@ -20,17 +20,17 @@
     </select>
 
     <select id="querySourceByName" parameterType="map" resultMap="source">
-        select * from project_test.source where translation = #{translation} and source = #{source} collate utf8mb4_bin
+        select * from project_test.source where translation = #{translation} and source = #{source} and url = #{url} collate utf8mb4_bin
     </select>
 
     <update id="submitSourceInPS" parameterType="map">
-        update project_test.persistence set source = #{source} where translation = #{translation} collate utf8mb4_bin
+        update project_test.persistence set source = #{source},url = #{url}  where translation = #{translation}
     </update>
     <update id="submitSourceInSource" parameterType="map">
-        update project_test.source set submitted = '是' where  source = #{source} and translation = #{translation} collate utf8mb4_bin
+        update project_test.source set submitted = '是' where (source = #{source} and translation = #{translation} and url = #{url}) collate utf8mb4_bin
     </update>
 
     <update id="addSourceLike" parameterType="map">
-        update project_test.source set likes = likes+1 where translation = #{translation} and source = #{source} collate utf8mb4_bin
+        update project_test.source set likes = likes+1 where translation = #{translation} and source = #{source} and url = #{url} collate utf8mb4_bin
     </update>
 </mapper>

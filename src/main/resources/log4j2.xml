@@ -115,39 +115,3 @@
     </Loggers>
 
 </configuration>
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
-<!--<Configuration status="trace">-->
-<!--    &lt;!&ndash; 配置日志信息输出目的地 &ndash;&gt;-->
-<!--    <Appenders>-->
-<!--        &lt;!&ndash; 输出到控制台 &ndash;&gt;-->
-<!--        <Console name="Console" target="SYSTEM_OUT">-->
-<!--            &lt;!&ndash;配置日志信息的格式 &ndash;&gt;-->
-<!--            <PatternLayout-->
-<!--                    pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />-->
-
-<!--        </Console>-->
-
-<!--        &lt;!&ndash; 输出到文件，其中有一个append属性，默认为true，即不清空该文件原来的信息，采用添加的方式，若设为false，则会先清空原来的信息，再添加 &ndash;&gt;-->
-<!--        <File name="MyFile" fileName="D:/Log4j2.log" append="false">-->
-<!--            <PatternLayout>-->
-<!--                &lt;!&ndash;配置日志信息的格式 &ndash;&gt;-->
-<!--                <pattern>%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</pattern>-->
-<!--            </PatternLayout>-->
-<!--        </File>-->
-
-<!--    </Appenders>-->
-<!--    &lt;!&ndash; 定义logger,只有定义了logger并引入了appender,appender才会有效 &ndash;&gt;-->
-<!--    <Loggers>-->
-<!--        &lt;!&ndash; 将业务dao接口所在的包填写进去,并用在控制台和文件中输出 &ndash;&gt;-->
-<!--        <logger name="com.project.mapper" level="TRACE"-->
-<!--                additivity="false">-->
-<!--            <AppenderRef ref="Console" />-->
-<!--            <AppenderRef ref="MyFile" />-->
-<!--        </logger>-->
-
-<!--        <Root level="info">-->
-<!--            <AppenderRef ref="Console" />-->
-<!--            <AppenderRef ref="MyFile" />-->
-<!--        </Root>-->
-<!--    </Loggers>-->
-<!--</Configuration>-->

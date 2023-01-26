@@ -16,6 +16,8 @@
         <input type="text" id="transl" name="translation"><br>
         <span>来源</span><br>
         <input type="text" id="sources" name="source"><br>
+        <span>来源url</span><br>
+        <input type="text" id="url" name="url"><br>
         <button type="submit">提交</button>
         <br>
     </form>
@@ -68,6 +70,7 @@
             <td>编号</td>
             <td>翻译</td>
             <td>翻译出处</td>
+            <td>出处url</td>
             <td>出处提交次数</td>
             <td>是否已提交</td>
             <td>认可此出处</td>
@@ -76,6 +79,7 @@
             <td th:text="${sources.id}"></td>
             <td th:text="${sources.translation}"></td>
             <td th:text="${sources.source}"></td>
+            <td th:text="${sources.url}"></td>
             <td th:text="${sources.likes}"></td>
             <td th:text="${sources.submitted}"></td>
             <td>
@@ -84,6 +88,7 @@
                         <input type="hidden" th:value="${sources.id}" name="id">
                         <input type="hidden" th:value="${sources.translation}" name="translation">
                         <input type="hidden" th:value="${sources.source}" name="source">
+                        <input type="hidden" th:value="${sources.url}" name="url">
                         <button type="submit">提交</button>
                     </form>
                 </div>

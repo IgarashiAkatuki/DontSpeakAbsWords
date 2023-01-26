@@ -118,7 +118,7 @@ public class BackStageController {
             return "forward:/admin/info";
         }else {
             if (!tempSource.getSource().isEmpty()){
-                int info = sourceService.submitSourceToTransl(tempSource.getTranslation(), tempSource.getSource());
+                int info = sourceService.submitSourceToTransl(tempSource.getTranslation(), tempSource.getSource(), tempSource.getUrl());
                 if (info != 1){
                     model.addAttribute("sourceError","提交失败");
                 }else {

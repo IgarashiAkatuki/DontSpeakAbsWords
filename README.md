@@ -2,6 +2,32 @@
 
 ## **黑话/缩写翻译网站**
 
+---
+
+**简单快速的使用教程**
+
+如果你想贡献一个词条
+
+> 词条 ：bupt
+>
+> 翻译 ：大专(北京邮电大学的戏称)
+
+**==我们不推荐将该词的[出处]、[详细的解释]等一并填入释义==**
+
+- **推荐的格式：将[释义]和[出处]分开填写**
+
+![image-20230126173028250](C:\Users\16780\AppData\Roaming\Typora\typora-user-images\image-20230126173028250.png)
+
+![image-20230126173229487](C:\Users\16780\AppData\Roaming\Typora\typora-user-images\image-20230126173229487.png)
+
+- **不推荐的格式：将[释义]和[出处]一起填入[释义]框**
+
+![image-20230126173045859](C:\Users\16780\AppData\Roaming\Typora\typora-user-images\image-20230126173045859.png)
+
+---
+**正确的填写格式可以帮助我们更好的收集整理数据，也可以让您所提交的释义更快的被查询到**
+
+---
 > 现已支持模糊查询(测试中)
 
 * **本网站旨在翻译包括但不限于`游戏/亚文化黑话`，`拼音缩写/谐音`，`汉字缩写/谐音`，`emoji谐音`等内容**
@@ -10,9 +36,7 @@
 **[https://project.midsummra.com/](https://project.midsummra.com/)**
 
 > 给我好好说话(恼
-> **最后更新于2023.1.11**
->
-> 未来将加入：根据tag查询词条
+> **最后更新于2023.1.26**
 
 ---
 
@@ -52,4 +76,4 @@
 **Github：[https://github.com/IgarashiAkatuki/DontSpeakAbsWords](https://github.com/IgarashiAkatuki/DontSpeakAbsWords)**
 
 ---
-By Midsummra & Jitsu
+By Midsummra & Jitsu & CyanCake

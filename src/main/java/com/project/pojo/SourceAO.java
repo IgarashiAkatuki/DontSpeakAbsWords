@@ -1,5 +1,8 @@
 package com.project.pojo;
 
+import com.mysql.cj.util.StringUtils;
+import org.jetbrains.annotations.Nullable;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -11,6 +14,9 @@ public class SourceAO implements Serializable{
         private String translation;
         @NotNull(message = "来源不能为空")
         private String source;
+
+        @Nullable
+        private String url;
 
         public SourceAO() {
         }
@@ -39,12 +45,29 @@ public class SourceAO implements Serializable{
             this.source = source;
         }
 
-        @Override
-        public String toString() {
-            return "TempSource{" +
-                    "id=" + id +
-                    ", translation='" + translation + '\'' +
-                    ", source='" + source + '\'' +
-                    '}';
-        }
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUrlOrDefault(String defaultUrl){
+            if (StringUtils.isNullOrEmpty(this.url)){
+                return defaultUrl;
+            }else {
+                return this.getUrl();
+            }
+    }
+
+    @Override
+    public String toString() {
+        return "SourceAO{" +
+                "id=" + id +
+                ", translation='" + translation + '\'' +
+                ", source='" + source + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

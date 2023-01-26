@@ -22,6 +22,8 @@ public class Translation implements Serializable {
 
     private String fuzzyWord;
 
+    private String url;
+
     public Translation() {
     }
 
@@ -89,16 +91,39 @@ public class Translation implements Serializable {
         this.fuzzyWord = fuzzyWord;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Translation that = (Translation) o;
-        return id == that.id && wordId == that.wordId && Objects.equals(word, that.word) && Objects.equals(translation, that.translation) && Objects.equals(likes, that.likes) && Objects.equals(source, that.source) && Objects.equals(date, that.date);
+        return id == that.id && likes == that.likes && wordId == that.wordId && Objects.equals(word, that.word) && Objects.equals(translation, that.translation) && Objects.equals(source, that.source) && Objects.equals(date, that.date) && Objects.equals(fuzzyWord, that.fuzzyWord) && Objects.equals(url, that.url);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, word, translation, likes, source, date, wordId);
+        return Objects.hash(id, word, translation, likes, source, date, wordId, fuzzyWord, url);
+    }
+
+    @Override
+    public String toString() {
+        return "Translation{" +
+                "id=" + id +
+                ", word='" + word + '\'' +
+                ", translation='" + translation + '\'' +
+                ", likes=" + likes +
+                ", source='" + source + '\'' +
+                ", date=" + date +
+                ", wordId=" + wordId +
+                ", fuzzyWord='" + fuzzyWord + '\'' +
+                ", url='" + url + '\'' +
+                '}';
     }
 }

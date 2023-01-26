@@ -6,6 +6,7 @@ import com.project.common.response.ErrorInfo;
 import com.project.common.response.ResponseStatusCode;
 import com.project.common.response.Result;
 import com.project.entity.Source;
+import com.project.pojo.SourceAO;
 import com.project.service.SourceService;
 import com.project.service.TranslationService;
 import com.project.service.WordService;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,24 +46,24 @@ public class SourceController {
     @ApiOperation("添加翻译的出处")
     @PostMapping(value = "/addTranslationsSource")
     @ResponseBody
-    public Result addTranslationsSource(@ApiParam("翻译") String translation, @ApiParam("出处") String source){
+    public Result addTranslationsSource(@Valid SourceAO sourceAO){
 
-        if (!StringUtils.isNullOrEmpty(translation) && !StringUtils.isNullOrEmpty(source)){
+        if (!StringUtils.isNullOrEmpty(sourceAO.getTranslation()) && !StringUtils.isNullOrEmpty(sourceAO.getSource())){
 
             int flag = 0;
 
-            if (!ObjectUtils.isEmpty(sourceService.querySourceByName(translation,source))){
+            if (!ObjectUtils.isEmpty(sourceService.querySourceByName(sourceAO.getTranslation(),sourceAO.getSource(),sourceAO.getUrlOrDefault("null")))){
 
-                flag = sourceService.addSourceLike(translation, source);
+                flag = sourceService.addSourceLike(sourceAO.getTranslation(),sourceAO.getSource(),sourceAO.getUrlOrDefault("null"));
 
             }else {
 
                 Source tempSource = new Source();
                 tempSource.setDate(new Date());
                 tempSource.setLikes("1");
-                tempSource.setTranslation(translation);
-                tempSource.setSource(source);
-
+                tempSource.setTranslation(sourceAO.getTranslation());
+                tempSource.setSource(sourceAO.getSource());
+                tempSource.setUrl(RegexUtils.urlRegex(sourceAO.getUrlOrDefault("null")));
                 flag = sourceService.submitSource(tempSource);
 
             }
@@ -99,7 +101,7 @@ public class SourceController {
 
     @PostMapping(value = "/admin/addSource",produces = "text/html;charset = utf-8")
     @ResponseBody
-    public String addSource(String translation,String source) throws Exception{
+    public String addSource(String translation, String source, String url) throws Exception{
 
         HashMap<String, String> map = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
@@ -110,7 +112,7 @@ public class SourceController {
             translation = RegexUtils.removeExtraSpace(translation);
             source = RegexUtils.removeExtraSpace(source);
 
-            flag = sourceService.submitSourceToTransl(translation, source);
+            flag = sourceService.submitSourceToTransl(translation, source, url);
 
             if (flag == 1){
                 map.put("info","1");

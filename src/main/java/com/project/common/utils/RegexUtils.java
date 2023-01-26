@@ -42,4 +42,31 @@ public class RegexUtils {
         str = str.toLowerCase();
         return str;
     }
+
+
+    /**
+     *
+     * @param url url
+     * @return 序列化url
+     */
+    public static String urlRegex(String url){
+        if (url == null){
+            return " ";
+        }
+        url = url.replace("/","_").replace(".","-");
+        return url;
+    }
+
+    /**
+     *
+     * @param url 序列化的url
+     * @return 反序列化url
+     */
+    public static String analyzeUrl(String url){
+        if (url == null){
+            return " ";
+        }
+        url = url.replace("_","/").replace(".","-");
+        return url;
+    }
 }

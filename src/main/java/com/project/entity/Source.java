@@ -18,6 +18,8 @@ public class Source implements Serializable {
 
     private String submitted;
 
+    private String url;
+
     public Source() {
     }
 
@@ -69,6 +71,27 @@ public class Source implements Serializable {
         this.submitted = submitted;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Source source1 = (Source) o;
+        return id == source1.id && Objects.equals(source, source1.source) && Objects.equals(translation, source1.translation) && Objects.equals(likes, source1.likes) && Objects.equals(date, source1.date) && Objects.equals(submitted, source1.submitted) && Objects.equals(url, source1.url);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, source, translation, likes, date, submitted, url);
+    }
+
     @Override
     public String toString() {
         return "Source{" +
@@ -77,19 +100,8 @@ public class Source implements Serializable {
                 ", translation='" + translation + '\'' +
                 ", likes='" + likes + '\'' +
                 ", date=" + date +
+                ", submitted='" + submitted + '\'' +
+                ", url='" + url + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Source source1 = (Source) o;
-        return id == source1.id && Objects.equals(source, source1.source) && Objects.equals(translation, source1.translation) && Objects.equals(likes, source1.likes) && Objects.equals(date, source1.date);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, source, translation, likes, date);
     }
 }

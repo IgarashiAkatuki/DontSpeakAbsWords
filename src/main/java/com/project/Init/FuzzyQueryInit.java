@@ -35,7 +35,7 @@ public class FuzzyQueryInit {
         System.out.println("=====================");
         System.out.println("正在初始化数据...");
 
-        if (redisTemplate.keys("*").size() <= 20700){
+        if (redisTemplate.keys("*").size() <= 20000){
             String str = null;
             while ((str = reader.readLine()) != null){
                 String[] s = str.split(" ");

@@ -1,6 +1,5 @@
 package com.project.controller;
 
-import com.project.common.response.ResponseStatusCode;
 import com.project.common.response.Result;
 import com.project.pojo.QuestionnaireAO;
 import com.project.pojo.TranslationAO;

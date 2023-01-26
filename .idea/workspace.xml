@@ -5,19 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8db82083-596b-487c-ad2a-759cfb7999ad" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.657793da.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.657793da.js.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/app.657793da.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/common/response/ErrorInfo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/common/response/ResponseStatusCode.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/common/response/Result.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/common/utils/IpUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/common/utils/RegexUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/ScheduledService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/ScheduledService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/common/utils/FuzzyQueryUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/common/utils/FuzzyQueryUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/config/LogAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/config/LogAspect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/config/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/config/SwaggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controller/Hanzi2EmojiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/controller/Hanzi2EmojiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controller/SwaggerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/controller/SwaggerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controller/WordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/controller/WordController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/SourceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/SourceServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/service/WordServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/service/WordServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/banner.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/favicon.ico" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,8 +49,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Project/Project-Refactor",
-    "settings.editor.selected.configurable": "MavenSettings"
+    "last_opened_file_path": "D:/Project/Project-Refactor/DontSpeakAbsWords",
+    "settings.editor.selected.configurable": "MavenSettings",
+    "spring.configuration.checksum": "0c31f75aa16dfc998679f25fc432c8a1"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -64,6 +64,7 @@
       <updated>1670592275331</updated>
       <workItem from="1670592276492" duration="64000" />
       <workItem from="1671785742755" duration="1020000" />
+      <workItem from="1673872826289" duration="1114000" />
     </task>
     <servers />
   </component>

@@ -18,12 +18,12 @@ public interface SourceService {
 
     // 查询一个翻译的出处
     // map中的属性: translation,source
-    Source querySourceByName(String translation,String source);
+    Source querySourceByName(String translation, String source , String url);
 
     // 添加一个出处
-    int submitSourceToTransl(String translation,String source);
+    int submitSourceToTransl(String translation, String source, String url);
 
     // 增加出处的提及次数
-    int addSourceLike(String translation,String source);
+    int addSourceLike(String translation, String source , String url);
 
 }
