@@ -107,11 +107,11 @@
 
 ------
 
-**前端: ** [Jitsu](https://github.com/anosu)
+**前端:** [Jitsu](https://github.com/anosu)
 
-**后端: **  [Midsummra](https://github.com/IgarashiAkatuki)
+**后端:**  [Midsummra](https://github.com/IgarashiAkatuki)
 
-**文案&宣发: ** [CyanCake](https://github.com/Cyan-cake)
+**文案&宣发:** [CyanCake](https://github.com/Cyan-cake)
 
 ---
 
