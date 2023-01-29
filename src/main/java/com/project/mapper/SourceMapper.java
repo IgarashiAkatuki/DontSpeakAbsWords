@@ -33,4 +33,7 @@ public interface SourceMapper {
     // map中存储的数据: translation, source, url
     int addSourceLike(Map map);
 
+    // 查询持久区中是否存在该翻译
+    int isInPS(String word);
+
 }

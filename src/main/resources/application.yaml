@@ -41,6 +41,7 @@ constant:
   TransformThresholds: 2
   QuestionnaireLimits: 5
   QuestionnaireCoolDown: 60000
+  PageSize: 50
   EnableSwagger: true
 
 
@@ -55,3 +56,5 @@ config:
   enableHanzi2Pinyin: false
   # 是否开启模糊查询模块(初始化redis)
   enableFuzzyQuery: true
+  # 是否开启测试功能
+  enableTestMetohd: true

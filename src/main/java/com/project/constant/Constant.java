@@ -19,6 +19,9 @@ public class Constant {
     // 问卷冷却时间
     private int QuestionnaireCoolDown;
 
+    // 页面大小
+    private int pageSize;
+
     private boolean EnableSwagger;
 
 
@@ -60,5 +63,13 @@ public class Constant {
 
     public void setEnableSwagger(boolean enableSwagger) {
         this.EnableSwagger = enableSwagger;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 }

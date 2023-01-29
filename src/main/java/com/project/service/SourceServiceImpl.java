@@ -87,4 +87,9 @@ public class SourceServiceImpl implements SourceService{
 
         return sourceMapper.addSourceLike(map);
     }
+
+    @Override
+    public int isInPS(String translation) {
+        return sourceMapper.isInPS(translation);
+    }
 }

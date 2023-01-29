@@ -26,4 +26,6 @@ public interface SourceService {
     // 增加出处的提及次数
     int addSourceLike(String translation, String source , String url);
 
+    int isInPS(String translation);
+
 }

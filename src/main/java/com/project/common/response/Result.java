@@ -56,6 +56,22 @@ public class Result<T> {
     }
 
     /**
+     * 请求成功
+     * @param data
+     * @param message
+     * @return
+     * @param <T>
+     */
+    public static <T> Result<T> suc(T data, String message){
+        Result<T> result = new Result<>();
+        result.setData(data);
+        result.setMessage(message);
+        result.setCode(ResponseStatusCode.SUCCESS.getResultCode());
+
+        return result;
+    }
+
+    /**
      *  请求失败
      * @param errorInfo
      * @return

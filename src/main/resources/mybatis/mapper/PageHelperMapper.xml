@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.PageHelperMapper">
+
+
+    <resultMap id="translation" type="com.project.entity.Translation">
+        <result property="wordId" column="word_id"/>
+        <result property="fuzzyWord" column="fuzzy_word"/>
+    </resultMap>
+
+    <select id="getTotalRowsInPS" parameterType="java.lang.String">
+        select count(*) from project_test.persistence where fuzzy_word like #{word}
+    </select>
+
+    <select id="getTotalRowsInPSAlphabet" parameterType="java.lang.String">
+        select count(*) from project_test.persistence where word like #{word}
+    </select>
+
+    <select id="fuzzyQueryInPS" resultMap="translation">
+        select * from project_test.persistence where fuzzy_word like #{word}
+        collate utf8mb4_bin order by persistence.likes+0 desc
+        limit #{limit} offset #{startIndex}
+    </select>
+    
+    <select id="fuzzyQueryInPS4Alphabet" resultMap="translation">
+        select * from project_test.persistence where persistence.word like #{word}
+        collate utf8mb4_bin order by persistence.likes+0 desc
+        limit #{limit} offset #{startIndex}
+    </select>
+</mapper>

@@ -5,11 +5,14 @@ import com.project.common.response.ErrorInfo;
 import com.project.common.response.ResponseStatusCode;
 import com.project.common.response.Result;
 import com.project.common.utils.FuzzyQueryUtils;
+import com.project.common.utils.PageUtils;
 import com.project.constant.Constant;
 import com.project.entity.Translation;
 import com.project.entity.Word;
+import com.project.pojo.FuzzyWordAO;
 import com.project.pojo.TranslationAO;
 import com.project.pojo.WordAO;
+import com.project.service.PagerHelperService;
 import com.project.service.TranslationService;
 import com.project.service.WordService;
 import com.project.common.utils.RegexUtils;
@@ -49,6 +52,14 @@ public class TranslationController {
     @Autowired
     @Qualifier("fuzzyQueryUtils")
     private FuzzyQueryUtils fuzzyQueryUtils;
+
+    @Autowired
+    @Qualifier("pageUtils")
+    private PageUtils pageUtils;
+
+    @Autowired
+    @Qualifier("pagerHelperServiceImpl")
+    private PagerHelperService pagerHelperService;
 
     // 从暂存区获得释义
     @ApiOperation("从暂存区获得释义")
@@ -450,4 +461,44 @@ public class TranslationController {
         }
     }
 
+// ===================================================================================================
+// 测试功能
+    @PostMapping("/testGetPages")
+    @ResponseBody
+    @ApiOperation("测试功能")
+    @ConditionalOnProperty(
+            name = "enableTestMethod",
+            havingValue = "true"
+    )
+    public Result testMethod1(@Valid FuzzyWordAO fuzzyWordAO){
+        // 获取word值
+        String word = fuzzyWordAO.getWord();
+
+        // 验证word是否为空
+        word = word.trim();
+        if (word.isEmpty()){
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
+        }
+
+        word = RegexUtils.replaceSpaceToUnderscore(word);
+
+        if (StringUtils.isNullOrEmpty(word)){
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
+        }
+
+        int totalRows = pagerHelperService.getTotalRows(word);
+        pageUtils.setRows(totalRows);
+        pageUtils.setCurrPage(1);
+        int size = pageUtils.getTotalPages();
+
+        if (totalRows <= webConstant.getPageSize()){
+            List<Translation> translations = translationService.fuzzyQueryInPS(word);
+            return Result.suc(translations,size+"");
+        }else {
+            String currPage = fuzzyWordAO.getCurrPageOrDefault();
+            int startIndex = (Integer.parseInt(currPage)-1) * pageUtils.getPageSize();
+            List<Translation> translations = pagerHelperService.fuzzyQuery(word, startIndex + "", pageUtils.getPageSize() + "");
+            return Result.suc(translations,size+"");
+        }
+    }
 }

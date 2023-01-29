@@ -118,6 +118,11 @@ public class BackStageController {
             return "forward:/admin/info";
         }else {
             if (!tempSource.getSource().isEmpty()){
+                int nums = sourceService.isInPS(tempSource.getTranslation());
+                if (nums <= 0){
+                    model.addAttribute("sourceError","此翻译不存在于持久区");
+                    return "forward:/admin/info";
+                }
                 int info = sourceService.submitSourceToTransl(tempSource.getTranslation(), tempSource.getSource(), tempSource.getUrl());
                 if (info != 1){
                     model.addAttribute("sourceError","提交失败");
