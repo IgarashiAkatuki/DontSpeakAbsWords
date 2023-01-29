@@ -34,7 +34,7 @@
         update project_test.source set likes = likes+1 where translation = #{translation} and source = #{source} and url = #{url} collate utf8mb4_bin
     </update>
 
-    <select id="isInPS" parameterType="java.lang.String">
+    <select id="isInPS" parameterType="java.lang.String" resultType="int">
         select count(*) from project_test.persistence where translation = #{translation}
     </select>
 </mapper>

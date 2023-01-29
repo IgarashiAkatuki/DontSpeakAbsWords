@@ -34,6 +34,6 @@ public interface SourceMapper {
     int addSourceLike(Map map);
 
     // 查询持久区中是否存在该翻译
-    int isInPS(String word);
+    int isInPS(String translation);
 
 }
