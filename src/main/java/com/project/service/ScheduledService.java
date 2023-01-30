@@ -22,6 +22,10 @@ public class ScheduledService {
     @Qualifier("statisticsServiceImpl")
     private StatisticsService statisticsService;
 
+    @Autowired
+    @Qualifier("translStatisticsServiceImpl")
+    private TranslStatisticsService translStatisticsService;
+
 
     @Autowired
     @Qualifier("constant")
@@ -55,7 +59,7 @@ public class ScheduledService {
                 if (i == 1){
                     System.out.println("["+date+"]网站访问数据存储成功");
                 }else {
-                    System.out.println("["+date+"]网站访问数据存储上失败");
+                    System.out.println("["+date+"]网站访问数据存储失败");
                 }
             }catch (Exception e){
                 System.out.println("发生未知错误");
@@ -68,5 +72,20 @@ public class ScheduledService {
         context.setAttribute("addTranslCount",0);
         context.setAttribute("QuestionnaireCount",0);
         context.setAttribute("addWordCount",0);
+    }
+
+    @Scheduled(cron = "0 0 4 * * ?")
+    @ConditionalOnProperty(
+            name =   "config.enableStatistic",
+            havingValue = "true"
+    )
+    void saveTranslStatistics(){
+        Date date = new Date();
+        int flag = translStatisticsService.persistentData();
+        if (flag >= 1){
+            System.out.println("["+date+"]释义统计数据存储成功");
+        }else {
+            System.out.println("["+date+"]释义统计数据存储失败");
+        }
     }
 }

@@ -5,7 +5,7 @@ server:
     #    encoding:
     #      charset: UTF-8
     session:
-      timeout: 100m
+      timeout: 4320m
   forward-headers-strategy: framework
 
 mybatis:

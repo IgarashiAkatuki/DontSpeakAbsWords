@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.TranslStatisticsMapper">
+    <resultMap id="statistics" type="com.project.entity.TranslStatistics">
+        <result property="wordId" column="word_id"/>
+        <result property="partOfSpeech" column="part_of_speech"/>
+    </resultMap>
+
+    <insert id="createRows" parameterType="com.project.entity.Translation">
+        insert into project_test.translation_statistics (word, translation, date, fluency, part_of_speech) VALUES (#{word},#{translation},#{date},'|','|')
+    </insert>
+
+    <select id="getStatistics" parameterType="com.project.entity.Translation" resultMap="statistics">
+        select * from project_test.translation_statistics where translation = #{translation} and word = #{word}
+    </select>
+
+    <select id="getFluency" parameterType="com.project.entity.Translation" resultMap="statistics">
+        select (word,translation,fluency) from project_test.translation_statistics where translation = #{translation} and word = #{word}
+    </select>
+
+    <select id="getPartOfSpeech" parameterType="com.project.entity.Translation" resultMap="statistics">
+        select (word,translation,part_of_speech) from project_test.translation_statistics where translation = #{translation} and word = #{word}
+    </select>
+
+    <update id="updateFluency" parameterType="com.project.entity.TranslStatistics">
+        update project_test.translation_statistics
+        set popular = popular + #{popular}, outdated = outdated + #{outdated}
+        where translation = #{translation} and word = #{word}
+    </update>
+
+    <update id="updatePartOfSpeech" parameterType="com.project.entity.TranslStatistics">
+        update project_test.translation_statistics
+        set neutral = neutral + #{neutral}, commendation = commendation + #{commendation}, derogatory = derogatory +#{derogatory}
+        where translation = #{translation} and word = #{word}
+    </update>
+
+    <update id="persistentData">
+        update project_test.translation_statistics
+        set fluency = concat(fluency,cast(popular as char),'/',cast(outdated as char),'|'),
+            part_of_speech = concat(part_of_speech,cast(neutral as char),'/',cast(commendation as char),'/',cast(derogatory as char),'|');
+    </update>
+
+    <select id="isExist" parameterType="com.project.entity.Translation" resultType="int">
+        select count(*) from project_test.translation_statistics where translation = #{translation} and word = #{word}
+    </select>
+</mapper>

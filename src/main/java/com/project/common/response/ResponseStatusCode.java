@@ -6,7 +6,8 @@ public enum ResponseStatusCode {
     FAILED(1,"请求失败"),
     ERROR(2,"服务器错误"),
     INVALID_PARAMETER(3,"参数不合法"),
-    NOT_FOUND(4,"未查询到相关内容");
+    NOT_FOUND(4,"未查询到相关内容"),
+    ALREADY_SUBMITTED(5,"已经提交过数据");
 
 
     private final int resultCode;

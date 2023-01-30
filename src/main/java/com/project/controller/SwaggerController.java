@@ -2,6 +2,7 @@ package com.project.controller;
 
 import com.project.common.response.Result;
 import com.project.pojo.QuestionnaireAO;
+import com.project.pojo.TranslStatisticsAO;
 import com.project.pojo.TranslationAO;
 import com.project.pojo.WordAO;
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +36,12 @@ public class SwaggerController {
     @ApiOperation("Result")
     public Result result(){
         return new Result<>();
+    }
+
+    @PostMapping("/TranslStatisticsAO")
+    @ApiOperation("TranslStatisticsAO")
+    public TranslStatisticsAO translStatisticsAO(){
+        return new TranslStatisticsAO();
     }
 
 }
