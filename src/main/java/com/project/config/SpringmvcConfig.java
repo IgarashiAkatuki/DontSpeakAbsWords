@@ -3,6 +3,7 @@ package com.project.config;
 import com.project.filter.CharacterFilter;
 import com.project.filter.IpFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -55,6 +56,13 @@ public class SpringmvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         registry.addResourceHandler("/swagger/**").addResourceLocations("classpath:/statics/swagger/");
+    }
+
+    // ehCache驱动
+    @Bean
+    public EhCacheCacheManager ehCacheCacheManager() {
+        EhCacheCacheManager em = new EhCacheCacheManager();
+        return em;
     }
 }
 

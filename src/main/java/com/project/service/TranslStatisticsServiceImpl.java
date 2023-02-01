@@ -5,9 +5,12 @@ import com.project.entity.Translation;
 import com.project.mapper.TranslStatisticsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig(cacheNames = "translationCache")
 public class TranslStatisticsServiceImpl implements TranslStatisticsService{
 
     @Autowired
@@ -15,6 +18,7 @@ public class TranslStatisticsServiceImpl implements TranslStatisticsService{
     private TranslStatisticsMapper mapper;
 
     @Override
+    @Cacheable(keyGenerator = "plainKeyGenerator")
     public TranslStatistics getStatistics(Translation translation) {
         int flag = mapper.isExist(translation);
         if (flag <= 0){

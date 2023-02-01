@@ -4,6 +4,8 @@ import com.project.entity.Translation;
 import com.project.mapper.TranslationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -12,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "translationCache")
 public class TranslationServiceImpl implements TranslationService{
 
     @Autowired
@@ -22,17 +25,24 @@ public class TranslationServiceImpl implements TranslationService{
     @Qualifier("redisTemplate")
     private RedisTemplate template;
 
+    @Autowired
+    @Qualifier("cacheService")
+    private CacheService cacheService;
+
     @Override
+    @Cacheable
     public List<Translation> queryAllTranslInTemp() {
         return translationMapper.queryAllTranslInTemp();
     }
 
     @Override
+    @Cacheable
     public List<Translation> queryTranslInTempByWord(String word) {
         return translationMapper.queryTranslInTempByWord(word);
     }
 
     @Override
+//    @CachePut(keyGenerator = "plainKeyGenerator")
     public int addLikeToTemp(String word, String translation) {
 
         HashMap<String, String> map = new HashMap<>();
@@ -43,11 +53,13 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+//    @CachePut(keyGenerator = "plainKeyGenerator")
     public int addTranslToTemp(Translation translation) {
         return translationMapper.addTranslToTemp(translation);
     }
 
     @Override
+//    @CacheEvict(keyGenerator = "plainKeyGenerator")
     public int deleteTranslInTemp(String word, String translation) {
 
         HashMap<String, String> map = new HashMap<>();
@@ -58,6 +70,7 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+//    @Cacheable(keyGenerator = "plainKeyGenerator")
     public Translation queryTranslInTemp(String word, String translation) {
 
         HashMap<String, String> map = new HashMap<>();
@@ -68,6 +81,7 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+//    @Cacheable(keyGenerator = "plainKeyGenerator")
     public int queryTranslLikeInTemp(String word, String translation) {
 
         HashMap<String, String> map = new HashMap<>();
@@ -78,16 +92,19 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+    @Cacheable
     public List<Translation> queryTranslInPSByWord(String word) {
         return translationMapper.queryTranslInPSByWord(word);
     }
 
     @Override
+//    @CachePut(keyGenerator = "plainKeyGenerator")
     public int addTranslToPS(Translation translation) {
         return translationMapper.addTranslToPS(translation);
     }
 
     @Override
+//    @CachePut(keyGenerator = "plainKeyGenerator")
     public int addTranslLikeInPS(String word, String translation) {
 
         HashMap<String, String> map = new HashMap<>();
@@ -98,6 +115,7 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+//    @CacheEvict(keyGenerator = "plainKeyGenerator")
     public int deleteTranslLikeInPS(String word, String translation) {
 
         HashMap<String, String> map = new HashMap<>();
@@ -108,6 +126,7 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+//    @Cacheable(keyGenerator = "plainKeyGenerator")
     public Translation queryTranslInPS(String word, String translation) {
 
         HashMap<String, String> map = new HashMap<>();
@@ -118,6 +137,7 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+//    @CacheEvict(keyGenerator = "plainKeyGenerator")
     public int deleteTranslInPS(String word, String translation) {
 
         HashMap<String, String> map = new HashMap<>();
@@ -128,6 +148,7 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+//    @CachePut(keyGenerator = "plainKeyGenerator")
     public int updateTranslInPS(String word, String newTranslation, String oldTranslation) {
 
         HashMap<String, String> map = new HashMap<>();
@@ -139,6 +160,7 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
+    @Cacheable(keyGenerator = "translKeyGenerator")
     public List<Translation> fuzzyQueryInPS(String word) {
 
         for (int i = 0; i < word.length(); i++) {
@@ -147,6 +169,7 @@ public class TranslationServiceImpl implements TranslationService{
                 continue;
             }else {
                 StringBuilder sb = new StringBuilder();
+                sb.append("_");
                 for (int j = 0; j < word.length(); j++) {
                     Object temp = template.opsForValue().get(word.charAt(j)+"");
                     if (ObjectUtils.isEmpty(temp)){
@@ -157,8 +180,8 @@ public class TranslationServiceImpl implements TranslationService{
                     }
                 }
 
-                if (sb.charAt(sb.length()-1) == '_'){
-                    sb.delete(sb.length()-1,sb.length());
+                if (sb.charAt(sb.length()-1) != '_'){
+                    sb.append('_');
                 }
 
                 String fuzzyWord = "%"+sb+"%";

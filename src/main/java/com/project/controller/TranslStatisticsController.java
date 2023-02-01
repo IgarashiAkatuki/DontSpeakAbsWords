@@ -103,4 +103,99 @@ public class TranslStatisticsController {
             return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(),ResponseStatusCode.FAILED.getResultMsg()));
         }
     }
+
+    @ResponseBody
+    @PostMapping("/submitFluency")
+    @ApiOperation("提交释义数据(流行度)")
+    public Result submitStatisticsOfFluency(@Valid TranslStatisticsAO statisticsAO, HttpServletRequest req){
+        String word = statisticsAO.getWord();
+        String translation = statisticsAO.getTranslation();
+
+        word = word.trim();
+        if (word.isEmpty()){
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
+        }
+
+        HttpSession session = req.getSession();
+
+        if (!ObjectUtils.isEmpty(session.getAttribute("statisticsSet"))){
+            HashSet<String> set = (HashSet<String>) session.getAttribute("statisticsSet");
+            if (set.contains(translation+"|"+word+0)){
+                return Result.error(new ErrorInfo(ResponseStatusCode.ALREADY_SUBMITTED.getResultCode(), ResponseStatusCode.ALREADY_SUBMITTED.getResultMsg()));
+            }
+
+        }else {
+            HashSet<String> set = new HashSet<>();
+            session.setAttribute("statisticsSet",set);
+        }
+        if ((statisticsAO.isPopular() + statisticsAO.isOutdated() > 1)){
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
+        }
+
+        TranslStatistics translStatistics = new TranslStatistics();
+        translStatistics.setWord(statisticsAO.getWord());
+        translStatistics.setTranslation(statisticsAO.getTranslation());
+        translStatistics.setPopular(statisticsAO.isPopular());
+        translStatistics.setOutdated(statisticsAO.isOutdated());
+        translStatistics.setDate(new Date());
+        translStatistics.setWordId(0);
+
+        int flag = translStatisticsService.updateAll(translStatistics);
+
+        if (flag >= 2){
+            HashSet<String> set = (HashSet<String>) session.getAttribute("statisticsSet");
+            set.add(translation+"|"+word+0);
+            return Result.suc();
+        }else {
+            return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(),ResponseStatusCode.FAILED.getResultMsg()));
+        }
+    }
+
+    @ResponseBody
+    @PostMapping("/submitPartOfSpeech")
+    @ApiOperation("提交释义数据(词性)")
+    public Result submitStatisticsOfSpeech(@Valid TranslStatisticsAO statisticsAO, HttpServletRequest req){
+        String word = statisticsAO.getWord();
+        String translation = statisticsAO.getTranslation();
+
+        word = word.trim();
+        if (word.isEmpty()){
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
+        }
+
+        HttpSession session = req.getSession();
+
+        if (!ObjectUtils.isEmpty(session.getAttribute("statisticsSet"))){
+            HashSet<String> set = (HashSet<String>) session.getAttribute("statisticsSet");
+            if (set.contains(translation+"|"+word+1)){
+                return Result.error(new ErrorInfo(ResponseStatusCode.ALREADY_SUBMITTED.getResultCode(), ResponseStatusCode.ALREADY_SUBMITTED.getResultMsg()));
+            }
+
+        }else {
+            HashSet<String> set = new HashSet<>();
+            session.setAttribute("statisticsSet",set);
+        }
+        if ((statisticsAO.isCommendation() + statisticsAO.isNeutral() + statisticsAO.isDerogatory() > 1)){
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
+        }
+
+        TranslStatistics translStatistics = new TranslStatistics();
+        translStatistics.setWord(statisticsAO.getWord());
+        translStatistics.setTranslation(statisticsAO.getTranslation());
+        translStatistics.setCommendation(statisticsAO.isCommendation());
+        translStatistics.setDerogatory(statisticsAO.isDerogatory());
+        translStatistics.setNeutral(statisticsAO.isNeutral());
+        translStatistics.setDate(new Date());
+        translStatistics.setWordId(0);
+
+        int flag = translStatisticsService.updateAll(translStatistics);
+
+        if (flag >= 2){
+            HashSet<String> set = (HashSet<String>) session.getAttribute("statisticsSet");
+            set.add(translation+"|"+word+1);
+            return Result.suc();
+        }else {
+            return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(),ResponseStatusCode.FAILED.getResultMsg()));
+        }
+    }
 }
