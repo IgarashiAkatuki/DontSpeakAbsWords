@@ -169,19 +169,19 @@ public class TranslationServiceImpl implements TranslationService{
                 continue;
             }else {
                 StringBuilder sb = new StringBuilder();
-                sb.append("_");
+                sb.append('|');
                 for (int j = 0; j < word.length(); j++) {
                     Object temp = template.opsForValue().get(word.charAt(j)+"");
                     if (ObjectUtils.isEmpty(temp)){
                         sb.append(word.charAt(j));
                     }else {
                         sb.append((String) temp);
-                        sb.append("_");
+                        sb.append('|');
                     }
                 }
 
-                if (sb.charAt(sb.length()-1) != '_'){
-                    sb.append('_');
+                if (sb.charAt(sb.length()-1) != '|'){
+                    sb.append('|');
                 }
 
                 String fuzzyWord = "%"+sb+"%";

@@ -18,7 +18,6 @@ public class TranslStatisticsServiceImpl implements TranslStatisticsService{
     private TranslStatisticsMapper mapper;
 
     @Override
-    @Cacheable(keyGenerator = "plainKeyGenerator")
     public TranslStatistics getStatistics(Translation translation) {
         int flag = mapper.isExist(translation);
         if (flag <= 0){

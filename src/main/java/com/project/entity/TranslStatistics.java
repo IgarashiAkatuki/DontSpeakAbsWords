@@ -13,17 +13,17 @@ public class TranslStatistics {
 
     private Date date;
 
-    private int popular;
+    private int popular = 0;
 
-    private int outdated;
+    private int outdated = 0;
 
     private String fluency;
 
-    private int neutral;
+    private int neutral = 0;
 
-    private int commendation;
+    private int commendation = 0;
 
-    private int derogatory;
+    private int derogatory = 0;
 
     private String partOfSpeech;
 

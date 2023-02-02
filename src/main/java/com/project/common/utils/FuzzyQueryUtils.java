@@ -20,7 +20,7 @@ public class FuzzyQueryUtils {
     )
     public String setFuzzyWord(String word){
         StringBuilder sb = new StringBuilder();
-        sb.append('_');
+        sb.append('|');
         for (int i = 0; i < word.length(); i++) {
             char alphabetic = word.charAt(i);
             if ((alphabetic >= 'a' && alphabetic <= 'z') || (alphabetic >= 'A' && alphabetic <= 'Z') || Character.isDigit(alphabetic)){
@@ -32,13 +32,13 @@ public class FuzzyQueryUtils {
                 sb.append(alphabetic);
             }else {
                 sb.append((String) temp);
-                sb.append("_");
+                sb.append('|');
             }
 
         }
 
-        if (sb.charAt(sb.length()-1) != '_'){
-            sb.append('_');
+        if (sb.charAt(sb.length()-1) != '|'){
+            sb.append('|');
         }
         return sb.toString();
     }

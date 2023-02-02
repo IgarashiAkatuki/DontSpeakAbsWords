@@ -4,8 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.Nullable;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @ApiModel("TranslStatisticsAO实体类")
 public class TranslStatisticsAO {
@@ -20,25 +19,18 @@ public class TranslStatisticsAO {
     @Size(max = 100,min = 1,message = "数据长度不合法")
     private String translation;
 
-    @ApiModelProperty("是否正在流行")
+    @ApiModelProperty("流行/过时")
     @Nullable
-    private boolean popular;
+    @DecimalMin(value = "-1",message = "数据不合法")
+    @DecimalMax(value = "1",message = "数据不合法")
+    private Integer fluency = -1;
 
-    @ApiModelProperty("是否已经过时")
+    @ApiModelProperty("词性")
     @Nullable
-    private boolean outdated;
+    @DecimalMin(value = "-1",message = "数据不合法")
+    @DecimalMax(value = "2",message = "数据不合法")
+    private Integer partOfSpeech = -1;
 
-    @ApiModelProperty("是否为中性词")
-    @Nullable
-    private boolean neutral;
-
-    @ApiModelProperty("是否为褒义词")
-    @Nullable
-    private boolean commendation;
-
-    @ApiModelProperty("是否为贬义词")
-    @Nullable
-    private boolean derogatory;
 
     public String getWord() {
         return word;
@@ -56,65 +48,19 @@ public class TranslStatisticsAO {
         this.translation = translation;
     }
 
-    public int isPopular() {
-        if (popular){
-            return 1;
-        }else {
-            return 0;
-        }
+    public int getFluency() {
+        return fluency == null ? -1 : fluency;
     }
 
-    public void setPopular(boolean popular) {
-        this.popular = popular;
+    public void setFluency(int fluency) {
+        this.fluency = fluency;
     }
 
-    public int isOutdated() {
-        if (outdated){
-            return 1;
-        }else {
-            return 0;
-        }
+    public int getPartOfSpeech() {
+        return partOfSpeech == null ? -1 : partOfSpeech;
     }
 
-    public void setOutdated(boolean outdated) {
-        this.outdated = outdated;
+    public void setPartOfSpeech(int partOfSpeech) {
+        this.partOfSpeech = partOfSpeech;
     }
-
-    public int isNeutral() {
-        if (neutral){
-            return 1;
-        }else {
-            return 0;
-        }
-    }
-
-    public void setNeutral(boolean neutral) {
-        this.neutral = neutral;
-    }
-
-    public int isCommendation() {
-        if (commendation){
-            return 1;
-        }else {
-            return 0;
-        }
-    }
-
-    public void setCommendation(boolean commendation) {
-        this.commendation = commendation;
-    }
-
-    public int isDerogatory() {
-        if (derogatory){
-            return 1;
-        }else {
-            return 0;
-        }
-    }
-
-    public void setDerogatory(boolean derogatory) {
-        this.derogatory = derogatory;
-    }
-
-
 }

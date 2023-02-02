@@ -78,20 +78,37 @@ public class TranslStatisticsController {
             HashSet<String> set = new HashSet<>();
             session.setAttribute("statisticsSet",set);
         }
-        if ((statisticsAO.isPopular() + statisticsAO.isOutdated() > 1) || (statisticsAO.isCommendation() + statisticsAO.isNeutral() + statisticsAO.isDerogatory() > 1)){
-            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
-        }
+        int fluency = statisticsAO.getFluency();
+        int partOfSpeech = statisticsAO.getPartOfSpeech();
 
         TranslStatistics translStatistics = new TranslStatistics();
         translStatistics.setWord(statisticsAO.getWord());
         translStatistics.setTranslation(statisticsAO.getTranslation());
-        translStatistics.setPopular(statisticsAO.isPopular());
-        translStatistics.setOutdated(statisticsAO.isOutdated());
-        translStatistics.setCommendation(statisticsAO.isCommendation());
-        translStatistics.setDerogatory(statisticsAO.isDerogatory());
-        translStatistics.setNeutral(statisticsAO.isNeutral());
         translStatistics.setDate(new Date());
         translStatistics.setWordId(0);
+
+        switch (fluency){
+            case 1:
+                translStatistics.setPopular(1);
+                break;
+            case 0:
+                translStatistics.setOutdated(1);
+            default:
+        }
+
+        switch (partOfSpeech){
+            case 0:
+                translStatistics.setNeutral(1);
+                break;
+            case 2:
+                translStatistics.setCommendation(1);
+                break;
+            case 1:
+                translStatistics.setDerogatory(1);
+                break;
+            default:
+        }
+
 
         int flag = translStatisticsService.updateAll(translStatistics);
 
@@ -128,17 +145,22 @@ public class TranslStatisticsController {
             HashSet<String> set = new HashSet<>();
             session.setAttribute("statisticsSet",set);
         }
-        if ((statisticsAO.isPopular() + statisticsAO.isOutdated() > 1)){
-            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
-        }
 
         TranslStatistics translStatistics = new TranslStatistics();
         translStatistics.setWord(statisticsAO.getWord());
         translStatistics.setTranslation(statisticsAO.getTranslation());
-        translStatistics.setPopular(statisticsAO.isPopular());
-        translStatistics.setOutdated(statisticsAO.isOutdated());
         translStatistics.setDate(new Date());
         translStatistics.setWordId(0);
+
+        int fluency = statisticsAO.getFluency();
+        switch (fluency){
+            case 1:
+                translStatistics.setPopular(1);
+                break;
+            case 0:
+                translStatistics.setOutdated(1);
+            default:
+        }
 
         int flag = translStatisticsService.updateAll(translStatistics);
 
@@ -175,18 +197,27 @@ public class TranslStatisticsController {
             HashSet<String> set = new HashSet<>();
             session.setAttribute("statisticsSet",set);
         }
-        if ((statisticsAO.isCommendation() + statisticsAO.isNeutral() + statisticsAO.isDerogatory() > 1)){
-            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(), ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
-        }
+
+        int partOfSpeech = statisticsAO.getPartOfSpeech();
 
         TranslStatistics translStatistics = new TranslStatistics();
         translStatistics.setWord(statisticsAO.getWord());
         translStatistics.setTranslation(statisticsAO.getTranslation());
-        translStatistics.setCommendation(statisticsAO.isCommendation());
-        translStatistics.setDerogatory(statisticsAO.isDerogatory());
-        translStatistics.setNeutral(statisticsAO.isNeutral());
         translStatistics.setDate(new Date());
         translStatistics.setWordId(0);
+
+        switch (partOfSpeech){
+            case 0:
+                translStatistics.setNeutral(1);
+                break;
+            case 2:
+                translStatistics.setCommendation(1);
+                break;
+            case 1:
+                translStatistics.setDerogatory(1);
+                break;
+            default:
+        }
 
         int flag = translStatisticsService.updateAll(translStatistics);
 
