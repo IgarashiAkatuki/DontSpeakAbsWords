@@ -1,12 +1,16 @@
 # [DontSpeakAbsWords!](https://github.com/IgarashiAkatuki/DontSpeakAbsWords)
 
-> 最后更新于 2023.1.28
+> 最后更新于 2023.2.7
+> 
+> 截至到2.1的统计数据已发布，有需要可以去GitHub自取w
+> 
+> 新增了各个释义的统计数据，可以点击词条的[更多]查看
 
 ## **黑话/缩写翻译站**
 
-**网站：** https://project.midsummra.com/
+**网站：** [https://project.midsummra.com/](https://project.midsummra.com/)
 
-**Github：** https://github.com/IgarashiAkatuki/DontSpeakAbsWords
+**Github：** [https://github.com/IgarashiAkatuki/DontSpeakAbsWords](https://github.com/IgarashiAkatuki/DontSpeakAbsWords)
 
 ---
 
@@ -114,6 +118,5 @@
 **文案&宣发:** [CyanCake](https://github.com/Cyan-cake)
 
 ---
-
 
 
