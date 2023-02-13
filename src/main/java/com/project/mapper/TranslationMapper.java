@@ -72,5 +72,7 @@ public interface TranslationMapper {
     // 模糊查询(仅对纯字母生效)
     List<Translation> fuzzyQueryInPS4Alphabet(String word);
 
+    int addTranslToPsAdmin(Translation translation);
+
 
 }

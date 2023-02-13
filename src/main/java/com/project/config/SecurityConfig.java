@@ -35,13 +35,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger").hasAuthority("NULL")
                 .antMatchers("/api/admin/**").hasAnyAuthority("admin")
                 .antMatchers("/admin/login").permitAll()
-                .antMatchers("/admin/**").access("hasAnyAuthority('admin')");
+                .antMatchers("/admin.html").hasAuthority("admin");
+//                .antMatchers("/admin/**").access("hasAnyAuthority('admin')");
         http.formLogin()
                 .loginProcessingUrl("/admin/form")
                 .loginPage("/admin/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/admin/info")
+                .defaultSuccessUrl("/admin.html")
                 .failureForwardUrl("/admin/login");
 
         http.logout().logoutSuccessUrl("/").deleteCookies();

@@ -192,4 +192,9 @@ public class TranslationServiceImpl implements TranslationService{
         String fuzzyWord = "%"+word+"%";
         return translationMapper.fuzzyQueryInPS4Alphabet(fuzzyWord);
     }
+
+    @Override
+    public int addTranslToPsAdmin(Translation translation) {
+        return translationMapper.addTranslToPsAdmin(translation);
+    }
 }

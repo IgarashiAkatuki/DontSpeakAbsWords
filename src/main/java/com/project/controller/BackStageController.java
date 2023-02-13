@@ -1,7 +1,9 @@
 package com.project.controller;
 
 import com.mysql.cj.util.StringUtils;
+import com.project.common.response.ErrorInfo;
 import com.project.common.response.ResponseStatusCode;
+import com.project.common.response.Result;
 import com.project.common.utils.FuzzyQueryUtils;
 import com.project.common.utils.RegexUtils;
 import com.project.entity.Erratum;
@@ -24,8 +26,10 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
 import java.util.List;
@@ -54,108 +58,89 @@ public class BackStageController {
     @Qualifier("fuzzyQueryUtils")
     private FuzzyQueryUtils fuzzyQueryUtils;
 
-    @RequestMapping("/info")
-    public String getErratumInfo(Model model){
 
+    @GetMapping("/erratumInfo")
+    @ResponseBody
+    public Result getErratumInfo(){
         List<Erratum> errata = erratumService.queryAllErratum();
+        return Result.suc(errata);
+    }
+
+    @GetMapping("/sourceInfo")
+    @ResponseBody
+    public Result getSourceInfo(){
         List<Source> sources = sourceService.queryAllSource();
-        model.addAttribute("erratum",errata);
-        model.addAttribute("sources",sources);
-
-        return "admin/backstage";
-    }
-
-    @PostMapping("/deleteTranslation")
-    public String deleteTranslation(@Validated TempTranslations translations, BindingResult result, Model model){
-        if (result.hasErrors()){
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            model.addAttribute("translationError",fieldErrors.get(0).getDefaultMessage());
-
-            return "forward:/admin/info";
-        }else {
-            int info = translationService.deleteTranslInPS(translations.getWord(), translations.getTranslation());
-            if (info != 1){
-                model.addAttribute("translationError","删除失败");
-            }else {
-                erratumService.deleteErratumByTransl(translations.getTranslation());
-                model.addAttribute("translationError","提交成功");
-            }
-
-            return "forward:/admin/info";
-        }
-    }
-
-    @PostMapping("/updateTranslation")
-    public String updateTranslation(@Validated TempTranslations translations,BindingResult result,Model model){
-        if (result.hasErrors()){
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            model.addAttribute("translationError",fieldErrors.get(0).getDefaultMessage());
-
-            return "forward:/admin/info";
-        }else {
-            if (!translations.getNewTranslation().isEmpty()){
-                int info = translationService.updateTranslInPS(translations.getWord(), translations.getTranslation(), translations.getNewTranslation());
-                if (info != 1){
-                    model.addAttribute("translationError","更改失败");
-                }else {
-                    erratumService.deleteErratumById(translations.getId());
-                    model.addAttribute("translationError","提交成功");
-                }
-                return "forward:/admin/info";
-            }else {
-                model.addAttribute("translationError","新翻译为空");
-                return "forward:/admin/info";
-            }
-        }
+        return Result.suc(sources);
     }
 
     @PostMapping("/submitSource")
-    public String submitSource(@Validated SourceAO tempSource, BindingResult result, Model model){
+    @ResponseBody
+    public Result submitSource(@Validated SourceAO tempSource, BindingResult result){
         if (result.hasErrors()){
             List<FieldError> fieldErrors = result.getFieldErrors();
-            model.addAttribute("sourceError",fieldErrors.get(0).getDefaultMessage());
-
-            return "forward:/admin/info";
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(),ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
         }else {
             if (!tempSource.getSource().isEmpty()){
                 int nums = sourceService.isInPS(tempSource.getTranslation());
+                System.out.println(nums);
                 if (nums <= 0){
-                    model.addAttribute("sourceError","此翻译不存在于持久区");
-                    return "forward:/admin/info";
+                    return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(),ResponseStatusCode.FAILED.getResultMsg()));
                 }
-                int info = sourceService.submitSourceToTransl(tempSource.getTranslation(), tempSource.getSource(), tempSource.getUrl());
+                int info = sourceService.submitSourceToTransl(tempSource.getTranslation(), tempSource.getSource(), tempSource.getUrlOrDefault("null"));
+                System.out.println(info);
                 if (info != 1){
-                    model.addAttribute("sourceError","提交失败");
-                }else {
-                    model.addAttribute("sourceError","提交成功");
+                    return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(),ResponseStatusCode.FAILED.getResultMsg()));
                 }
-                return "forward:/admin/info";
+                return Result.suc();
             }else {
-                model.addAttribute("sourceError","来源为空");
-                return "forward:/admin/info";
+                return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(),ResponseStatusCode.FAILED.getResultMsg()));
             }
         }
     }
+
+    @PostMapping("/deleteTranslation")
+    @ResponseBody
+    public Result deleteTranslation(@Validated TempTranslations translations, BindingResult result){
+            int info = translationService.deleteTranslInPS(translations.getWord(), translations.getTranslation());
+            if (info != 1){
+                return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(),ResponseStatusCode.FAILED.getResultMsg()));
+            }else {
+                erratumService.deleteErratumByTransl(translations.getTranslation());
+                return Result.suc();
+            }
+
+    }
+
+    @PostMapping("/updateTranslation")
+    @ResponseBody
+    public Result updateTranslation(@Validated TempTranslations translations){
+            if (!translations.getNewTranslation().isEmpty()){
+                int info = translationService.updateTranslInPS(translations.getWord(), translations.getNewTranslation(), translations.getTranslation());
+                if (info != 1){
+                    return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(),ResponseStatusCode.FAILED.getResultMsg()));
+                }else {
+                    erratumService.deleteErratumById(translations.getId());
+                    return Result.suc();
+                }
+            }else {
+                return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(),ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
+            }
+    }
+
 
     @ConditionalOnBean(
             name = "fuzzyQueryUtils"
     )
     @PostMapping("/submitTranslToPS")
-    public String submitTranslToPS(@Validated TranslationAO translationAO, BindingResult result, Model model){
+    @ResponseBody
+    public Result submitTranslToPS(@Validated TranslationAO translationAO){
 
-        if (result.hasErrors()){
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            String s = fieldErrors.get(0).getDefaultMessage();
-            model.addAttribute("info",s);
-
-            return "forward:/admin/info";
-        }
 
         String translation = RegexUtils.removeExtraSpace(translationAO.getTranslation());
         String word = RegexUtils.replaceSpaceToUnderscore(translationAO.getWord());
 
         if (StringUtils.isNullOrEmpty(translation) || StringUtils.isNullOrEmpty(word)){
-            model.addAttribute("info", ResponseStatusCode.INVALID_PARAMETER.getResultMsg());
+            return Result.error(new ErrorInfo(ResponseStatusCode.INVALID_PARAMETER.getResultCode(),ResponseStatusCode.INVALID_PARAMETER.getResultMsg()));
         }
 
         Word temp = wordService.queryWordByName(word);
@@ -176,16 +161,16 @@ public class BackStageController {
         transl.setWordId(temp.getWordId());
         transl.setTranslation(translation);
         transl.setFuzzyWord(fuzzyWord);
+        transl.setUrl(translationAO.getUrl());
         if (!StringUtils.isNullOrEmpty(translationAO.getSource())){
             transl.setSource(translationAO.getSource());
         }
-        int flag = translationService.addTranslToPS(transl);
+        int flag = translationService.addTranslToPsAdmin(transl);
 
         if (flag == 1){
-            model.addAttribute("info",ResponseStatusCode.SUCCESS.getResultMsg());
+            return Result.suc();
         }else {
-            model.addAttribute("info",ResponseStatusCode.FAILED.getResultMsg());
+            return Result.error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(),ResponseStatusCode.FAILED.getResultMsg()));
         }
-        return "forward:/admin/info";
     }
 }

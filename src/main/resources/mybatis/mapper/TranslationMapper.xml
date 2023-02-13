@@ -94,4 +94,8 @@
         select * from project_test.persistence where word like #{word} collate utf8mb4_bin order by persistence.likes+0 desc limit 50
     </select>
 
+    <insert id="addTranslToPsAdmin" parameterType="com.project.entity.Translation">
+        insert into project_test.persistence (date, word, translation, word_id, source, fuzzy_word, url) VALUES (#{date},#{word},#{translation},#{wordId},#{source},#{fuzzyWord},#{url})
+    </insert>
+
 </mapper>

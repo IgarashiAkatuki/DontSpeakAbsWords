@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -25,6 +26,10 @@ public class TranslationAO implements Serializable {
     @Nullable
     @ApiModelProperty("词条的来源")
     private String source;
+
+    @Nullable
+    @ApiModelProperty("词条URL")
+    private String url;
 
     public TranslationAO(){};
 
@@ -51,6 +56,17 @@ public class TranslationAO implements Serializable {
 
     public void setSource(@Nullable String source) {
         this.source = source;
+    }
+
+    public void setUrl(@Nullable String url){
+        this.url = url;
+    }
+
+    public String getUrl(){
+        if (this.url == null || this.url.isEmpty()){
+            return "null";
+        }
+        return this.url;
     }
 
     @Override

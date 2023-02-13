@@ -64,4 +64,6 @@ public interface TranslationService {
     int updateTranslInPS(String word,String newTranslation,String oldTranslation);
 
     List<Translation> fuzzyQueryInPS(String word);
+
+    int addTranslToPsAdmin(Translation translation);
 }
