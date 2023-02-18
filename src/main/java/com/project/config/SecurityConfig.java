@@ -35,8 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger").hasAuthority("NULL")
                 .antMatchers("/api/admin/**").hasAnyAuthority("admin")
                 .antMatchers("/admin/login").permitAll()
-                .antMatchers("/admin.html").hasAuthority("admin");
-//                .antMatchers("/admin/**").access("hasAnyAuthority('admin')");
+                .antMatchers("/admin.html").hasAuthority("admin")
+                .antMatchers("/admin/**").access("hasAnyAuthority('admin')");
         http.formLogin()
                 .loginProcessingUrl("/admin/form")
                 .loginPage("/admin/login")
