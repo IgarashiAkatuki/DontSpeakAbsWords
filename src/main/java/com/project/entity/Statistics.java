@@ -20,7 +20,7 @@ public class Statistics implements Serializable {
     }
 
     public Date getDate() {
-        return date;
+        return (Date) date.clone();
     }
 
     public void setDate(Date date) {

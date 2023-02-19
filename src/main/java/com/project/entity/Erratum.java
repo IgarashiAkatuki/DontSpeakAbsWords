@@ -24,10 +24,9 @@ public class Erratum implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id){
         this.id = id;
     }
-
     public String getWord() {
         return word;
     }
@@ -45,7 +44,7 @@ public class Erratum implements Serializable {
     }
 
     public Date getDate() {
-        return date;
+        return (Date) date.clone();
     }
 
     public void setDate(Date date) {

@@ -27,10 +27,9 @@ public class Source implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id){
         this.id = id;
     }
-
     public String getSource() {
         return source;
     }
@@ -56,7 +55,7 @@ public class Source implements Serializable {
     }
 
     public Date getDate() {
-        return date;
+        return (Date) date.clone();
     }
 
     public void setDate(Date date) {
