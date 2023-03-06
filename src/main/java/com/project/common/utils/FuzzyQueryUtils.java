@@ -22,7 +22,7 @@ public class FuzzyQueryUtils {
         StringBuilder sb = new StringBuilder();
         sb.append('|');
 
-        // 应改为 word.codePointCount(0,word.length())
+
         for (int i = 0; i < word.length(); i++) {
             char alphabetic = word.charAt(i);
             if ((alphabetic >= 'a' && alphabetic <= 'z') || (alphabetic >= 'A' && alphabetic <= 'Z') || Character.isDigit(alphabetic)){
@@ -44,4 +44,5 @@ public class FuzzyQueryUtils {
         }
         return sb.toString();
     }
+
 }

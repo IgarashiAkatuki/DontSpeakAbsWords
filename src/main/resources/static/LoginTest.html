@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DontSpeakAbsWords后台</title>
+    <script type="text/javascript" src="jquery-3.6.1.js"></script>
+</head>
+<body>
+<form action="" method="post">
+    <h3>DontSpeakAbsWords后台登录</h3>
+    <span>用户名</span><br>
+    <input type="text" placeholder="用户名" name="username" id="username"><br>
+    <span>密码</span><br>
+    <input type="password" placeholder="密码" name="password" id="password"><br>
+    <button type="button" id="submitForm">登录</button>
+</form>
+<script type="text/javascript">
+    "use strict"
+    $('#submitForm').click(function () {
+        $.ajax({
+            url: 'http://localhost:8080/api/login',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                username: $('#username').val(),
+                password: $('#password').val()
+            },
+            success(data){
+                alert("登陆成功")
+            },
+            error(){
+                alert("发生错误")
+            }
+        })
+    })
+</script>
+<div id="text"></div>
+</body>
+</html>

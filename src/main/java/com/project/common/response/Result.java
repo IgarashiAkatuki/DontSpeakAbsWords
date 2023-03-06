@@ -86,6 +86,10 @@ public class Result<T> {
         return result;
     }
 
+    public static <T> Result<T> error(){
+        return error(new ErrorInfo(ResponseStatusCode.FAILED.getResultCode(), ResponseStatusCode.FAILED.getResultMsg()));
+    }
+
 
     public int getCode() {
         return code;
