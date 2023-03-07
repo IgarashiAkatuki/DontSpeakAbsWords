@@ -3,6 +3,7 @@ package com.project.filter;
 import com.mysql.cj.util.StringUtils;
 import com.project.common.utils.JwtUtils;
 import com.project.service.UserDetailsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Value("${jwt.tokenHeader}")
@@ -44,7 +46,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     break;
                 }
             }
-            if (rawToken != null) {
+
+            if (rawToken == null || jwtUtils.isTokenExpired(rawToken)){
+                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(null,null,null));
+            }
+            if (rawToken != null && !rawToken.trim().equals("")) {
                 String username = jwtUtils.getUserNameFromToken(rawToken);
                 if (!StringUtils.isNullOrEmpty(username) && SecurityContextHolder.getContext().getAuthentication() == null){
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);

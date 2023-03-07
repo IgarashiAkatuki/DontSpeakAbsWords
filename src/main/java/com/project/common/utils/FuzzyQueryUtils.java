@@ -1,11 +1,15 @@
 package com.project.common.utils;
 
+import com.mysql.cj.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+
+import javax.servlet.ServletContext;
+import java.util.HashMap;
 
 
 @Component
@@ -15,10 +19,21 @@ public class FuzzyQueryUtils {
     @Qualifier("redisTemplate")
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private ServletContext servletContext;
+
     @ConditionalOnBean(
             name = "redisTemplate"
     )
     public String setFuzzyWord(String word){
+
+        Object attribute = servletContext.getAttribute("hanziPinyinMap");
+        if (ObjectUtils.isEmpty(attribute)){
+            return word;
+        }
+
+        HashMap<String,String> map = (HashMap<String, String>) attribute;
+
         StringBuilder sb = new StringBuilder();
         sb.append('|');
 
@@ -29,11 +44,11 @@ public class FuzzyQueryUtils {
                 sb.append(alphabetic);
                 continue;
             }
-            Object temp = redisTemplate.opsForValue().get(alphabetic+"");
-            if (ObjectUtils.isEmpty(temp)){
+            String temp = map.get(alphabetic+"");
+            if (StringUtils.isNullOrEmpty(temp)){
                 sb.append(alphabetic);
             }else {
-                sb.append((String) temp);
+                sb.append(temp);
                 sb.append('|');
             }
 

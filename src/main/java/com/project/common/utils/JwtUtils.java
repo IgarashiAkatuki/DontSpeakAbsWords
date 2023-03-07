@@ -1,10 +1,7 @@
 package com.project.common.utils;
 
 import com.mysql.cj.util.StringUtils;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -39,8 +36,8 @@ public class JwtUtils {
 
     public String generateToken(Map<String, Object> claim){
         return Jwts.builder()
-                .setExpiration(generateExpirationDate())
                 .setClaims(claim)
+                .setExpiration(generateExpirationDate())
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
@@ -60,10 +57,10 @@ public class JwtUtils {
                     .setSigningKey(secret)
                     .parseClaimsJws(token)
                     .getBody();
+        }catch (ExpiredJwtException e){
+            claims = e.getClaims();
         }catch (Exception e){
-            JwtException exception = new JwtException("无法解析token或token已过期");
-            exception.initCause(e);
-            exception.printStackTrace();
+            e.printStackTrace();
         }
 
         return claims;
@@ -95,6 +92,7 @@ public class JwtUtils {
 
     private Date getExpirationDateFromToken(String token){
         Claims claims = getClaims(token);
+        System.out.println(claims.getExpiration().toString());
         return claims.getExpiration();
     }
 
@@ -104,21 +102,27 @@ public class JwtUtils {
     }
 
     public String refreshToken(String oldToken){
-        if (StringUtils.isNullOrEmpty(oldToken)){
-            return null;
-        }
-        Date expiredTime = getExpirationDateFromToken(tokenHead);
-        Claims claims = getClaims(oldToken);
+        String newToken = null;
+        try{
+            if (StringUtils.isNullOrEmpty(oldToken)){
+                return null;
+            }
+            Date expiredTime = getExpirationDateFromToken(tokenHead);
+            Claims claims = getClaims(oldToken);
 
-        if (claims == null || expiredTime == null){
-            return null;
-        }
+            if (claims == null || expiredTime == null){
+                return null;
+            }
 
-        if (expiredTime.before(new Date()) && (new Date().getTime() - expiredTime.getTime()) > 30*60){
-            return oldToken;
+            if (expiredTime.before(new Date()) && (new Date().getTime() - expiredTime.getTime()) > 30*60){
+                return oldToken;
+            }
+            claims.put(CLAIM_KEY_CREATED, new Date());
+            return generateToken(claims);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        claims.put(CLAIM_KEY_CREATED, new Date());
-        return generateToken(claims);
+        return newToken;
     }
 }
 

@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -60,6 +61,9 @@ public class TranslationController {
     @Autowired
     @Qualifier("pagerHelperServiceImpl")
     private PagerHelperService pagerHelperService;
+
+    @Autowired
+    private ServletContext servletContext;
 
     // 从暂存区获得释义
     @ApiOperation("从暂存区获得释义")
@@ -435,7 +439,7 @@ public class TranslationController {
                     try{
                         fuzzyWord = fuzzyQueryUtils.setFuzzyWord(word);
                     }catch (Exception e){
-                        System.out.println("Redis未启用");
+                        System.out.println("模糊查询未启用");
                     }
 
 
