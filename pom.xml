@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.project</groupId>
     <artifactId>DontSpeakAbsWords</artifactId>
-    <version>2.3.6-1-DEV</version>
+    <version>2.4.0-2-DEV</version>
     <name>DontSpeakAbsWords</name>
     <description>DontSpeakAbsWords</description>
     <properties>

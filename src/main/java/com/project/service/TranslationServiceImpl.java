@@ -1,5 +1,6 @@
 package com.project.service;
 
+import com.project.common.exceptions.HanziMapException;
 import com.project.entity.Translation;
 import com.project.mapper.TranslationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import javax.servlet.ServletContext;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +30,9 @@ public class TranslationServiceImpl implements TranslationService{
     @Autowired
     @Qualifier("cacheService")
     private CacheService cacheService;
+
+    @Autowired
+    private ServletContext servletContext;
 
     @Override
     @Cacheable
@@ -163,6 +168,14 @@ public class TranslationServiceImpl implements TranslationService{
     @Cacheable(keyGenerator = "translKeyGenerator")
     public List<Translation> fuzzyQueryInPS(String word) {
 
+        Object map = servletContext.getAttribute("hanziPinyinMap");
+        HashMap<String, String> hashMap = new HashMap<>();
+        if (ObjectUtils.isEmpty(map)){
+            hashMap = new HashMap<>();
+        }else {
+            hashMap = (HashMap<String, String>) map;
+        }
+
         for (int i = 0; i < word.length(); i++) {
             char alphabetic = word.charAt(i);
             if ((alphabetic >= 'a' && alphabetic <= 'z') || (alphabetic >= 'A' && alphabetic <= 'Z') || Character.isDigit(alphabetic)){
@@ -171,11 +184,11 @@ public class TranslationServiceImpl implements TranslationService{
                 StringBuilder sb = new StringBuilder();
                 sb.append('|');
                 for (int j = 0; j < word.length(); j++) {
-                    Object temp = template.opsForValue().get(word.charAt(j)+"");
+                    Object temp = hashMap.get(word.charAt(j)+"");
                     if (ObjectUtils.isEmpty(temp)){
                         sb.append(word.charAt(j));
                     }else {
-                        sb.append((String) temp);
+                        sb.append(temp);
                         sb.append('|');
                     }
                 }

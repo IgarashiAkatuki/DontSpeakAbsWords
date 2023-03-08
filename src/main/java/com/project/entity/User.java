@@ -85,7 +85,7 @@ public class User implements Serializable, UserDetails {
     }
 
     public Date getDate() {
-        return (Date) date.clone();
+        return this.date == null ? null : (Date) date.clone();
     }
 
     public void setDate(Date date) {

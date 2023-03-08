@@ -52,7 +52,7 @@ public class TranslStatistics {
     }
 
     public Date getDate() {
-        return (Date) date.clone();
+        return this.date == null ? null : (Date) date.clone();
     }
 
     public void setDate(Date date) {
