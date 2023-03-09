@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DontSpeakAbsWords
 // @namespace    https://github.com/IgarashiAkatuki/DontSpeakAbsWords
-// @version      0.1
+// @version      0.2
 // @description  黑话/缩写翻译站
 // @author       Jitsu
 // @match        *://*/*
@@ -42,10 +42,10 @@
                 }
             }
             dsawGetXhr.ontimeout = () => {
-                resolve('error: 查询超时，请检查网络连接')
+                resolve({ 'error: 查询超时，请检查网络连接': null })
             }
             dsawGetXhr.onerror = () => {
-                resolve('error: 连接失败')
+                resolve({ 'error: 连接失败': null })
             }
             dsawGetXhr.open("POST", DSAW_URL + 'getTranslationsFromPersistence', true);
             dsawGetXhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -128,6 +128,7 @@
             document.getElementById('dsaw-popup-content').innerText = '加载中……'
         }
     }
+
     let dom = document.createElement('div')
     let div = `
     <dsaw id="dsaw-popup" style="left:0px;top:0px;display:none">
@@ -148,6 +149,7 @@
     let css = `
     <style>
         dsaw {
+            line-height: 1.2;
             display: block;
             margin: 0;
             padding: 0;
@@ -158,7 +160,7 @@
             width: 400px;
             box-sizing: unset;
             color: #000;
-            border-radius: 5px;
+            border-radius: 8px;
             background-color: white;
             box-shadow: 5px 5px 15px 1px #c8c8c8;
             z-index: 999999999;
@@ -212,13 +214,13 @@
     document.getElementById('redirect-website').addEventListener('click', redirectWebsite)
     window.addEventListener("mouseup", setDSAW_GLOBAL);
     window.onkeydown = function (event) {
-        if (event.ctrlKey && event.keyCode == 191) {
+        if ((event.ctrlKey || event.altKey) && (event.keyCode == 191 || event.keyCode == 192)) {
+            event.preventDefault()
             if (DSAW_GLOBAL.select == '' || DSAW_GLOBAL.select.length > 50 || DSAW_GLOBAL.select.match(/^\s+$/)) {
                 return
             }
-            event.preventDefault()
             DSAW()
         }
     }
     window.addEventListener("mousedown", hidePopup);
-})();
+})()
