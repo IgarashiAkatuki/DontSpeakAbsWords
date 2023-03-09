@@ -29,6 +29,8 @@
 **[点击安装](https://github.com/IgarashiAkatuki/DontSpeakAbsWords/raw/main/dsaw.user.js)**
 
 > 脚本为仓库中的 dsaw.user.js 文件
+> 
+> 脚本热键为 '/' + '?'
 
 ---
 ## 何为黑话
