@@ -1,12 +1,11 @@
 package com.project.service;
 
-import com.project.entity.TranslStatistics;
-import com.project.entity.Translation;
+import com.project.entity.mysql.TranslStatistics;
+import com.project.entity.mysql.Translation;
 import com.project.mapper.TranslStatisticsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service

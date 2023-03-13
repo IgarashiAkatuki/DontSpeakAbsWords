@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.mapper.TranslationMapper">
 
-    <resultMap id="translation" type="com.project.entity.Translation">
+    <resultMap id="translation" type="com.project.entity.mysql.Translation">
         <result property="wordId" column="word_id"/>
         <result property="fuzzyWord" column="fuzzy_word"/>
     </resultMap>
@@ -26,7 +26,7 @@
         collate utf8mb4_bin
     </update>
 
-    <insert id="addTranslToTemp" parameterType="com.project.entity.Translation">
+    <insert id="addTranslToTemp" parameterType="com.project.entity.mysql.Translation">
         insert into project_test.temporary
         (date, word, translation, word_id,likes)
         VALUES (#{date},#{word},#{translation},#{wordId},#{likes})
@@ -52,7 +52,7 @@
         select * from project_test.persistence where word = #{word} collate utf8mb4_bin order by likes+0 desc
     </select>
 
-    <insert id="addTranslToPS" parameterType="com.project.entity.Translation">
+    <insert id="addTranslToPS" parameterType="com.project.entity.mysql.Translation">
         insert into project_test.persistence
         (date, word, translation, word_id, fuzzy_word)
         values (#{date},#{word},#{translation},#{wordId}, #{fuzzyWord})
@@ -94,7 +94,7 @@
         select * from project_test.persistence where word like #{word} collate utf8mb4_bin order by persistence.likes+0 desc limit 50
     </select>
 
-    <insert id="addTranslToPsAdmin" parameterType="com.project.entity.Translation">
+    <insert id="addTranslToPsAdmin" parameterType="com.project.entity.mysql.Translation">
         insert into project_test.persistence (date, word, translation, word_id, source, fuzzy_word, url) VALUES (#{date},#{word},#{translation},#{wordId},#{source},#{fuzzyWord},#{url})
     </insert>
 

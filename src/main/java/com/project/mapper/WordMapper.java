@@ -1,6 +1,6 @@
 package com.project.mapper;
 
-import com.project.entity.Word;
+import com.project.entity.mysql.Word;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

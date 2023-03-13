@@ -4,11 +4,11 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.mapper.WordMapper">
 
-    <resultMap id="Word" type="com.project.entity.Word">
+    <resultMap id="Word" type="com.project.entity.mysql.Word">
         <result column="word_id" property="wordId"/>
     </resultMap>
 
-    <insert id="addWord" parameterType="com.project.entity.Word">
+    <insert id="addWord" parameterType="com.project.entity.mysql.Word">
         insert into project_test.words (date, word,likes) VALUES (#{date},#{word},#{likes})
     </insert>
 

@@ -5,7 +5,7 @@ import com.project.common.response.ErrorInfo;
 import com.project.common.response.ResponseStatusCode;
 import com.project.common.response.Result;
 import com.project.constant.Constant;
-import com.project.entity.Word;
+import com.project.entity.mysql.Word;
 import com.project.pojo.QuestionnaireAO;
 import com.project.pojo.WordAO;
 import com.project.service.WordService;

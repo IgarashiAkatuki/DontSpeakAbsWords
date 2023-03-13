@@ -1,7 +1,7 @@
 package com.project.service;
 
 import com.project.common.utils.RegexUtils;
-import com.project.entity.Source;
+import com.project.entity.mysql.Source;
 import com.project.mapper.SourceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

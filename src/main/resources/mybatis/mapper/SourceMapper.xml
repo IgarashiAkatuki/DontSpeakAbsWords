@@ -4,10 +4,10 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.mapper.SourceMapper">
 
-    <resultMap id="source" type="com.project.entity.Source"/>
+    <resultMap id="source" type="com.project.entity.mysql.Source"/>
 
 
-    <insert id="submitSource" parameterType="com.project.entity.Source">
+    <insert id="submitSource" parameterType="com.project.entity.mysql.Source">
         insert into project_test.source (source, translation, date, url) values (#{source},#{translation},#{date}, #{url})
     </insert>
 

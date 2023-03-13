@@ -1,6 +1,6 @@
 package com.project.service;
 
-import com.project.entity.Word;
+import com.project.entity.mysql.Word;
 import com.project.mapper.WordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

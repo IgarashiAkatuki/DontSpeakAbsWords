@@ -1,7 +1,7 @@
 package com.project.service;
 
-import com.project.entity.TranslStatistics;
-import com.project.entity.Translation;
+import com.project.entity.mysql.TranslStatistics;
+import com.project.entity.mysql.Translation;
 
 public interface TranslStatisticsService {
 

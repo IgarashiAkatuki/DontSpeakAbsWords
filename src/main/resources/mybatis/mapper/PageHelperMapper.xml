@@ -5,7 +5,7 @@
 <mapper namespace="com.project.mapper.PageHelperMapper">
 
 
-    <resultMap id="translation" type="com.project.entity.Translation">
+    <resultMap id="translation" type="com.project.entity.mysql.Translation">
         <result property="wordId" column="word_id"/>
         <result property="fuzzyWord" column="fuzzy_word"/>
     </resultMap>

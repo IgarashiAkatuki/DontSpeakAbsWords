@@ -1,14 +1,15 @@
 package com.project.controller;
 
 import com.mysql.cj.util.StringUtils;
+import com.project.Init.FuzzyQueryInit;
 import com.project.common.response.ErrorInfo;
 import com.project.common.response.ResponseStatusCode;
 import com.project.common.response.Result;
 import com.project.common.utils.FuzzyQueryUtils;
 import com.project.common.utils.PageUtils;
 import com.project.constant.Constant;
-import com.project.entity.Translation;
-import com.project.entity.Word;
+import com.project.entity.mysql.Translation;
+import com.project.entity.mysql.Word;
 import com.project.pojo.FuzzyWordAO;
 import com.project.pojo.TranslationAO;
 import com.project.pojo.WordAO;
@@ -64,6 +65,9 @@ public class TranslationController {
 
     @Autowired
     private ServletContext servletContext;
+
+    @Autowired
+    private FuzzyQueryInit fuzzyQueryInit;
 
     // 从暂存区获得释义
     @ApiOperation("从暂存区获得释义")

@@ -1,6 +1,6 @@
 package com.project.mapper;
 
-import com.project.entity.User;
+import com.project.entity.mysql.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

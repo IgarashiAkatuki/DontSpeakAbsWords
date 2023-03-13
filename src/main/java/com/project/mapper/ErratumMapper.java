@@ -1,6 +1,6 @@
 package com.project.mapper;
 
-import com.project.entity.Erratum;
+import com.project.entity.mysql.Erratum;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

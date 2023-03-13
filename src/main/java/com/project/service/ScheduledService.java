@@ -1,7 +1,7 @@
 package com.project.service;
 
 import com.project.constant.Constant;
-import com.project.entity.Statistics;
+import com.project.entity.mysql.Statistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

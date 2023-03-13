@@ -1,6 +1,6 @@
 package com.project.service;
 
-import com.project.entity.Statistics;
+import com.project.entity.mysql.Statistics;
 import com.project.mapper.StatisticsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

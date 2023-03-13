@@ -1,7 +1,6 @@
 package com.project.service;
 
-import com.project.entity.Erratum;
-import org.springframework.stereotype.Service;
+import com.project.entity.mysql.Erratum;
 
 import java.util.List;
 

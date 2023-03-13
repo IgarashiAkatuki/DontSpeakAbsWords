@@ -1,6 +1,6 @@
 package com.project.common.ehcache;
 
-import com.project.entity.Translation;
+import com.project.entity.mysql.Translation;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.stereotype.Component;
 

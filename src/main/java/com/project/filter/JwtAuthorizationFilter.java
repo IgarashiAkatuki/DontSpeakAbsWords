@@ -46,8 +46,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     break;
                 }
             }
-
-            if (rawToken == null || jwtUtils.isTokenExpired(rawToken)){
+            if ("".equals(rawToken)){
+                filterChain.doFilter(request, response);
+                return;
+            }
+            if (StringUtils.isNullOrEmpty(rawToken) || jwtUtils.isTokenExpired(rawToken)){
                 SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(null,null,null));
             }
             if (rawToken != null && !rawToken.trim().equals("")) {

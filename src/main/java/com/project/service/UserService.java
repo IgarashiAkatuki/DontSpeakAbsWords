@@ -1,8 +1,6 @@
 package com.project.service;
 
-import com.project.entity.User;
-
-import java.util.Map;
+import com.project.entity.mysql.User;
 
 public interface UserService {
 

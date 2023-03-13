@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.mapper.ErratumMapper">
-    <insert id="addErratum" parameterType="com.project.entity.Erratum">
+    <insert id="addErratum" parameterType="com.project.entity.mysql.Erratum">
         insert into project_test.erratum ( word, translation, date, reason) VALUES (#{word},#{translation},#{date},#{reason})
     </insert>
 
@@ -15,7 +15,7 @@
         delete from project_test.erratum where translation = #{translation} collate utf8mb4_bin
     </delete>
 
-    <select id="queryAllErratum" resultType="com.project.entity.Erratum">
+    <select id="queryAllErratum" resultType="com.project.entity.mysql.Erratum">
         select * from project_test.erratum order by date collate utf8mb4_bin
     </select>
 

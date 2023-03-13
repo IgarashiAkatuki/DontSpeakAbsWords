@@ -19,15 +19,14 @@ public class FuzzyQueryUtils {
     @Qualifier("redisTemplate")
     private RedisTemplate redisTemplate;
 
+
     @Autowired
     private ServletContext servletContext;
 
-    @ConditionalOnBean(
-            name = "redisTemplate"
-    )
     public String setFuzzyWord(String word){
 
         Object attribute = servletContext.getAttribute("hanziPinyinMap");
+        System.out.println(ObjectUtils.isEmpty(attribute));
         if (ObjectUtils.isEmpty(attribute)){
             return word;
         }

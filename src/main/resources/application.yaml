@@ -32,6 +32,16 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  neo4j:
+    authentication:
+      password: 12345678
+      username: neo4j
+  jpa:
+    show-sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+      ddl-auto: update
 
 logging:
   config: classpath:log4j2.xml
@@ -57,8 +67,10 @@ config:
   # 是否开启测试功能
   enableTestMetohd: true
 
+  neo4jURL: neo4j://localhost:7687
+
 jwt:
   secret: 114514
-  expiration: 100
+  expiration: 862000
   tokenHeader: Authorization
   tokenHead: 'Bearer '

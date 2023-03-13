@@ -1,6 +1,6 @@
 package com.project.mapper;
 
-import com.project.entity.Statistics;
+import com.project.entity.mysql.Statistics;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

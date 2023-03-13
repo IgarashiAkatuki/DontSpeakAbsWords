@@ -1,6 +1,6 @@
 package com.project.service;
 
-import com.project.entity.Statistics;
+import com.project.entity.mysql.Statistics;
 
 import java.util.List;
 

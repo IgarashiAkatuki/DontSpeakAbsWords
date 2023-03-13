@@ -4,14 +4,14 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.mapper.StatisticsMapper">
 
-    <resultMap id="statistic" type="com.project.entity.Statistics">
+    <resultMap id="statistic" type="com.project.entity.mysql.Statistics">
         <result property="selectTranslCount" column="select_transl_count"/>
         <result property="addWordCount" column="add_word_count"/>
         <result property="addTranslCount" column="add_transl_count"/>
         <result property="QuestionnaireCount" column="questionnaire_count"/>
     </resultMap>
 
-    <insert id="addStatistic" parameterType="com.project.entity.Statistics">
+    <insert id="addStatistic" parameterType="com.project.entity.mysql.Statistics">
         insert into project_test.statistics
         (date, select_transl_count, add_word_count, add_transl_count, questionnaire_count)
         VALUES

@@ -1,7 +1,6 @@
 package com.project.service;
 
-import com.project.common.exceptions.HanziMapException;
-import com.project.entity.Translation;
+import com.project.entity.mysql.Translation;
 import com.project.mapper.TranslationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -170,12 +169,13 @@ public class TranslationServiceImpl implements TranslationService{
 
         Object map = servletContext.getAttribute("hanziPinyinMap");
         HashMap<String, String> hashMap = new HashMap<>();
+        System.out.println(ObjectUtils.isEmpty(map));
         if (ObjectUtils.isEmpty(map)){
             hashMap = new HashMap<>();
         }else {
             hashMap = (HashMap<String, String>) map;
         }
-
+        System.out.println(hashMap.size());
         for (int i = 0; i < word.length(); i++) {
             char alphabetic = word.charAt(i);
             if ((alphabetic >= 'a' && alphabetic <= 'z') || (alphabetic >= 'A' && alphabetic <= 'Z') || Character.isDigit(alphabetic)){

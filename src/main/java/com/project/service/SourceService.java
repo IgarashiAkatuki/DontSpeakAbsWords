@@ -1,9 +1,8 @@
 package com.project.service;
 
-import com.project.entity.Source;
+import com.project.entity.mysql.Source;
 
 import java.util.List;
-import java.util.Map;
 
 public interface SourceService {
 

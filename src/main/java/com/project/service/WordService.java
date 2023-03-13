@@ -1,9 +1,8 @@
 package com.project.service;
 
-import com.project.entity.Word;
+import com.project.entity.mysql.Word;
 
 import java.util.List;
-import java.util.Map;
 
 public interface WordService {
 

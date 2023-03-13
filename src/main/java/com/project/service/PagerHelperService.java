@@ -1,9 +1,8 @@
 package com.project.service;
 
-import com.project.entity.Translation;
+import com.project.entity.mysql.Translation;
 
 import java.util.List;
-import java.util.Map;
 
 public interface PagerHelperService {
 
