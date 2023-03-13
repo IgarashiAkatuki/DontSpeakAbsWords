@@ -1,6 +1,8 @@
 # [DontSpeakAbsWords!](https://github.com/IgarashiAkatuki/DontSpeakAbsWords)
 
-> 最后更新于 2023.2.7
+> 最后更新于 2023.3.9
+>
+> **油猴划词翻译脚本已发布，[点击下载](https://github.com/IgarashiAkatuki/DontSpeakAbsWords/raw/main/dsaw.user.js)**
 > 
 > 截至到2.1的统计数据已发布，有需要可以去GitHub自取w
 > 
@@ -19,50 +21,18 @@
 
 ---
 
-## 快速开始
+
+## 用户脚本
+
+目前有一个基于[油猴](https://www.tampermonkey.net/index.php?browser=chrome&locale=zh)的用户脚本，可以实现在任意网站的 **划词翻译**
+
+**[点击安装](https://github.com/IgarashiAkatuki/DontSpeakAbsWords/raw/main/dsaw.user.js)**
+
+> 脚本为仓库中的 dsaw.user.js 文件
+> 
+> 脚本热键为 'ctrl' + '?'
 
 ---
-
-###  **良好的填写规范可以帮助我们更好地收集和整理词条，也可以让你添加的释义更快地被查询到**
-
-**如果你想贡献词条如:**
-
-> 词条：js
->
-> 翻译：JavaScript(一种编程语言)
-
----
-
-### 我们推荐的添加方式：
-
-- 将 **[释义]** 和 **[出处]** 分开填写
-- 一次添加一条 **[释义]**
-- **填写问卷时同样遵循以上两条**
-
-![image](https://user-images.githubusercontent.com/109781981/215271255-fe11dcb3-2d68-415a-a5b4-1a0a49522f82.png)
-
----
-
-### 我们不推荐的添加方式:
-
-- **[释义]** 和 **[出处]** 添加在一起
-
-![image](https://user-images.githubusercontent.com/109781981/215271265-7963c844-e4ab-4ba4-b16f-531e2b46c72b.png)
-
-- 同时添加多个 **[释义]**
-
-![image](https://user-images.githubusercontent.com/109781981/215271270-f1936dae-834e-4de8-bc12-bd3f20a59709.png)
-
----
-
-### 我们极不建议的添加方式:
-
-- 填写诸如 **[不知道]** 、 **[1]** 或者毫不相干的内容
-
-![image](https://user-images.githubusercontent.com/109781981/215271274-55b0bd41-9261-48b7-9031-caf829287812.png)
-
----
-
 ## 何为黑话
 
 ​	在该项目中，**[黑话]** 是一种 **[泛指]**，我们把 **`游戏/亚文化黑话`，`拼音缩写/谐音`，`汉字缩写/谐音`，`emoji谐音`** 等内容统称为 **[黑话]**。
