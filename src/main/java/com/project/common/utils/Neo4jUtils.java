@@ -136,9 +136,9 @@ public class Neo4jUtils {
     public Collection<Map<String,Object>> getGraph(String nodeVal) throws GenerateMapException{
         Collection<Map<String,Object>> list = null;
         try {
-            list = neo4jClient.query("match path = (n)-[*]-(r) where n.val = '"+ nodeVal +"' " +
+            list = neo4jClient.query("match path = (n)-[*1..6]-(r) where n.val = '"+ nodeVal +"' " +
                     "unwind nodes(path) as node with distinct node match (node)-[r]-(related) " +
-                    "where NOT (node)<-[r]-(related) "+
+                    "where NOT (node)<-[r]-(related) " +
                     "return distinct node.val, type(r), related.val").fetch().all();
         }catch (Exception e){
             GenerateMapException generateMapException = new GenerateMapException("获取图结构失败");

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
+@SuppressWarnings("rawtypes")
 public class FormatUtils {
     public List<Collection> convert(Collection<Map<String,Object>> graph){
         HashMap<String, Node> nodeMap = new HashMap<>();

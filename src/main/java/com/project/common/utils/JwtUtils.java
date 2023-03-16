@@ -92,7 +92,7 @@ public class JwtUtils {
 
     private Date getExpirationDateFromToken(String token){
         Claims claims = getClaims(token);
-        System.out.println(claims.getExpiration().toString());
+//        System.out.println(claims.getExpiration().toString());
         return claims.getExpiration();
     }
 

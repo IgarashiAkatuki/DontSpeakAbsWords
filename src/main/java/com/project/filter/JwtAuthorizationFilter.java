@@ -46,14 +46,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     break;
                 }
             }
-            if ("".equals(rawToken)){
+            if (StringUtils.isNullOrEmpty(rawToken) || jwtUtils.isTokenExpired(rawToken)){
+                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(null,null,null));
                 filterChain.doFilter(request, response);
                 return;
             }
-            if (StringUtils.isNullOrEmpty(rawToken) || jwtUtils.isTokenExpired(rawToken)){
-                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(null,null,null));
-            }
-            if (rawToken != null && !rawToken.trim().equals("")) {
+            if (!rawToken.trim().equals("")) {
                 String username = jwtUtils.getUserNameFromToken(rawToken);
                 if (!StringUtils.isNullOrEmpty(username) && SecurityContextHolder.getContext().getAuthentication() == null){
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);

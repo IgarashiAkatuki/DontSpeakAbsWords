@@ -62,15 +62,15 @@ config:
   enableSecurity: true
   # 是否启用数据记录
   enableStatistic: true
-  # 是否启用汉字转Emoji功能(初始化redis)
+  # 是否启用模糊查询功能(初始化redis)
   enableFuzzyQuery: true
   # 是否开启测试功能
   enableTestMetohd: true
-
+  # neo4jURL
   neo4jURL: neo4j://localhost:7687
 
 jwt:
   secret: 114514
-  expiration: 862000
+  expiration: 86400
   tokenHeader: Authorization
   tokenHead: 'Bearer '
