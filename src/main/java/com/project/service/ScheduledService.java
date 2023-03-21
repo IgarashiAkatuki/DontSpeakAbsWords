@@ -1,7 +1,9 @@
 package com.project.service;
 
+import com.project.common.exceptions.GenerateMapException;
 import com.project.constant.Constant;
 import com.project.entity.mysql.Statistics;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -13,6 +15,7 @@ import javax.servlet.ServletContext;
 import java.util.Date;
 
 @Service
+@Slf4j
 public class ScheduledService {
 
     @Autowired
@@ -30,6 +33,9 @@ public class ScheduledService {
     @Autowired
     @Qualifier("constant")
     private Constant constant;
+
+    @Autowired
+    private GraphService graphService;
 
     // 秒 分 时 日 月 星期 年
     // 一天四次存储数据
@@ -87,5 +93,29 @@ public class ScheduledService {
         }else {
             System.out.println("["+date+"]释义统计数据存储失败");
         }
+    }
+
+    @Scheduled(cron = "0 0 4 * * ?")
+    @ConditionalOnProperty(
+            name = "config.enableUpdateGraph",
+            havingValue = "true"
+    )
+    void updateGraph(){
+        int id = 0;
+        if (context.getAttribute("currID") != null){
+            Integer attribute = (Integer) context.getAttribute("currId");
+            if (attribute > id){
+                id = attribute;
+            }
+        }
+        int currId = id;
+        try{
+            id = graphService.updateGraph(id);
+        }catch (GenerateMapException e){
+            log.error(e.getMessage());
+        }finally {
+            context.setAttribute("currID",id);
+        }
+
     }
 }

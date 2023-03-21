@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Translation {
+public class Persistence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class Translation {
 
     private String translation;
 
-    private String likes;
+    private int likes;
 
     private int wordId;
 

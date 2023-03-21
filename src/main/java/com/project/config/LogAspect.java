@@ -70,6 +70,13 @@ public class LogAspect {
             }else {
                 context.setAttribute("addWordCount",(int)temp+1);
             }
+        }else if ("generateGraph".equals(name)){
+            Object temp = context.getAttribute("selectTranslCount");
+            if (ObjectUtils.isEmpty(temp)){
+                context.setAttribute("selectTranslCount",1);
+            }else {
+                context.setAttribute("selectTranslCount",(int)temp+1);
+            }
         }
 
     }

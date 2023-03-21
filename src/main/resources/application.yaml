@@ -68,6 +68,8 @@ config:
   enableTestMetohd: true
   # neo4jURL
   neo4jURL: neo4j://localhost:7687
+  # 是否启用更新图数据库
+  enableUpdateGraph: true
 
 jwt:
   secret: 114514
