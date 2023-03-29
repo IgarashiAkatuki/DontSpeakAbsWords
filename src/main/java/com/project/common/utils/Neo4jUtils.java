@@ -2,6 +2,7 @@ package com.project.common.utils;
 
 import com.mysql.cj.util.StringUtils;
 import com.project.common.exceptions.GenerateMapException;
+import com.project.entity.jpa.Persistence;
 import com.project.entity.neo4j.SourceNode;
 import com.project.entity.neo4j.TranslationNode;
 import com.project.entity.neo4j.WordNode;
@@ -15,9 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.core.Neo4jClient;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class Neo4jUtils {
@@ -45,91 +44,90 @@ public class Neo4jUtils {
 
 
     public void addSourceNodes(){
-        repository.findAll().forEach(data->{
+        HashSet<SourceNode> nodesToSave = new HashSet<>();
+        for (Persistence data : repository.findAll()) {
             String source = data.getSource();
             if (StringUtils.isNullOrEmpty(source)){
-                return;
+                continue;
             }
-            List<SourceNode> sourceNodes = sourceRepo.queryAllByVal(source);
+            List<SourceNode> sourceNodes = sourceRepo.queryAllByVal(source.trim().toLowerCase());
             if (sourceNodes != null && sourceNodes.size() > 0){
-                return;
+                continue;
             }
-            SourceNode sourceNode = new SourceNode(data.getSource().hashCode()+(long)(Math.random()*1000), data.getSource());
-            sourceRepo.save(sourceNode);
-            System.out.println("添加了[sourceNode]-> "+ sourceNode.getVal());
-        });
+            SourceNode sourceNode = new SourceNode(data.getSource().hashCode(), data.getSource().trim().toLowerCase());
+//            System.out.println(sourceNode.getVal());
+            nodesToSave.add(sourceNode);
+        }
+
+        System.out.println(nodesToSave.size());
+        sourceRepo.saveAll(nodesToSave);
     }
 
     public void addTranslationNodes(){
-        repository.findAll().forEach(data->{
+        HashMap<String,TranslationNode> nodesToSave = new HashMap<>();
+        for (Persistence data : repository.findAll()) {
             String source = data.getSource();
             TranslationNode translationNode = null;
-            List<TranslationNode> translationNodes = translationRepo.queryAllByVal(data.getTranslation());
-
-            if (translationNodes == null || translationNodes.size() < 1){
+            if (nodesToSave.containsKey(data.getTranslation())){
+                translationNode = nodesToSave.get(data.getTranslation());
+                if (!StringUtils.isNullOrEmpty(source)){
+                    List<SourceNode> sourceNodes = sourceRepo.queryAllByVal(data.getSource().trim().toLowerCase());
+                    translationNode.addSourceNode(sourceNodes.get(0));
+                }else {
+                    continue;
+                }
+            }else {
                 translationNode = new TranslationNode();
-                translationNode.setVal(data.getTranslation());
+                translationNode.setId(data.getTranslation().hashCode());
+                translationNode.setVal(data.getTranslation().trim().toLowerCase());
                 translationNode.setWord(data.getWord());
-                translationNode.setLikes(1);
-                translationNode.setId(data.getTranslation().hashCode()+(long)(Math.random()*1000));
                 if (!StringUtils.isNullOrEmpty(source)){
                     translationNode.setSource(data.getSource());
-//                    SourceNode sourceNode = new SourceNode(data.getSource().hashCode(),data.getSource());
-                    List<SourceNode> sourceNodes = sourceRepo.queryAllByVal(data.getSource());
-                    translationNode.addSourceNode(sourceNodes.get(0));
-                }
-            }else {
-                translationNode = translationNodes.get(0);
-                if (!StringUtils.isNullOrEmpty(source)){
-                    List<SourceNode> sourceNodes = sourceRepo.queryAllByVal(data.getSource());
+                    List<SourceNode> sourceNodes = sourceRepo.queryAllByVal(data.getSource().trim().toLowerCase());
                     translationNode.addSourceNode(sourceNodes.get(0));
                 }
             }
-
-            translationRepo.save(translationNode);
-            System.out.println("添加了[translationNode]-> "+ data.getTranslation());
-        });
+            nodesToSave.put(translationNode.getVal(),translationNode);
+        }
+        System.out.println(nodesToSave.size());
+        translationRepo.saveAll(nodesToSave.values());
     }
 
-    public void addWordNodes(){
-        repository.findAll().forEach(data->{
+    public void addWordNodes() {
+        HashMap<String, WordNode> nodesToSave = new HashMap<>();
+        for (Persistence data : repository.findAll()) {
 
-            List<TranslationNode> nodes = translationRepo.queryAllByVal(data.getTranslation());
+            List<TranslationNode> translationNodes = translationRepo.queryAllByVal(data.getTranslation().trim().toLowerCase());
             TranslationNode translationNode = null;
-            if (nodes == null || nodes.size() < 1){
-                TranslationNode node = new TranslationNode();
-                try{
-                    node.setSource(data.getSource());
-                    node.setVal(data.getTranslation());
-                    node.setWord(data.getWord());
-                    node.setLikes(1);
-                    node.setId(System.currentTimeMillis());
-                    translationNode = node;
-                }catch (Exception e){
-                    e.printStackTrace();
-                    System.out.println(node);
-                }
-
-            }else {
-                translationNode = nodes.get(0);
+            if (translationNodes == null || translationNodes.size() < 1) {
+                translationNode = new TranslationNode();
+                translationNode.setSource(data.getSource());
+                translationNode.setVal(data.getTranslation().trim().toLowerCase());
+                translationNode.setWord(data.getWord());
+                translationNode.setId(data.getTranslation().hashCode());
+                translationRepo.save(translationNode);
+            } else {
+                translationNode = translationNodes.get(0);
             }
 
-
-            List<WordNode> wordNodes = wordRepo.queryAllByVal(data.getWord());
-            if (wordNodes == null || wordNodes.size() < 1){
-                WordNode wordNode = new WordNode();
-                wordNode.setId(data.getWord().hashCode()+(long)(Math.random()*100));
-                wordNode.setVal(data.getWord());
+            WordNode wordNode = null;
+            if (!nodesToSave.containsKey(data.getWord())) {
+                wordNode = new WordNode();
+                wordNode.setId(data.getWord().hashCode());
+                wordNode.setVal(data.getWord().trim().toLowerCase());
                 wordNode.addTranslationNodes(translationNode);
-                wordRepo.save(wordNode);
-            }else {
-                WordNode wordNode = wordNodes.get(0);
-                wordNode.addTranslationNodes(translationNode);
-                wordRepo.save(wordNode);
+            } else {
+                wordNode = nodesToSave.get(data.getWord());
             }
-            System.out.println("添加了[wordNode]-> "+ data.getWord());
-        });
+
+            wordNode.addTranslationNodes(translationNode);
+            nodesToSave.put(wordNode.getVal(), wordNode);
+        }
+
+        System.out.println(nodesToSave.size());
+        wordRepo.saveAll(nodesToSave.values());
     }
+
 
 
 

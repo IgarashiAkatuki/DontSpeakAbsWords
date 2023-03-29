@@ -13,6 +13,8 @@ import com.project.repository.neo4j.SourceRepo;
 import com.project.repository.neo4j.TranslationRepo;
 import com.project.repository.neo4j.WordRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@CacheConfig(cacheNames = "neo4jCache")
 @SuppressWarnings("rawtypes")
 public class GraphService {
 
@@ -42,6 +45,7 @@ public class GraphService {
     @Autowired
     private WordRepo wordRepo;
 
+    @Cacheable
     public List<Collection> generateGraph(String val){
         Collection<Map<String, Object>> graph = null;
         try {

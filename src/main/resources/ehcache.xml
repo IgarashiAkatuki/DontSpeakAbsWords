@@ -16,4 +16,12 @@
            timeToIdleSeconds="360"
            timeToLiveSeconds="1800"
            />
+    <cache name="neo4jCache"
+           maxElementsInMemory="10000"
+           eternal="false"
+           overflowToDisk="false"
+           diskPersistent="false"
+           timeToIdleSeconds="360"
+           timeToLiveSeconds="1800"
+           />
 </ehcache>
