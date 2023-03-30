@@ -8,7 +8,7 @@ import com.project.constant.Constant;
 import com.project.entity.mysql.Word;
 import com.project.pojo.QuestionnaireAO;
 import com.project.pojo.WordAO;
-import com.project.service.WordService;
+import com.project.service.serviceInterface.WordService;
 import com.project.common.utils.RegexUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

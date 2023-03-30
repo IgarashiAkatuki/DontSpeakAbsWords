@@ -1,4 +1,4 @@
-package com.project.service;
+package com.project.service.serviceInterface;
 
 import com.project.entity.mysql.Erratum;
 

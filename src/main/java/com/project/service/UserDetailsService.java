@@ -1,6 +1,7 @@
 package com.project.service;
 
 import com.project.entity.mysql.User;
+import com.project.service.serviceInterface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;

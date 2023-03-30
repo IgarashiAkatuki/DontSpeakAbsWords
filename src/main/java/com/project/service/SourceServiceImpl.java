@@ -3,6 +3,7 @@ package com.project.service;
 import com.project.common.utils.RegexUtils;
 import com.project.entity.mysql.Source;
 import com.project.mapper.SourceMapper;
+import com.project.service.serviceInterface.SourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class SourceServiceImpl implements SourceService{
+public class SourceServiceImpl implements SourceService {
 
     @Autowired
     @Qualifier("sourceMapper")

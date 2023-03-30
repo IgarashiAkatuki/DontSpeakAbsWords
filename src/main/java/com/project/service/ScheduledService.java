@@ -3,6 +3,8 @@ package com.project.service;
 import com.project.common.exceptions.GenerateMapException;
 import com.project.constant.Constant;
 import com.project.entity.mysql.Statistics;
+import com.project.service.serviceInterface.StatisticsService;
+import com.project.service.serviceInterface.TranslStatisticsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

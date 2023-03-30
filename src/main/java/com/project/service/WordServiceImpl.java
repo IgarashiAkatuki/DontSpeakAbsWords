@@ -2,6 +2,7 @@ package com.project.service;
 
 import com.project.entity.mysql.Word;
 import com.project.mapper.WordMapper;
+import com.project.service.serviceInterface.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class WordServiceImpl implements WordService{
+public class WordServiceImpl implements WordService {
 
     @Autowired
     @Qualifier("wordMapper")

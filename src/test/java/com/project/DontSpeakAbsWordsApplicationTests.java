@@ -3,26 +3,15 @@ package com.project;
 import com.mysql.cj.util.StringUtils;
 import com.project.common.utils.JwtUtils;
 import com.project.common.utils.Neo4jUtils;
-import com.project.constant.Constant;
-import com.project.entity.jpa.Persistence;
 import com.project.entity.neo4j.SourceNode;
 import com.project.repository.jpa.Translation4NeoRepo;
 import com.project.repository.neo4j.SourceRepo;
 import com.project.service.GraphService;
-import com.project.service.TranslStatisticsService;
-import com.project.service.TranslationService;
-import com.project.service.WordService;
-import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.Test;
-import org.neo4j.driver.AuthTokens;
-import org.neo4j.driver.Driver;
-import org.neo4j.driver.GraphDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.neo4j.core.Neo4jClient;
 
-import java.util.HashMap;
 import java.util.List;
 
 

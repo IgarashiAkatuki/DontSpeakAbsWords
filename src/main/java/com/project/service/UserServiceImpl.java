@@ -2,6 +2,7 @@ package com.project.service;
 
 import com.project.entity.mysql.User;
 import com.project.mapper.UserMapper;
+import com.project.service.serviceInterface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     @Qualifier("userMapper")

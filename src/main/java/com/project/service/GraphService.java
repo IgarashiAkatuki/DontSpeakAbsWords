@@ -17,10 +17,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @CacheConfig(cacheNames = "neo4jCache")
@@ -60,12 +57,14 @@ public class GraphService {
     }
 
     public int updateGraph(int id) throws GenerateMapException{
+
+        HashMap<String,SourceNode> sourceToSave = new HashMap<>();
         long start = System.currentTimeMillis();
 
         List<Persistence> persistences = dataRepo.queryAllByIdGreaterThan(id);
 
         for (Persistence persistence : persistences) {
-            String source = persistence.getSource();
+            String source = persistence.getSource().trim().toLowerCase();
             if (StringUtils.isNullOrEmpty(source)){
                 continue;
             }
@@ -73,11 +72,16 @@ public class GraphService {
             if (sourceNodes != null && sourceNodes.size() > 0){
                 continue;
             }
-            SourceNode sourceNode = new SourceNode(persistence.getSource().hashCode()+(long)(Math.random()*1000), persistence.getSource());
-            sourceRepo.save(sourceNode);
+            SourceNode sourceNode = new SourceNode(persistence.getSource().hashCode(), persistence.getSource().toLowerCase().trim());
+            sourceToSave.put(persistence.getSource().trim().toLowerCase(),sourceNode);
             System.out.println("添加了[sourceNode]-> "+ sourceNode.getVal());
         }
 
+        sourceRepo.saveAll(sourceToSave.values());
+
+        // ------------------------------------------------------------------------
+
+        HashMap<String, TranslationNode> translationToSave = new HashMap<>();
         for (Persistence persistence : persistences) {
             String source = persistence.getSource();
             TranslationNode translationNode = null;
@@ -88,24 +92,31 @@ public class GraphService {
                 translationNode.setVal(persistence.getTranslation());
                 translationNode.setWord(persistence.getWord());
                 translationNode.setLikes(1);
-                translationNode.setId(persistence.getTranslation().hashCode()+(long)(Math.random()*1000));
+                translationNode.setId(persistence.getTranslation().hashCode());
                 if (!StringUtils.isNullOrEmpty(source)){
-                    translationNode.setSource(persistence.getSource());
+                    translationNode.setSource(persistence.getSource().trim().toLowerCase());
 //                    SourceNode sourceNode = new SourceNode(data.getSource().hashCode(),data.getSource());
-                    List<SourceNode> sourceNodes = sourceRepo.queryAllByVal(persistence.getSource());
+                    List<SourceNode> sourceNodes = sourceRepo.queryAllByVal(persistence.getSource().trim().toLowerCase());
                     translationNode.addSourceNode(sourceNodes.get(0));
                 }
             }else {
                 translationNode = translationNodes.get(0);
                 if (!StringUtils.isNullOrEmpty(source)){
-                    List<SourceNode> sourceNodes = sourceRepo.queryAllByVal(persistence.getSource());
+                    List<SourceNode> sourceNodes = sourceRepo.queryAllByVal(persistence.getSource().trim().toLowerCase());
                     translationNode.addSourceNode(sourceNodes.get(0));
                 }
             }
 
-            translationRepo.save(translationNode);
+            translationToSave.put(persistence.getTranslation(),translationNode);
             System.out.println("添加了[translationNode]-> "+ persistence.getTranslation());
         }
+
+        translationRepo.saveAll(translationToSave.values());
+
+        // ------------------------------------------------------------------------
+
+
+        HashMap<String, WordNode> wordToSave = new HashMap<>();
 
         for (Persistence persistence : persistences) {
             List<TranslationNode> nodes = translationRepo.queryAllByVal(persistence.getTranslation());
@@ -128,21 +139,24 @@ public class GraphService {
                 translationNode = nodes.get(0);
             }
 
-
+            WordNode wordNode = new WordNode();
             List<WordNode> wordNodes = wordRepo.queryAllByVal(persistence.getWord());
             if (wordNodes == null || wordNodes.size() < 1){
-                WordNode wordNode = new WordNode();
-                wordNode.setId(persistence.getWord().hashCode()+(long)(Math.random()*100));
+
+                wordNode.setId(persistence.getWord().hashCode());
                 wordNode.setVal(persistence.getWord());
                 wordNode.addTranslationNodes(translationNode);
-                wordRepo.save(wordNode);
             }else {
-                WordNode wordNode = wordNodes.get(0);
+                wordNode = wordNodes.get(0);
                 wordNode.addTranslationNodes(translationNode);
-                wordRepo.save(wordNode);
             }
+
+            wordToSave.put(persistence.getWord(),wordNode);
             System.out.println("添加了[wordNode]-> "+ persistence.getWord());
         }
+
+        wordRepo.saveAll(wordToSave.values());
+
         System.out.println("图构建共耗时"+ (System.currentTimeMillis()-start) + "ms");
         return persistences.get(persistences.size()-1).getId();
     }

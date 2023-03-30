@@ -3,6 +3,7 @@ package com.project.service;
 import com.project.entity.mysql.TranslStatistics;
 import com.project.entity.mysql.Translation;
 import com.project.mapper.TranslStatisticsMapper;
+import com.project.service.serviceInterface.TranslStatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @CacheConfig(cacheNames = "translationCache")
-public class TranslStatisticsServiceImpl implements TranslStatisticsService{
+public class TranslStatisticsServiceImpl implements TranslStatisticsService {
 
     @Autowired
     @Qualifier("translStatisticsMapper")

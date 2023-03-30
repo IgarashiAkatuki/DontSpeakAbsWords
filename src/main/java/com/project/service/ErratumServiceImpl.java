@@ -2,6 +2,7 @@ package com.project.service;
 
 import com.project.entity.mysql.Erratum;
 import com.project.mapper.ErratumMapper;
+import com.project.service.serviceInterface.ErratumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ErratumServiceImpl implements ErratumService{
+public class ErratumServiceImpl implements ErratumService {
 
     @Autowired
     @Qualifier("erratumMapper")

@@ -2,6 +2,7 @@ package com.project.service;
 
 import com.project.entity.mysql.Translation;
 import com.project.mapper.PageHelperMapper;
+import com.project.service.serviceInterface.PagerHelperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Service
 @SuppressWarnings("rawtypes")
-public class PagerHelperServiceImpl implements PagerHelperService{
+public class PagerHelperServiceImpl implements PagerHelperService {
 
     @Autowired
     @Qualifier("pageHelperMapper")

@@ -10,8 +10,6 @@ import com.project.repository.jpa.Translation4NeoRepo;
 import com.project.repository.neo4j.SourceRepo;
 import com.project.repository.neo4j.TranslationRepo;
 import com.project.repository.neo4j.WordRepo;
-import com.project.service.SourceService;
-import com.project.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.core.Neo4jClient;
 import org.springframework.stereotype.Component;
@@ -20,15 +18,9 @@ import java.util.*;
 
 @Component
 public class Neo4jUtils {
-    @Autowired
-    private SourceService sourceService;
 
     @Autowired
     private Translation4NeoRepo repository;
-
-    @Autowired
-    private WordService wordService;
-
 
     @Autowired
     private TranslationRepo translationRepo;
@@ -127,9 +119,6 @@ public class Neo4jUtils {
         System.out.println(nodesToSave.size());
         wordRepo.saveAll(nodesToSave.values());
     }
-
-
-
 
     public Collection<Map<String,Object>> getGraph(String nodeVal) throws GenerateMapException{
         Collection<Map<String,Object>> list = null;

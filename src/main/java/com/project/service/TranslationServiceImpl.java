@@ -2,6 +2,7 @@ package com.project.service;
 
 import com.project.entity.mysql.Translation;
 import com.project.mapper.TranslationMapper;
+import com.project.service.serviceInterface.TranslationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Service
 @CacheConfig(cacheNames = "translationCache")
-public class TranslationServiceImpl implements TranslationService{
+public class TranslationServiceImpl implements TranslationService {
 
     @Autowired
     @Qualifier("translationMapper")

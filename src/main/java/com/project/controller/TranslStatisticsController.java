@@ -7,7 +7,7 @@ import com.project.entity.mysql.TranslStatistics;
 import com.project.entity.mysql.Translation;
 import com.project.pojo.TranslStatisticsAO;
 import com.project.pojo.TranslationAO;
-import com.project.service.TranslStatisticsService;
+import com.project.service.serviceInterface.TranslStatisticsService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

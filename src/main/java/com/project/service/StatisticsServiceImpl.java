@@ -2,6 +2,7 @@ package com.project.service;
 
 import com.project.entity.mysql.Statistics;
 import com.project.mapper.StatisticsMapper;
+import com.project.service.serviceInterface.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StatisticsServiceImpl implements StatisticsService{
+public class StatisticsServiceImpl implements StatisticsService {
 
     @Autowired
     @Qualifier("statisticsMapper")
