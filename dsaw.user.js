@@ -1,12 +1,17 @@
 // ==UserScript==
 // @name         DontSpeakAbsWords
 // @namespace    https://github.com/IgarashiAkatuki/DontSpeakAbsWords
-// @version      0.2
+// @version      0.4
 // @description  黑话/缩写翻译站
 // @author       Jitsu
+// @homepage     https://github.com/anosu/DontSpeakAbsWords-UserScript
+// @downloadURL  https://fastly.jsdelivr.net/gh/anosu/DontSpeakAbsWords-UserScript@main/dsaw.user.js
+// @supportURL   https://github.com/anosu/DontSpeakAbsWords-UserScript/issues
 // @match        *://*/*
 // @icon         https://project.midsummra.com/favicon.ico
-// @grant        none
+// @grant        GM_xmlhttpRequest
+// @connect      project.midsummra.com
+// @run-at       document-body
 // ==/UserScript==
 
 (function () {
@@ -26,57 +31,70 @@
     }
     const getDSAW_Translations = (text) => {
         return new Promise((resolve, reject) => {
-            let dsawGetXhr = new XMLHttpRequest();
-            dsawGetXhr.onreadystatechange = () => {
-                if (dsawGetXhr.readyState == 4 && dsawGetXhr.status == 200) {
-                    let response = JSON.parse(dsawGetXhr.responseText);
-                    let dsawData = {}
-                    if (response.data != null) {
-                        response.data.forEach(e => {
-                            dsawData[e.translation] = e.likes
-                        });
+            GM_xmlhttpRequest({
+                url: DSAW_URL + 'getTranslationsFromPersistence',
+                method: 'POST',
+                headers: {
+                    "content-type": "application/x-www-form-urlencoded"
+                },
+                data: 'word=' + text,
+                responseType: 'json',
+                timeout: 3000,
+                onload: (response) => {
+                    if (response.status == 200) {
+                        let res = response.response
+                        let dsawData = {}
+                        if (res.data != null) {
+                            res.data.forEach(e => {
+                                dsawData[e.translation] = e.likes
+                            })
+                        } else {
+                            dsawData['没有查询到相关释义'] = null
+                        }
+                        resolve(dsawData)
                     } else {
-                        dsawData['没有查询到相关释义'] = null
+                        resolve({ 'error: 请求失败': null })
                     }
-                    resolve(dsawData)
+                },
+                ontimeout: () => {
+                    resolve({ 'error: 查询超时，请检查网络连接': null })
+                },
+                onerror: () => {
+                    resolve({ 'error: 连接失败': null })
                 }
-            }
-            dsawGetXhr.ontimeout = () => {
-                resolve({ 'error: 查询超时，请检查网络连接': null })
-            }
-            dsawGetXhr.onerror = () => {
-                resolve({ 'error: 连接失败': null })
-            }
-            dsawGetXhr.open("POST", DSAW_URL + 'getTranslationsFromPersistence', true);
-            dsawGetXhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            dsawGetXhr.timeout = 3000
-            dsawGetXhr.send('word=' + text);
+            })
         })
     }
     const subDSAW_Translations = (translation) => {
         return new Promise((resolve, reject) => {
-            let dsawSubXhr = new XMLHttpRequest();
-            dsawSubXhr.onreadystatechange = () => {
-                if (dsawSubXhr.readyState == 4 && dsawSubXhr.status == 200) {
-                    let response = JSON.parse(dsawSubXhr.responseText);
-                    console.log(response)
-                    if (response.code == 0) {
-                        resolve(true)
+            GM_xmlhttpRequest({
+                url: DSAW_URL + 'submitTranslationsToTemp',
+                method: 'POST',
+                headers: {
+                    "content-type": "application/x-www-form-urlencoded"
+                },
+                data: 'word=' + DSAW_GLOBAL.current + '&translation=' + translation,
+                responseType: 'json',
+                timeout: 3000,
+                onload: (response) => {
+                    if (response.status == 200) {
+                        let res = response.response;
+                        if (res.code == 0) {
+                            resolve(true)
+                        } else {
+                            resolve(false)
+                        }
                     } else {
                         resolve(false)
                     }
+                },
+                ontimeout: () => {
+                    resolve(false)
+                },
+                onerror: () => {
+                    resolve(false)
                 }
-            }
-            dsawSubXhr.ontimeout = () => {
-                resolve(false)
-            }
-            dsawSubXhr.onerror = () => {
-                resolve(false)
-            }
-            dsawSubXhr.open("POST", DSAW_URL + 'submitTranslationsToTemp', true);
-            dsawSubXhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            dsawSubXhr.timeout = 3000
-            dsawSubXhr.send('word=' + DSAW_GLOBAL.current + '&translation=' + translation);
+            })
         })
     }
 
@@ -176,11 +194,12 @@
             margin: 8px 15px;
         }
         #dsaw-popup-content {
-            height: 100px;
+            height: 120px;
             line-height: 25.5px;
             margin: 0;
             padding: 10px 18px;
             overflow: auto;
+            overscroll-behavior: none;
         }
         #dsaw-popup-footer {
             position: relative;
