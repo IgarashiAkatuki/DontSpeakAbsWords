@@ -471,14 +471,14 @@ public class TranslationController {
 
 // ===================================================================================================
 // 测试功能
-    @PostMapping("/testGetPages")
+    @GetMapping("/fuzzyQueryPages")
     @ResponseBody
     @ApiOperation("测试功能")
     @ConditionalOnProperty(
             name = "enableTestMethod",
             havingValue = "true"
     )
-    public Result testMethod1(@Valid FuzzyWordAO fuzzyWordAO){
+    public Result getPages(@Valid FuzzyWordAO fuzzyWordAO){
         // 获取word值
         String word = fuzzyWordAO.getWord();
 
@@ -496,7 +496,7 @@ public class TranslationController {
 
         int totalRows = pagerHelperService.getTotalRows(word);
         pageUtils.setRows(totalRows);
-        pageUtils.setCurrPage(1);
+        pageUtils.setCurrPage(Integer.parseInt(fuzzyWordAO.getCurrPageOrDefault()));
         int size = pageUtils.getTotalPages();
 
         if (totalRows <= webConstant.getPageSize()){
@@ -509,4 +509,5 @@ public class TranslationController {
             return Result.suc(translations,size+"");
         }
     }
+
 }

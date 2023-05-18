@@ -1,11 +1,11 @@
 package com.project.mapper;
 
 import com.project.entity.mysql.Translation;
+import com.project.pojo.PageDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 @Repository
@@ -17,7 +17,7 @@ public interface PageHelperMapper {
     public int getTotalRowsInPSAlphabet(String word);
 
     // 模糊查询
-    public List<Translation> fuzzyQueryInPS(Map map);
+    public List<Translation> fuzzyQueryInPS(PageDTO map);
 
-    public List<Translation> fuzzyQueryInPS4Alphabet(Map map);
+    public List<Translation> fuzzyQueryInPS4Alphabet(PageDTO map);
 }

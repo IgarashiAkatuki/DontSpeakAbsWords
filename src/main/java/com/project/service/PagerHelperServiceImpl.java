@@ -2,6 +2,7 @@ package com.project.service;
 
 import com.project.entity.mysql.Translation;
 import com.project.mapper.PageHelperMapper;
+import com.project.pojo.PageDTO;
 import com.project.service.serviceInterface.PagerHelperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -60,7 +61,7 @@ public class PagerHelperServiceImpl implements PagerHelperService {
     @Override
     public List<Translation> fuzzyQuery(String word, String startIndex, String limit) {
 
-        HashMap<String, String> map = new HashMap<>();
+        PageDTO pageDTO = new PageDTO();
 
         for (int i = 0; i < word.length(); i++) {
             char alphabetic = word.charAt(i);
@@ -83,17 +84,17 @@ public class PagerHelperServiceImpl implements PagerHelperService {
                 }
 
                 String fuzzyWord = "%"+sb+"%";
-                map.put("fuzzyWord",fuzzyWord);
-                map.put("limit",limit);
-                map.put("startIndex",startIndex);
-                return helper.fuzzyQueryInPS(map);
+                pageDTO.setWord(fuzzyWord);
+                pageDTO.setStartIndex(Integer.parseInt(startIndex));
+                pageDTO.setLimit(Integer.parseInt(limit));
+                return helper.fuzzyQueryInPS(pageDTO);
             }
         }
 
         String fuzzyWord = "%"+word+"%";
-        map.put("fuzzyWord",fuzzyWord);
-        map.put("limit",limit);
-        map.put("startIndex",startIndex);
-        return helper.fuzzyQueryInPS4Alphabet(map);
+        pageDTO.setWord(fuzzyWord);
+        pageDTO.setStartIndex(Integer.parseInt(startIndex));
+        pageDTO.setLimit(Integer.parseInt(limit));
+        return helper.fuzzyQueryInPS4Alphabet(pageDTO);
     }
 }

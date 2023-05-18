@@ -1,8 +1,6 @@
 package com.project.common.utils;
 
-import com.project.constant.Constant;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 // 分页查询工具类
@@ -10,9 +8,6 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("all")
 public class PageUtils {
 
-    @Autowired
-    @Qualifier("constant")
-    private Constant constant;
 
     // 总页面数
     private int totalPages;
@@ -21,11 +16,11 @@ public class PageUtils {
     private int currPage = 1;
 
     // 页面大小
+    @Value(value = "${constant.PageSize}")
     private int pageSize;
 
     // 数据总数
     private int rows;
-
 
     public int getTotalPages() {
         return totalPages;
@@ -43,7 +38,12 @@ public class PageUtils {
 
     public void setRows(int rows){
         this.rows = rows;
-        this.totalPages = (rows % pageSize) == 0 ? (rows / pageSize) : (rows / pageSize) + 1;
+        if (rows == 0){
+            this.totalPages = 0;
+        }else {
+            this.totalPages = (rows % pageSize) == 0 ? (rows / pageSize) : (rows / pageSize) + 1;
+        }
+
     }
 
     public void setCurrPage(int currPage){
@@ -55,9 +55,6 @@ public class PageUtils {
     }
 
 
-    private void setPageSize(){
-        this.pageSize = constant.getPageSize();
-    }
 
     public int getPageSize() {
         return pageSize;
