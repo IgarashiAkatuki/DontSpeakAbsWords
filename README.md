@@ -1,12 +1,12 @@
 # [DontSpeakAbsWords!](https://github.com/IgarashiAkatuki/DontSpeakAbsWords)
 
-> 最后更新于 2023.3.21
+> 最后更新于 2023.5.18
 >
 > **油猴划词翻译脚本已发布，[点击下载](https://github.com/IgarashiAkatuki/DontSpeakAbsWords/raw/main/dsaw.user.js)**
 > 
 > **新增知识图谱(beta)**
 > 
-> 截至到4.1的统计数据已发布，有需要可以去GitHub自取w
+> 截至到5.18的统计数据已发布，有需要可以去GitHub自取w
 > 
 > 新增了各个释义的统计数据，可以点击词条的[更多]查看
 
